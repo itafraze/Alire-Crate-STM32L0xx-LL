@@ -1,7 +1,47 @@
 name = "stm32l0xx_ll"
 description = "LL library for STMicroelectronics' STM32L0 MCU series"
-version = "0.0.1-dev"
+version = "0.0.2-dev"
 
 authors = ["Emanuele Zarfati"]
 maintainers = ["Emanuele Zarfati <zarfati.tecno@gmail.com>"]
 maintainers-logins = ["ezetec"]
+
+[[depends-on]]
+gnat_arm_elf = "^13.2.1"
+stm32l0xx_cmsis = "1.0.0"
+
+[[pins]]
+
+[pins.stm32l0xx_cmsis]
+url = 'https://gitlab.com/ezetec-alire-crates/stm32l0xx-cmsis.git'
+commit = "5dae4b41a3b8c5cae87b383d1fe25709fa1e26fd"
+
+[build-profiles]
+stm32l0xx_cmsis = "release"
+
+[build-switches.release]
+optimization    = "size"       # "-Os", "-gnatn", "-ffunction-sections", "-fdata-sections"
+debug_info      = "no"         #
+runtime_checks  = "none"       # "-gnatp"
+compile_checks  = "none"       #
+contracts       = "no"         #
+style_checks    = "yes"        # "-gnaty3", "-gnatya", "-gnatyA", "-gnatyB", "-gnatyb", "-gnatyc", "-gnaty-d", "-gnatye", "-gnatyf", "-gnatyh", "-gnatyi", "-gnatyI", "-gnatyk", "-gnatyl", "-gnatym", "-gnatyn", "-gnatyO", "-gnatyp", "-gnatyr", "-gnatyS", "-gnatyt", "-gnatyu", "-gnatyx"
+
+[build-switches.validation]
+optimization    = "size"       # "-Os", "-gnatn", "-ffunction-sections", "-fdata-sections"
+debug_info      = "no"         #
+runtime_checks  = "everything" # "-gnato"
+compile_checks  = "errors"     # "-gnatwa", "-gnatw.X", "-gnatVa", "-gnatwe"
+contracts       = "yes"        # "-gnata"
+style_checks    = "yes"        # "-gnaty3", "-gnatya", "-gnatyA", "-gnatyB", "-gnatyb", "-gnatyc", "-gnaty-d", "-gnatye", "-gnatyf", "-gnatyh", "-gnatyi", "-gnatyI", "-gnatyk", "-gnatyl", "-gnatym", "-gnatyn", "-gnatyO", "-gnatyp", "-gnatyr", "-gnatyS", "-gnatyt", "-gnatyu", "-gnatyx"
+
+[build-switches.development]
+optimization    = "debug"      # "-Os", "-gnatn", "-ffunction-sections", "-fdata-sections"
+debug_info      = "yes"        # "-g"
+runtime_checks  = "default"    #
+compile_checks  = "warnings"   # "-gnatwa", "-gnatw.X", "-gnatVa"
+contracts       = "yes"        # "-gnata"
+style_checks    = "no"         #
+
+[configuration.variables]
+Disable_Restrictions = {type = "Boolean", default = false}

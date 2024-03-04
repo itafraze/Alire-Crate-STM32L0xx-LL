@@ -1,29 +1,62 @@
 with "config/stm32l0xx_ll_config.gpr";
+with "stm32l0xx_cmsis.gpr";
+
 project Stm32l0xx_Ll is
 
+   --  Library specification
    for Library_Name use "Stm32l0xx_Ll";
-   for Library_Version use Project'Library_Name & ".so." & Stm32l0xx_Ll_Config.Crate_Version;
+   for Library_Version use
+      Project'Library_Name & ".so." & Stm32l0xx_Ll_Config.Crate_Version;
+   for Library_Kind use "static";
 
-   for Source_Dirs use ("src/", "config/");
-   for Object_Dir use "obj/" & Stm32l0xx_Ll_Config.Build_Profile;
+   --  Target platform and Runtime environment
+   for Target use Stm32l0xx_Cmsis'Target;
+   for Runtime use Stm32l0xx_Cmsis'Runtime;
+
+   --  Programming languages
+   for Languages use ("Ada");
+
+   --  Device information
+   Device := Stm32l0xx_Cmsis.Device;
+   Device_Series := Stm32l0xx_Cmsis.Device_Series;
+   Device_Category := Stm32l0xx_Cmsis.Device_Category;
+
+   --  Source directories
+   for Source_Dirs use ();
+   for Source_Dirs use Project'Source_Dirs & ("src/", "config/");
+
+    --  Other project directories
    for Create_Missing_Dirs use "True";
+   for Object_Dir use "obj/" & Stm32l0xx_Ll_Config.Build_Profile;
    for Library_Dir use "lib";
 
-   type Library_Type_Type is ("relocatable", "static", "static-pic");
-   Library_Type : Library_Type_Type :=
-     external ("STM32L0XX_LL_LIBRARY_TYPE", external ("LIBRARY_TYPE", "static"));
-   for Library_Kind use Library_Type;
+   package Builder is
+      case Stm32l0xx_Ll_Config.Disable_Restrictions is
+         when "False" =>
+            for Global_Configuration_Pragmas use "stm32l0xx_ll.adc";
+         when others => null;
+      end case;
+   end Builder;
 
    package Compiler is
-      for Default_Switches ("Ada") use Stm32l0xx_Ll_Config.Ada_Compiler_Switches;
+      Switches := Stm32l0xx_Ll_Config.Ada_Compiler_Switches;
+      case Stm32l0xx_Ll_Config.Build_Profile is
+         when "development" =>
+            Switches := Switches &
+               ("-gnatw_a", "-gnatwc", "-gnatVd", "-gnatVa", "-gnatr",
+               "-gnatyy", "-fgnat-encodings=gdb");
+         when "validation" =>
+            Switches := Switches &
+               ("-gnatw_a", "-gnatwc", "-gnatVd", "-gnatyy");
+         when "release" =>
+            Switches := Switches & ("-gnatyy");
+      end case;
+
+      for Default_Switches ("Ada") use Switches;
    end Compiler;
 
    package Binder is
       for Switches ("Ada") use ("-Es"); --  Symbolic traceback
    end Binder;
-
-   package Install is
-      for Artifacts (".") use ("share");
-   end Install;
 
 end Stm32l0xx_Ll;
