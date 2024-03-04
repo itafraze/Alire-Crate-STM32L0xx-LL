@@ -1,0 +1,29 @@
+with "config/stm32l0xx_ll_config.gpr";
+project Stm32l0xx_Ll is
+
+   for Library_Name use "Stm32l0xx_Ll";
+   for Library_Version use Project'Library_Name & ".so." & Stm32l0xx_Ll_Config.Crate_Version;
+
+   for Source_Dirs use ("src/", "config/");
+   for Object_Dir use "obj/" & Stm32l0xx_Ll_Config.Build_Profile;
+   for Create_Missing_Dirs use "True";
+   for Library_Dir use "lib";
+
+   type Library_Type_Type is ("relocatable", "static", "static-pic");
+   Library_Type : Library_Type_Type :=
+     external ("STM32L0XX_LL_LIBRARY_TYPE", external ("LIBRARY_TYPE", "static"));
+   for Library_Kind use Library_Type;
+
+   package Compiler is
+      for Default_Switches ("Ada") use Stm32l0xx_Ll_Config.Ada_Compiler_Switches;
+   end Compiler;
+
+   package Binder is
+      for Switches ("Ada") use ("-Es"); --  Symbolic traceback
+   end Binder;
+
+   package Install is
+      for Artifacts (".") use ("share");
+   end Install;
+
+end Stm32l0xx_Ll;
