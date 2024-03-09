@@ -22,7 +22,6 @@
 ------------------------------------------------------------------------------
 
 with CMSIS.Device;
-   use all type CMSIS.Device.UInt12;
    use all type CMSIS.Device.UInt32;
 with CMSIS.Device.ADC.Instances;
    use all type CMSIS.Device.ADC.Instances.Instance_Type;
@@ -30,6 +29,9 @@ with CMSIS.Device.ADC.Instances;
 
 package LL.ADC is
    --  Analog-to-Digital Converter (ADC) low-level driver
+   --
+   --  Analog-to-Digital Converter (ADC) peripheral initialization functions
+   --  and APIs
    --
    --  Implementation notes:
    --  - Based on source files:

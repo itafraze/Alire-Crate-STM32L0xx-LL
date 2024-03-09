@@ -33,6 +33,7 @@ package body LL.ADC is
    --
    --  Implementation notes:
    --  - Based on source files:
+   --    - stm32l0xx_hal_driver:Inc/stm32l0xx_ll_adc.h
    --    - stm32l0xx_hal_driver:Src/stm32l0xx_ll_adc.c
 
    ---------------------------------------------------------------------------
