@@ -103,6 +103,53 @@ package body LL.Bus is
 
    end APB1_GRP1_Enable_Clock;
 
+
+   ---------------------------------------------------------------------------
+   procedure APB2_GRP1_Enable_Clock (
+      Peripherals : APB2_GRP1_Peripheral_Selection_Type) is
+   --
+   --  TODO:
+   --  - Device-category-dependent implementation to handle missing
+   --    peripherals
+      UNUSED_Bit : CMSIS.Device.Bit
+         with Volatile;
+   begin
+
+      for Ph in APB2_GRP1_Peripheral_Selection_Type'Range
+      loop
+         if Peripherals (Ph) = True
+         then
+            case Ph is
+               when SYSCFG =>
+                  RCC_Periph.APB2ENR.SYSCFGEN := 2#1#;
+                  UNUSED_Bit := RCC_Periph.APB2ENR.SYSCFGEN;
+               when TIM21 =>
+                  RCC_Periph.APB2ENR.TIM21EN := 2#1#;
+                  UNUSED_Bit := RCC_Periph.APB2ENR.TIM21EN;
+               when TIM22 =>
+                  RCC_Periph.APB2ENR.TIM22EN := 2#1#;
+                  UNUSED_Bit := RCC_Periph.APB2ENR.TIM22EN;
+               when FW =>
+                  RCC_Periph.APB2ENR.FWEN := 2#1#;
+                  UNUSED_Bit := RCC_Periph.APB2ENR.FWEN;
+               when ADC1 =>
+                  RCC_Periph.APB2ENR.ADCEN := 2#1#;
+                  UNUSED_Bit := RCC_Periph.APB2ENR.ADCEN;
+               when SPI1 =>
+                  RCC_Periph.APB2ENR.SPI1EN := 2#1#;
+                  UNUSED_Bit := RCC_Periph.APB2ENR.SPI1EN;
+               when USART1 =>
+                  RCC_Periph.APB2ENR.USART1EN := 2#1#;
+                  UNUSED_Bit := RCC_Periph.APB2ENR.USART1EN;
+               when DBGMCU =>
+                  RCC_Periph.APB2ENR.DBGEN := 2#1#;
+                  UNUSED_Bit := RCC_Periph.APB2ENR.DBGEN;
+            end case;
+         end if;
+      end loop;
+
+   end APB2_GRP1_Enable_Clock;
+
    ---------------------------------------------------------------------------
    procedure IOP_GRP1_EnableClock (
       Peripherals : IOP_GRP1_Peripheral_Selection_Type) is
