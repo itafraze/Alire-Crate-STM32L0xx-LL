@@ -29,7 +29,6 @@ package LL.Bus is
    --  Implementation notes:
    --  - Based on source files:
    --    - stm32l0xx_hal_driver:Inc/stm32l0xx_ll_bus.h
-   pragma Pure;
 
    type APB1_GRP1_Peripheral_Type is
       (TIM2, TIM3, TIM6, TIM7, LCD, WWDG, SPI2, USART2, LPUART1, USART4,

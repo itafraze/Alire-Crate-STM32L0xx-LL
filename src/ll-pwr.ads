@@ -27,7 +27,6 @@ package LL.PWR is
    --  Implementation notes:
    --  - Based on source files:
    --    - stm32l0xx_hal_driver:Inc/stm32l0xx_ll_pwr.h
-   pragma Pure;
 
    type Voltage_Scaling_Type is
       (SCALE1, SCALE2, SCALE3)
