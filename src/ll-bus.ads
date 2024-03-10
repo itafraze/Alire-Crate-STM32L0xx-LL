@@ -35,7 +35,7 @@ package LL.Bus is
          USART5, I2C1, I2C2, USB, CRS, PWR, DAC1, I2C3, LPTIM1);
    --
 
-   type APB1_GRP1_Peripheral_Selection_Type is
+   type APB1_GRP1_Peripheral_Select_Type is
       array (APB1_GRP1_Peripheral_Type)
       of Boolean
       with Default_Component_Value => False;
@@ -45,7 +45,7 @@ package LL.Bus is
       (SYSCFG, TIM21, TIM22, FW, ADC1, SPI1, USART1, DBGMCU);
    --
 
-   type APB2_GRP1_Peripheral_Selection_Type is
+   type APB2_GRP1_Peripheral_Select_Type is
       array (APB2_GRP1_Peripheral_Type)
       of Boolean
       with Default_Component_Value => False;
@@ -56,7 +56,7 @@ package LL.Bus is
       with Default_Value => GPIOA;
    --
 
-   type IOP_GRP1_Peripheral_Selection_Type is
+   type IOP_GRP1_Peripheral_Select_Type is
       array (IOP_GRP1_Peripheral_Type)
       of Boolean
       with Default_Component_Value => False;
@@ -64,20 +64,20 @@ package LL.Bus is
 
    ---------------------------------------------------------------------------
    procedure APB1_GRP1_Enable_Clock (
-      Peripherals : APB1_GRP1_Peripheral_Selection_Type);
+      Peripherals : APB1_GRP1_Peripheral_Select_Type);
    --  Enable APB1 peripherals clock
    --
    --  @param Peripherals
 
    procedure APB2_GRP1_Enable_Clock (
-      Peripherals : APB2_GRP1_Peripheral_Selection_Type);
+      Peripherals : APB2_GRP1_Peripheral_Select_Type);
    --  Enable APB2 peripherals clock
    --
    --  @param Peripherals
 
    ---------------------------------------------------------------------------
    procedure IOP_GRP1_EnableClock (
-      Peripherals : IOP_GRP1_Peripheral_Selection_Type);
+      Peripherals : IOP_GRP1_Peripheral_Select_Type);
    --  Enable IOP peripherals clock
    --
    --  @param Peripherals

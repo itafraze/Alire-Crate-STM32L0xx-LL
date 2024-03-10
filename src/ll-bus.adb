@@ -34,7 +34,7 @@ package body LL.Bus is
 
    ---------------------------------------------------------------------------
    procedure APB1_GRP1_Enable_Clock (
-      Peripherals : APB1_GRP1_Peripheral_Selection_Type) is
+      Peripherals : APB1_GRP1_Peripheral_Select_Type) is
    --
    --  TODO:
    --  - Device-category-dependent implementation to handle missing
@@ -43,7 +43,7 @@ package body LL.Bus is
          with Volatile;
    begin
 
-      for Ph in APB1_GRP1_Peripheral_Selection_Type'Range
+      for Ph in APB1_GRP1_Peripheral_Select_Type'Range
       loop
          if Peripherals (Ph) = True
          then
@@ -106,7 +106,7 @@ package body LL.Bus is
 
    ---------------------------------------------------------------------------
    procedure APB2_GRP1_Enable_Clock (
-      Peripherals : APB2_GRP1_Peripheral_Selection_Type) is
+      Peripherals : APB2_GRP1_Peripheral_Select_Type) is
    --
    --  TODO:
    --  - Device-category-dependent implementation to handle missing
@@ -115,7 +115,7 @@ package body LL.Bus is
          with Volatile;
    begin
 
-      for Ph in APB2_GRP1_Peripheral_Selection_Type'Range
+      for Ph in APB2_GRP1_Peripheral_Select_Type'Range
       loop
          if Peripherals (Ph) = True
          then
@@ -152,13 +152,13 @@ package body LL.Bus is
 
    ---------------------------------------------------------------------------
    procedure IOP_GRP1_EnableClock (
-      Peripherals : IOP_GRP1_Peripheral_Selection_Type) is
+      Peripherals : IOP_GRP1_Peripheral_Select_Type) is
    --
       UNUSED_Bit : CMSIS.Device.Bit
          with Volatile;
    begin
 
-      for Ph in IOP_GRP1_Peripheral_Selection_Type'Range
+      for Ph in IOP_GRP1_Peripheral_Select_Type'Range
       loop
          if Peripherals (Ph) = True
          then
