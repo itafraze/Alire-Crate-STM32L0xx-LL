@@ -25,8 +25,8 @@ with CMSIS.Device;
 with CMSIS.Device.RCC;
    use CMSIS.Device.RCC;
 
-package body LL.Bus is
-   --  Bus low-level driver body
+package body LL.BUS is
+   --  BUS low-level driver body
    --
    --  Implementation notes:
    --  - Based on source files:
@@ -186,4 +186,4 @@ package body LL.Bus is
       end loop;
    end IOP_GRP1_EnableClock;
 
-end LL.Bus;
+end LL.BUS;

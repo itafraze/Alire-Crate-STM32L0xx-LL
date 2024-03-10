@@ -21,8 +21,8 @@
 --
 ------------------------------------------------------------------------------
 
-package LL.Bus is
-   --  Bus low-level driver
+package LL.BUS is
+   --  BUS low-level driver
    --
    --  Core bus control and peripheral clock activation and deactivation
    --
@@ -84,4 +84,4 @@ package LL.Bus is
 
 
 
-end LL.Bus;
+end LL.BUS;
