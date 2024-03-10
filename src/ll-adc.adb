@@ -21,6 +21,8 @@
 --
 ------------------------------------------------------------------------------
 
+with System;
+
 with CMSIS.Device;
    use CMSIS.Device;
 with CMSIS.Device.ADC.Instances;
@@ -78,6 +80,67 @@ package body LL.ADC is
       return SUCCESS;
 
    end REG_Init;
+
+   ---------------------------------------------------------------------------
+   function Convert_Data_Resolution (Data              : Natural;
+                                     Input_Resolution  : Resolution_Type;
+                                     Output_Resolution : Resolution_Type)
+      return Natural is
+   --
+      Out_Data : Natural;
+   begin
+
+      Out_Data := Natural (
+         Shift_Right (
+            Shift_Left (UInt32 (Data),
+                        Resolution_Type'Pos (Input_Resolution) * 2),
+            Resolution_Type'Pos (Output_Resolution) * 2));
+
+      return Out_Data;
+
+   end Convert_Data_Resolution;
+
+   ---------------------------------------------------------------------------
+   function Calculate_Vref_Analog_Voltage (Data       : Natural;
+                                           Resolution : Resolution_Type)
+      return Natural is
+   --
+      Vref_Calibration : UInt16
+         with Import, Address => System'To_Address (16#1FF8_0078#);
+      --  Embedded internal reference voltage calibration value
+
+      Vref_Calibration_Vref : constant Natural := 3000;
+      --  Analog voltage reference (Vref+) value with which the internal
+      --  voltage reference has been calibrated in production (unit: mV).
+   begin
+
+      return (Natural (Vref_Calibration) * Vref_Calibration_Vref) /
+         Convert_Data_Resolution (Data, Resolution, RESOLUTION_12B);
+
+   end Calculate_Vref_Analog_Voltage;
+
+   ---------------------------------------------------------------------------
+   function Calculate_Data_To_Voltage (Vref       : Natural;
+                                       Data       : Natural;
+                                       Resolution : Resolution_Type)
+      return Natural is
+   --
+   begin
+
+      return (Data * Vref) / Digital_Scale (Resolution);
+
+   end Calculate_Data_To_Voltage;
+
+   ---------------------------------------------------------------------------
+   function Digital_Scale (Resolution : Resolution_Type)
+      return Natural is
+   begin
+
+      return Natural (
+         Shift_Right (UInt32 (16#FFF#),
+                      Resolution_Type'Pos (Resolution) * 2));
+
+   end Digital_Scale;
 
    ---------------------------------------------------------------------------
    procedure Set_Common_Clock (Instance     : Instance_Type;

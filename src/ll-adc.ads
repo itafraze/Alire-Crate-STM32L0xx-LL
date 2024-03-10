@@ -224,6 +224,54 @@ package LL.ADC is
    --  @field Overrun Set ADC group regular behaviors in case of overrun
 
    ---------------------------------------------------------------------------
+   function Calculate_Vref_Analog_Voltage (Data       : Natural;
+                                           Resolution : Resolution_Type)
+      return Natural;
+   --  Calculate analog reference voltage (Vref+) (unit: mVolt) from ADC
+   --  conversion data of internal voltage reference VrefInt.
+   --
+   --  @param Data ADC conversion data (resolution 12 bits) of internal
+   --    voltage reference VrefInt (unit: digital value).
+   --  @param Resolution
+   --  @return Analog reference voltage (unit: mV)
+
+   ---------------------------------------------------------------------------
+   function Calculate_Data_To_Voltage (Vref       : Natural;
+                                       Data       : Natural;
+                                       Resolution : Resolution_Type)
+      return Natural;
+   --  Calculate the voltage (unit: mVolt) corresponding to a ADC conversion
+   --  data (unit: digital value).
+   --
+   --  @param Vref Analog reference voltage (unit: mV)
+   --  @param Data ADC conversion data (resolution 12 bits) (unit: digital
+   --    value).
+   --  @param Resolution
+   --  @return ADC conversion data equivalent voltage value (unit: mVolt)
+
+   ---------------------------------------------------------------------------
+   function Convert_Data_Resolution (Data              : Natural;
+                                     Input_Resolution  : Resolution_Type;
+                                     Output_Resolution : Resolution_Type)
+      return Natural;
+   --  Convert the ADC conversion data from a resolution to another
+   --  resolution.
+   --
+   --  @param Data ADC conversion data to be converted
+   --  @param Input_Resolution Resolution of to the data to be converted
+   --  @param Output_Resolution Resolution of the data after conversion
+   --  @return ADC conversion data to the requested resolution
+
+   ---------------------------------------------------------------------------
+   function Digital_Scale (Resolution : Resolution_Type)
+      return Natural;
+   --  Define the ADC conversion data full-scale digital value corresponding
+   --  to the selected ADC resolution.
+   --
+   --  @param Resolution
+   --  @return ADC conversion data equivalent to full scale
+
+   ---------------------------------------------------------------------------
    procedure Clear_Flag_ADRDY (Instance : Instance_Type);
    --  Clear flag ADC ready
    --
