@@ -295,8 +295,8 @@ package body LL.ADC is
       Continuous : REG_Continuous_Mode_Type) is
    begin
 
-      ADCx (All_Instance_Type (Instance)).CFGR1 := (@ with delta
-         CONT => REG_Continuous_Mode_Type'Pos (Continuous));
+      ADCx (All_Instance_Type (Instance)).CFGR1.CONT :=
+         REG_Continuous_Mode_Type'Pos (Continuous);
 
    end REG_Set_Continuous_Mode;
 
@@ -450,8 +450,7 @@ package body LL.ADC is
          ADCAL => 2#0#,
          ADSTP => 2#0#,
          ADSTART => 2#0#,
-         ADDIS => 2#0#,
-         ADEN => 2#0#);
+         ADDIS => 2#0#);
 
    end Enable;
 
@@ -464,7 +463,6 @@ package body LL.ADC is
          ADCAL => 2#0#,
          ADSTP => 2#0#,
          ADSTART => 2#0#,
-         ADDIS => 2#0#,
          ADEN => 2#0#);
 
    end Disable;
@@ -485,7 +483,6 @@ package body LL.ADC is
 
       ADCx (All_Instance_Type (Instance)).CR := (@ with delta
          ADCAL => 2#1#,
-         ADCAL => 2#0#,
          ADSTP => 2#0#,
          ADSTART => 2#0#,
          ADDIS => 2#0#,
@@ -501,7 +498,6 @@ package body LL.ADC is
          ADSTART => 2#1#,
          ADCAL => 2#0#,
          ADSTP => 2#0#,
-         ADSTART => 2#0#,
          ADDIS => 2#0#,
          ADEN => 2#0#);
 
@@ -514,7 +510,6 @@ package body LL.ADC is
       ADCx (All_Instance_Type (Instance)).CR := (@ with delta
          ADSTP => 2#1#,
          ADCAL => 2#0#,
-         ADSTP => 2#0#,
          ADSTART => 2#0#,
          ADDIS => 2#0#,
          ADEN => 2#0#);
