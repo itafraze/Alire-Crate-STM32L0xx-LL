@@ -180,6 +180,11 @@ package body LL.ADC is
    end Set_Sampling_Time_Common_Channels;
 
    ---------------------------------------------------------------------------
+   function REG_Is_Conversion_Ongoing (Instance : Instance_Type)
+      return Boolean is
+      ((ADCx (All_Instance_Type (Instance)).CR.ADSTART) /= 0);
+
+   ---------------------------------------------------------------------------
    procedure REG_Set_Trigger_Source (
       Instance       : Instance_Type;
       Trigger_Source : REG_Trigger_Source_Type) is

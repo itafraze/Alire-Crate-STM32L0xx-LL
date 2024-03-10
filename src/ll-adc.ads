@@ -700,6 +700,14 @@ package LL.ADC is
    --  @return Operations success status
 
    ---------------------------------------------------------------------------
+   function REG_Is_Conversion_Ongoing (Instance : Instance_Type)
+      return Boolean;
+   --  Get ADC group regular conversion state
+   --
+   --  @param Instance ADC peripheral instance
+   --  @return True if conversion is ongoing on ADC group regular
+
+   ---------------------------------------------------------------------------
    function REG_Read_Conversion_Data_32 (Instance : Instance_Type)
       return CMSIS.Device.UInt32;
    --  Get ADC group regular conversion data, range fit for all ADC
