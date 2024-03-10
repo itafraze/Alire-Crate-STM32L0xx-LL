@@ -470,6 +470,11 @@ package body LL.ADC is
    end Disable;
 
    ---------------------------------------------------------------------------
+   function Is_Calibration_Ongoing (Instance : Instance_Type)
+      return Boolean is
+      (ADCx (All_Instance_Type (Instance)).CR.ADCAL /= 2#0#);
+
+   ---------------------------------------------------------------------------
    function Is_Enabled (Instance : Instance_Type)
       return Boolean is
       (ADCx (All_Instance_Type (Instance)).CR.ADEN /= 2#0#);
