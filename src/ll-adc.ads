@@ -104,10 +104,10 @@ package LL.ADC is
    --  @enum LEFT Left aligned (alignment on data register MSB bit 15)
 
    type Low_Power_Mode_Type is
-     (MODE_NONE, AUTOWAIT, AUTOPOWEROFF, AUTOWAIT_AUTOPOWEROFF)
-      with Default_Value => MODE_NONE;
+     (NONE, AUTOWAIT, AUTOPOWEROFF, AUTOWAIT_AUTOPOWEROFF)
+      with Default_Value => NONE;
    --
-   --  @enum MODE_NONE
+   --  @enum NONE
    --  @enum AUTOWAIT
    --  @enum AUTOPOWEROFF
    --  @enum AUTOWAIT_AUTOPOWEROFF
@@ -656,8 +656,8 @@ package LL.ADC is
    --  @param Clock_Source
 
    ---------------------------------------------------------------------------
-   procedure Set_Data_Alignment (Instance      : Instance_Type;
-                                Data_Alignment : Data_Alignment_Type);
+   procedure Set_Data_Alignment (Instance       : Instance_Type;
+                                 Data_Alignment : Data_Alignment_Type);
    --  Set ADC conversion data alignment
    --
    --  TODO:
