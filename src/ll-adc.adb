@@ -557,6 +557,11 @@ package body LL.ADC is
       (ADCx (All_Instance_Type (Instance)).ISR.EOCAL /= 2#0#);
 
    ---------------------------------------------------------------------------
+   function Is_Disable_Ongoing (Instance : Instance_Type)
+      return Boolean is
+      (ADCx (All_Instance_Type (Instance)).CR.ADDIS /= 2#0#);
+
+   ---------------------------------------------------------------------------
    procedure Clear_Flag_ADRDY (Instance : Instance_Type) is
    begin
 

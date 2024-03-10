@@ -480,6 +480,14 @@ package LL.ADC is
    --  @return State of the flag
 
    ---------------------------------------------------------------------------
+   function Is_Disable_Ongoing (Instance : Instance_Type)
+      return Boolean;
+   --  Get the selected ADC instance disable state
+   --
+   --  @param Instance ADC peripheral instance
+   --  @return True if ADC disable command ongoing
+
+   ---------------------------------------------------------------------------
    function Is_Enabled (Instance : Instance_Type)
       return Boolean;
    --  Get the selected ADC instance enable state
