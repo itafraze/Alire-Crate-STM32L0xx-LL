@@ -21,35 +21,12 @@
 --
 ------------------------------------------------------------------------------
 
-with Ada.Text_IO;
-with AUnit.Reporter.Text;
-with AUnit.Run;
-with Suite;
+with AUnit.Test_Suites;
 
-procedure Tests
-is
-   use Ada.Text_IO;
-   use AUnit.Reporter.Text;
-   use AUnit.Run;
+package Suite is
 
-   Reporter : Text_Reporter;
-   --
+   -------------------------------------------------------------------------
+   function Suite
+      return AUnit.Test_Suites.Access_Test_Suite;
 
-   procedure Runner
-      is new Test_Runner (Suite.Suite);
-   --
-
-   procedure Os_Abort
-      with Import, External_Name => "abort", No_Return;
-   --
-begin
-
-   New_Line; Put_Line ("STM32L0xx LL library tests start");
-
-   Set_Use_ANSI_Colors (Reporter, True);
-   Runner (Reporter);
-
-   New_Line; Put_Line ("STM32L0xx LL library tests completed");
-   Os_Abort;
-
-end Tests;
+end Suite;
