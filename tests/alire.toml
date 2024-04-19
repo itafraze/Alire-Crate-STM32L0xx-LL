@@ -1,0 +1,9 @@
+name = "tests"
+description = "Shiny new project"
+version = "0.1.0-dev"
+
+authors = ["Emanuele Zarfati"]
+maintainers = ["Emanuele Zarfati <zarfati.tecno@gmail.com>"]
+maintainers-logins = ["ezetec"]
+
+executables = ["tests"]
