@@ -1,0 +1,54 @@
+name = "tests"
+description = "Tests project for library stm32l0xx_ll"
+version = "0.0.0-dev"
+
+authors = ["Emanuele Zarfati"]
+maintainers = ["Emanuele Zarfati <zarfati.tecno@gmail.com>"]
+maintainers-logins = ["ezetec"]
+
+executables = ["tests"]
+
+[[depends-on]]
+gnat_arm_elf = "^13.2.1"
+stm32l0xx_ll = "*"
+aunit = "^24.0.0"
+
+[[pins]]
+stm32l0xx_ll = { path='..' }
+
+[build-profiles]
+"stm32l0xx_ll" = "validation"
+
+[configuration.values]
+stm32l0xx_cmsis.Device = "stm32l011d4"
+stm32l0xx_cmsis.With_Startup = false
+
+[gpr-externals]
+EMU_MODE = ["run", "debug"]
+
+[gpr-set-externals]
+AUNIT_RUNTIME = "zfp-cross"
+AUNIT_BUILD_MODE = "Install"
+
+[build-switches]
+"*".Ada_Version = "Ada2022"
+
+[[actions]]
+type = "post-build"
+command = ["sh", "-c", "arm-eabi-objdump -DxS bin/tests.elf | tee bin/tests.dis >/dev/null"]
+
+[[actions]]
+type = "post-build"
+command = ["sh", "-c", "arm-eabi-objcopy -O binary -R .eeprom bin/tests.elf bin/tests-noeeprom.bin"]
+
+[[actions]]
+type = "post-build"
+command = ["sh", "-c", "arm-eabi-objcopy -O binary -j .eeprom bin/tests.elf bin/tests-eeprom.bin"]
+
+[[actions]]
+type = "post-build"
+command = ["sh", "-c", "hexdump -C bin/tests-noeeprom.bin | tee bin/tests-noeeprom.hexdump >/dev/null"]
+
+[[actions]]
+type = "post-build"
+command = ["sh", "-c", "hexdump -C bin/tests-eeprom.bin | tee bin/tests-eeprom.hexdump >/dev/null"]
