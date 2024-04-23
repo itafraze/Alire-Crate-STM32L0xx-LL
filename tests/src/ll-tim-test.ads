@@ -21,22 +21,20 @@
 --
 ------------------------------------------------------------------------------
 
-with LL.TIM.Test;
+with AUnit.Test_Fixtures;
+with AUnit.Test_Suites;
 
-package body Suite is
+package LL.TIM.Test is
 
-   Result : aliased AUnit.Test_Suites.Test_Suite;
-   --  Statically allocated test suite
+   type Zero_Fixture is
+      new AUnit.Test_Fixtures.Test_Fixture with null record;
+   --  All TIM peripherals registers set to zero
 
+   ---------------------------------------------------------------------------
+   overriding procedure Set_Up (T : in out Zero_Fixture);
+
+   ---------------------------------------------------------------------------
    function Suite
-      return AUnit.Test_Suites.Access_Test_Suite
-   is
-   begin
+      return AUnit.Test_Suites.Access_Test_Suite;
 
-      Result.Add_Test (LL.TIM.Test.Suite);
-
-      return Result'Access;
-
-   end Suite;
-
-end Suite;
+end LL.TIM.Test;

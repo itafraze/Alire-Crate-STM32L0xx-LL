@@ -56,6 +56,8 @@ project Tests is
             & ",size=" & Stm32l0xx_Cmsis.Sram_Size
             & ",addr=" & Stm32l0xx_Cmsis.Sram_Addr
          , "--add-memory="
+            & "name=PERIPHERALS,size=0x10002000,addr=0x40000000"
+         , "--add-memory="
             & "name=AUNIT_FLASH,read-only=on,size=0x00100000,addr=0x60000000"
          , "--add-memory="
             & "name=AUNIT_SRAM,size=0x00100000,addr=0x70000000"
