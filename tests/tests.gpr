@@ -33,7 +33,8 @@ project Tests is
       for Switches ("Ada") use (
          "-T", "aunit.ld",
          "-T", Stm32l0xx_Cmsis.Linker.Default_Script,
-         "-Wl,--print-memory-usage");
+         "-Wl,--print-memory-usage",
+         "-Wl,--gc-sections");
    end Linker;
 
    type Emulation_Mode_Type is ("run", "debug");
