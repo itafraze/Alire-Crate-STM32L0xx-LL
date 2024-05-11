@@ -1,6 +1,6 @@
 name = "stm32l0xx_ll"
-description = "LL library for STMicroelectronics' STM32L0 MCU series"
-version = "0.6.1-dev"
+description = "Low-level drivers for STMicroelectronics' STM32L0 MCU series"
+version = "0.6.2-dev"
 
 authors = ["Emanuele Zarfati"]
 maintainers = ["Emanuele Zarfati <zarfati.tecno@gmail.com>"]

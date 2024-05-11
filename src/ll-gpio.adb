@@ -27,7 +27,7 @@ with CMSIS.Device.GPIO.Instances;
    use CMSIS.Device.GPIO.Instances;
 
 package body LL.GPIO is
-   --  General Purpose Input/Output (GPIO) low-level driver body
+   --  General Purpose Input/Output (GPIO) low-layer driver body
    --
    --  Implementation notes:
    --  - Based on source files:

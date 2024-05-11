@@ -25,7 +25,7 @@ with CMSIS.Device.GPIO.Instances;
    use all type CMSIS.Device.GPIO.Instances.Instance_Type;
 
 package LL.GPIO is
-   --  General Purpose Input/Output (GPIO) low-level driver
+   --  General Purpose Input/Output (GPIO) low-layer driver
    --
    --  Analog-to-Digital Converter (ADC) peripheral initialization functions
    --  and APIs

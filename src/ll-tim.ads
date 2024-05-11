@@ -26,7 +26,7 @@ with CMSIS.Device.TIM.Instances;
    use all type CMSIS.Device.TIM.Instances.Instance_Type;
 
 package LL.TIM is
-   --  Timer (TIM) low-level driver
+   --  Timer (TIM) low-layer driver
    --
    --  TODO:
    --  - Implement Set_Remap

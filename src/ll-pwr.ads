@@ -22,7 +22,7 @@
 ------------------------------------------------------------------------------
 
 package LL.PWR is
-   --  Power (PWR) low-level driver
+   --  Power (PWR) low-layer driver
    --
    --  Implementation notes:
    --  - Based on source files:

@@ -22,7 +22,7 @@
 ------------------------------------------------------------------------------
 
 package LL.BUS is
-   --  BUS low-level driver
+   --  BUS low-layer driver
    --
    --  Core bus control and peripheral clock activation and deactivation
    --

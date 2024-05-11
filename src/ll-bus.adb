@@ -26,7 +26,7 @@ with CMSIS.Device.RCC;
    use CMSIS.Device.RCC;
 
 package body LL.BUS is
-   --  BUS low-level driver body
+   --  BUS low-layer driver body
    --
    --  Implementation notes:
    --  - Based on source files:

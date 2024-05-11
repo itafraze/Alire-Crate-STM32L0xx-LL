@@ -28,7 +28,7 @@ with CMSIS.Device.ADC.Instances;
    use all type CMSIS.Device.ADC.Instances.Channel_Type;
 
 package LL.ADC is
-   --  Analog-to-Digital Converter (ADC) low-level driver
+   --  Analog-to-Digital Converter (ADC) low-layer driver
    --
    --  Analog-to-Digital Converter (ADC) peripheral initialization functions
    --  and APIs

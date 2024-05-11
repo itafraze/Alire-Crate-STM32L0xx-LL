@@ -29,7 +29,7 @@ with CMSIS.Device.TIM.Instances;
    use CMSIS.Device.TIM.Instances;
 
 package body LL.TIM is
-   --  Timer (TIM) low-level driver body
+   --  Timer (TIM) low-layer driver body
    --
    --  Implementation notes:
    --  - Based on source files:

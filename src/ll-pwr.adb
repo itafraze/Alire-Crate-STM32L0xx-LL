@@ -25,7 +25,7 @@ with CMSIS.Device.PWR;
    use CMSIS.Device.PWR;
 
 package body LL.PWR is
-   --  Power (PWR) low-level driver body
+   --  Power (PWR) low-layer driver body
    --
    --  Implementation notes:
    --  - Based on source files:

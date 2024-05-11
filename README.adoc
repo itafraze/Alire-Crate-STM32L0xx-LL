@@ -2,7 +2,7 @@
 Emanuele Zarfati <zarfati.tecno@gmail.com>
 :toc:
 
-This repository provides the Low-Level Drivers library for the
+This repository provides the low-layer Drivers library for the
 STMicroelectronics
 link:https://www.st.com/en/microcontrollers-microprocessors/stm32l0-series.html[STM32L0]
 MCU series and is intended to be distributed via the

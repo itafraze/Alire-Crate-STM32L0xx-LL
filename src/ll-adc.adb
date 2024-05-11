@@ -31,7 +31,7 @@ with CMSIS.Device.ADC;
    use CMSIS.Device.ADC;
 
 package body LL.ADC is
-   --  Analog-to-Digital Converter (ADC) low-level driver body
+   --  Analog-to-Digital Converter (ADC) low-layer driver body
    --
    --  Implementation notes:
    --  - Based on source files:

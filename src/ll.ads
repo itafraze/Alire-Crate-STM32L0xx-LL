@@ -22,7 +22,7 @@
 ------------------------------------------------------------------------------
 
 package LL is
-   --  Low-Level (LL) driver
+   --  Low-layer (LL) driver
    --
    --  The low-layer (LL) drivers are designed to offer a fast light-weight
    --  expert-oriented layer which is closer to the hardware than the HAL
