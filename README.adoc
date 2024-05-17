@@ -45,7 +45,7 @@ from C to Ada, support for the entire family cannot yet be guaranteed due to
 lack of testing.
 
 .Supported drivers
-[cols="1,3",width=75%,frame=none,grid=rows,role=center]
+[cols="1,^1,4",width=75%,frame=none,grid=rows,role=center]
 |===
 | Driver | Status | Details
 
@@ -61,7 +61,7 @@ lack of testing.
 | GPIO | ∂ |
 | I2C | |
 | IWDG | |
-| LPTIM | | No get functions, no encoder mode
+| LPTIM | ∂ | No get functions, no encoder mode
 | LPUART | |
 | PWR | ∂ |
 | RCC | |
