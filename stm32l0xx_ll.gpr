@@ -4,7 +4,7 @@ with "stm32l0xx_cmsis.gpr";
 project Stm32l0xx_Ll is
 
    --  Library specification
-   for Library_Name use "Stm32l0xx_Ll";
+   for Library_Name use "stm32l0xx_ll";
    for Library_Version use
       Project'Library_Name & ".so." & Stm32l0xx_Ll_Config.Crate_Version;
    for Library_Kind use "static";
@@ -25,7 +25,7 @@ project Stm32l0xx_Ll is
    for Source_Dirs use ();
    for Source_Dirs use Project'Source_Dirs & ("src/", "config/");
 
-    --  Other project directories
+   --  Other project directories
    for Create_Missing_Dirs use "True";
    for Object_Dir use "obj/" & Stm32l0xx_Ll_Config.Build_Profile;
    for Library_Dir use "lib";
