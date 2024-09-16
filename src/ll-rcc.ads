@@ -163,4 +163,59 @@ package LL.RCC is
       with Inline;
    --  Get HSI calibration trimming
 
+   ---------------------------------------------------------------------------
+   procedure HSI48_Enable is null
+      with Inline;
+   --  Enable HSI48
+   --
+   --  TODO:
+   --  - Implement for supported devices
+
+   ---------------------------------------------------------------------------
+   procedure HSI48_Disable is null
+      with Inline;
+   --  Disable HSI48
+   --
+   --  TODO:
+   --  - Implement for supported devices
+
+   ---------------------------------------------------------------------------
+   function HSI48_Is_Ready
+      return Boolean is (False)
+      with Inline;
+   --  Check if HSI48 oscillator ready
+   --
+   --  TODO:
+   --  - Implement for supported devices
+
+   ---------------------------------------------------------------------------
+   function HSI48_Get_Calibration
+      return Natural is (0)
+      with Inline;
+
+   ---------------------------------------------------------------------------
+   procedure HSI48_Enable_Divider is null
+      with Inline;
+   --  Enable HSI48 divider (it divides by 6)
+   --
+   --  TODO:
+   --  - Implement for supported devices
+
+   ---------------------------------------------------------------------------
+   procedure HSI48_Disable_Divider is null
+      with Inline;
+   --  Disable HSI48 divider (it divides by 6)
+   --
+   --  TODO:
+   --  - Implement for supported devices
+
+   ---------------------------------------------------------------------------
+   function HSI48_Is_Divided
+      return Boolean is (False)
+      with Inline;
+   --  Check if HSI48 divider is enabled (it divides by 6)
+   --
+   --  TODO:
+   --  - Implement for supported devices
+
 end LL.RCC;
