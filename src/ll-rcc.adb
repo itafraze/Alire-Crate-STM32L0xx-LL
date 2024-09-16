@@ -176,4 +176,75 @@ package body LL.RCC is
       return Natural is
       (Natural (RCC.ICSCR.HSI16TRIM));
 
+   ---------------------------------------------------------------------------
+   procedure LSE_Enable is
+   begin
+
+      RCC.CSR.LSEON := CSR_LSEON_Field (2#1#);
+
+   end LSE_Enable;
+
+   ---------------------------------------------------------------------------
+   procedure LSE_Disable is
+   begin
+
+      RCC.CSR.LSEON := CSR_LSEON_Field (2#0#);
+
+   end LSE_Disable;
+
+   ---------------------------------------------------------------------------
+   procedure LSE_Enable_Bypass is
+   begin
+
+      RCC.CSR.LSEBYP := CSR_LSEBYP_Field (2#1#);
+
+   end LSE_Enable_Bypass;
+
+   ---------------------------------------------------------------------------
+   procedure LSE_Disable_Bypass is
+   begin
+
+      RCC.CSR.LSEBYP := CSR_LSEBYP_Field (2#0#);
+
+   end LSE_Disable_Bypass;
+
+   ---------------------------------------------------------------------------
+   procedure LSE_Set_Drive_Capability (Value : LSE_Drive_Type) is
+   begin
+
+      RCC.CSR.LSEDRV := CSR_LSEDRV_Field (LSE_Drive_Type'Pos (Value));
+
+   end LSE_Set_Drive_Capability;
+
+   ---------------------------------------------------------------------------
+   function LSE_Get_Drive_Capability
+      return LSE_Drive_Type is
+      (LSE_Drive_Type'Val (RCC.CSR.LSEDRV));
+
+   ---------------------------------------------------------------------------
+   procedure LSE_Enable_CSS is
+   begin
+
+      RCC.CSR.CSSLSEON := CSR_CSSLSEON_Field (2#1#);
+
+   end LSE_Enable_CSS;
+
+   ---------------------------------------------------------------------------
+   procedure LSE_Disable_CSS is
+   begin
+
+      RCC.CSR.CSSLSEON := CSR_CSSLSEON_Field (2#0#);
+
+   end LSE_Disable_CSS;
+
+   ---------------------------------------------------------------------------
+   function LSE_Is_Ready
+      return Boolean is
+      (Boolean'Val (RCC.CSR.LSERDY));
+
+   ---------------------------------------------------------------------------
+   function LSE_Is_CSS_Detected
+      return Boolean is
+      (Boolean'Val (RCC.CSR.CSSLSED));
+
 end LL.RCC;

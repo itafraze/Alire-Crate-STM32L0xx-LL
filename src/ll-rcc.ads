@@ -44,6 +44,16 @@ package LL.RCC is
       CMSIS.Device.RCC.ICSCR_HSI16TRIM_Field;
    --  Type of high speed internal clock trimming value
 
+   type LSE_Drive_Type is
+      (LOW, MEDIUM_LOW, MEDIUM_HIGH, HIGH)
+      with Default_Value => LOW;
+   --  Type of the LSE oscillator drive capability
+   --
+   --  @enum LOW Xtal mode lower driving capability
+   --  @enum MEDIUM_LOW Xtal mode medium low driving capability
+   --  @enum MEDIUM_HIGH Xtal mode medium high driving capability
+   --  @enum HIGH Xtal mode higher driving capability
+
    ---------------------------------------------------------------------------
    procedure HSE_Enable_CSS is null
       with Inline;
@@ -217,5 +227,69 @@ package LL.RCC is
    --
    --  TODO:
    --  - Implement for supported devices
+
+   ---------------------------------------------------------------------------
+   procedure LSE_Enable
+      with Inline;
+   --  Enable  Low Speed External (LSE) crystal
+
+   ---------------------------------------------------------------------------
+   procedure LSE_Disable
+      with Inline;
+   --  Disable  Low Speed External (LSE) crystal
+
+   ---------------------------------------------------------------------------
+   procedure LSE_Enable_Bypass
+      with Inline;
+   --  Enable external clock source (LSE bypass)
+
+   ---------------------------------------------------------------------------
+   procedure LSE_Disable_Bypass
+      with Inline;
+   --  Disable external clock source (LSE bypass)
+
+   ---------------------------------------------------------------------------
+   procedure LSE_Set_Drive_Capability (Value : LSE_Drive_Type)
+      with Inline;
+   --  Set LSE oscillator drive capability
+   --
+   --  Notes:
+   --  - The oscillator is in Xtal mode when it is not in bypass mode
+   --  - Once “00” has been written, the content of LSEDRV cannot be changed by
+   --    software.
+
+   ---------------------------------------------------------------------------
+   function LSE_Get_Drive_Capability
+      return LSE_Drive_Type
+      with Inline;
+   --  Get LSE oscillator drive capability
+   --
+   --  @return Driving capability of the LSE oscillator.
+
+   ---------------------------------------------------------------------------
+   procedure LSE_Enable_CSS
+      with Inline;
+   --  Enable Clock Security System on LSE
+
+   ---------------------------------------------------------------------------
+   procedure LSE_Disable_CSS
+      with Inline;
+   --  Disable Clock Security System on LSE
+   --
+   --  Notes:
+   --  - lock security system can be disabled only after a LSE failure
+   --    detection. In that case it MUST be disabled by software.
+
+   ---------------------------------------------------------------------------
+   function LSE_Is_Ready
+      return Boolean
+      with Inline;
+   --  Check if LSE oscillator ready
+
+   ---------------------------------------------------------------------------
+   function LSE_Is_CSS_Detected
+      return Boolean
+      with Inline;
+   --  Check if CSS on LSE failure detection
 
 end LL.RCC;
