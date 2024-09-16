@@ -27,9 +27,6 @@ package LL.RCC is
    --  Implementation notes:
    --  - Based on source files:
    --    - stm32l0xx_hal_driver:Inc/stm32l0xx_ll_rcc.h
-   --
-   --  TODO:
-   --  - Implement HSE_Enable_CSS for supported devices
 
    type HSE_Prescaler_Type is
       (DIV_2, DIV_4, DIV_8, DIV_16)
@@ -40,6 +37,14 @@ package LL.RCC is
    --  @enum DIV_4 HSE is divided by 4 for RTC clock
    --  @enum DIV_8 HSE is divided by 8 for RTC clock
    --  @enum DIV_16 HSE is divided by 16 for RTC clock
+
+   ---------------------------------------------------------------------------
+   procedure HSE_Enable_CSS is null
+      with Inline;
+   --  Enable the Clock Security System
+   --
+   --  TODO:
+   --  - Implement for supported devices
 
    ---------------------------------------------------------------------------
    procedure HSE_Enable_Bypass
@@ -65,7 +70,7 @@ package LL.RCC is
    function HSE_Is_Ready
       return Boolean
       with Inline;
-   --  Check if HSE oscillator Ready
+   --  Check if HSE oscillator ready
 
    ---------------------------------------------------------------------------
    procedure Set_RTC_HSE_Prescaler (HSE_Prescaler : HSE_Prescaler_Type);
@@ -74,6 +79,6 @@ package LL.RCC is
    ---------------------------------------------------------------------------
    function Get_RTC_HSE_Prescaler
       return HSE_Prescaler_Type;
-   --  Get the RTC divider (prescaler)
+   --  Get the RTC prescaler (divider)
 
 end LL.RCC;
