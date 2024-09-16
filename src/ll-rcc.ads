@@ -33,7 +33,7 @@ package LL.RCC is
    type HSE_Prescaler_Type is
       (DIV_2, DIV_4, DIV_8, DIV_16)
       with Default_Value => DIV_2;
-   --  RTC HSE Prescaler type
+   --  Type of the RTC HSE Prescaler
    --
    --  @enum DIV_2 HSE is divided by 2 for RTC clock
    --  @enum DIV_4 HSE is divided by 4 for RTC clock

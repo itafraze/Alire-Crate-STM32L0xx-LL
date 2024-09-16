@@ -64,7 +64,7 @@ lack of testing.
 | LPTIM | ∂ | No get functions, no encoder mode
 | LPUART | |
 | PWR | ∂ |
-| RCC | |
+| RCC | ∂ | No HSE CSS, no HSI48
 | RNG | |
 | RTC | |
 | SPI | |
