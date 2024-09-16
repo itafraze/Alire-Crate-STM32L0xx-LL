@@ -88,4 +88,92 @@ package body LL.RCC is
       return HSE_Prescaler_Type is
       (HSE_Prescaler_Type'Val (RCC.CR.RTCPRE));
 
+   ---------------------------------------------------------------------------
+   procedure HSI_Enable is
+   begin
+
+      RCC.CR.HSI16ON := CR_HSI16ON_Field (2#1#);
+
+   end HSI_Enable;
+
+   ---------------------------------------------------------------------------
+   procedure HSI_Disable is
+   begin
+
+      RCC.CR.HSI16ON := CR_HSI16ON_Field (2#0#);
+
+   end HSI_Disable;
+
+   ---------------------------------------------------------------------------
+   function HSI_Is_Ready
+      return Boolean is
+      (Boolean'Val (RCC.CR.HSI16RDYF));
+
+   ---------------------------------------------------------------------------
+   procedure HSI_Enable_In_Stop_Mode is
+   begin
+
+      RCC.CR.HSI16KERON := CR_HSI16KERON_Field (2#1#);
+
+   end HSI_Enable_In_Stop_Mode;
+
+   ---------------------------------------------------------------------------
+   procedure HSI_Disable_In_Stop_Mode is
+   begin
+
+      RCC.CR.HSI16KERON := CR_HSI16KERON_Field (2#0#);
+
+   end HSI_Disable_In_Stop_Mode;
+
+   ---------------------------------------------------------------------------
+   procedure HSI_Enable_Divider is
+   begin
+
+      RCC.CR.HSI16DIVEN := CR_HSI16DIVEN_Field (2#1#);
+
+   end HSI_Enable_Divider;
+
+   ---------------------------------------------------------------------------
+   procedure HSI_Disable_Divider is
+   begin
+
+      RCC.CR.HSI16DIVEN := CR_HSI16DIVEN_Field (2#0#);
+
+   end HSI_Disable_Divider;
+
+   ---------------------------------------------------------------------------
+   procedure HSI_Enable_Output is
+   begin
+
+      RCC.CR.HSI16OUTEN := CR_HSI16OUTEN_Field (2#1#);
+
+   end HSI_Enable_Output;
+
+   ---------------------------------------------------------------------------
+   procedure HSI_Disable_Output is
+   begin
+
+      RCC.CR.HSI16OUTEN := CR_HSI16OUTEN_Field (2#0#);
+
+   end HSI_Disable_Output;
+
+   ---------------------------------------------------------------------------
+   function HSI_Get_Calibration
+      return Natural is
+      (Natural (RCC.ICSCR.HSI16CAL));
+
+   ---------------------------------------------------------------------------
+   procedure HSI_Set_Calibration_Trimming (
+      Value : HSI_Trim_Calibration_Type) is
+   begin
+
+      RCC.ICSCR.HSI16TRIM := Value;
+
+   end HSI_Set_Calibration_Trimming;
+
+   ---------------------------------------------------------------------------
+   function HSI_Set_Calibration_Trimming
+      return Natural is
+      (Natural (RCC.ICSCR.HSI16TRIM));
+
 end LL.RCC;

@@ -21,6 +21,8 @@
 --
 ------------------------------------------------------------------------------
 
+with CMSIS.Device.RCC;
+
 package LL.RCC is
    --  Reset and Clock Control (RCC) low-level driver
    --
@@ -37,6 +39,10 @@ package LL.RCC is
    --  @enum DIV_4 HSE is divided by 4 for RTC clock
    --  @enum DIV_8 HSE is divided by 8 for RTC clock
    --  @enum DIV_16 HSE is divided by 16 for RTC clock
+
+   subtype HSI_Trim_Calibration_Type is
+      CMSIS.Device.RCC.ICSCR_HSI16TRIM_Field;
+   --  Type of high speed internal clock trimming value
 
    ---------------------------------------------------------------------------
    procedure HSE_Enable_CSS is null
@@ -80,5 +86,81 @@ package LL.RCC is
    function Get_RTC_HSE_Prescaler
       return HSE_Prescaler_Type;
    --  Get the RTC prescaler (divider)
+
+   ---------------------------------------------------------------------------
+   procedure HSI_Enable
+      with Inline;
+   --  Enable HSI oscillator
+
+   ---------------------------------------------------------------------------
+   procedure HSI_Disable
+      with Inline;
+   --  Disable HSI oscillator
+
+   ---------------------------------------------------------------------------
+   function HSI_Is_Ready
+      return Boolean
+      with Inline;
+   --  Check if HSI oscillator ready
+
+   ---------------------------------------------------------------------------
+   procedure HSI_Enable_In_Stop_Mode
+      with Inline;
+   --  Enable HSI even in stop mode
+
+   ---------------------------------------------------------------------------
+   procedure HSI_Disable_In_Stop_Mode
+      with Inline;
+   --  Disable HSI in stop mode
+
+   ---------------------------------------------------------------------------
+   procedure HSI_Enable_Divider
+      with Inline;
+   --  Enable HSI divider (it divides by 4)
+
+   ---------------------------------------------------------------------------
+   procedure HSI_Disable_Divider
+      with Inline;
+   --  Disable HSI divider (it divides by 4)
+
+   ---------------------------------------------------------------------------
+   procedure HSI_Enable_Output
+      with Inline;
+   --  Enable HSI output
+
+   ---------------------------------------------------------------------------
+   procedure HSI_Disable_Output
+      with Inline;
+   --  Disable HSI output
+
+   ---------------------------------------------------------------------------
+   function HSI_Get_Calibration
+      return Natural
+      with Inline;
+   --  Get HSI calibration value
+   --
+   --  Notes:
+   --  - When HSITRIM is written, HSICAL is updated with the sum of HSITRIM and
+   --    the factory trim value
+
+   ---------------------------------------------------------------------------
+   procedure HSI_Set_Calibration_Trimming (Value : HSI_Trim_Calibration_Type)
+      with Inline;
+   --  Set HSI calibration trimming
+   --
+   --  Notes:
+   --  - User-programmable trimming value that is added to the HSICAL
+   --  - Default value is 16, which, when added to the HSICAL value, should
+   --    trim the HSI to 16 MHz +/- 1 %
+   --
+   --  TODO:
+   --  - Replace HSI_Trim_Calibration_Type with Natural and add precondition
+   --    on Value allowed range
+
+   ---------------------------------------------------------------------------
+   function HSI_Set_Calibration_Trimming
+      return Natural
+      with Inline;
+   --  Get HSI calibration trimming
 
 end LL.RCC;
