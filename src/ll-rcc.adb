@@ -439,4 +439,15 @@ package body LL.RCC is
       return Clock_After_Wake_Type is
       (Clock_After_Wake_Type'Val (RCC.CFGR.STOPWUCK));
 
+   ---------------------------------------------------------------------------
+   procedure Configure_MCO (Source    : MCO_Source_Type;
+                            Prescaler : MCO_Prescaler_Type) is
+   begin
+
+      RCC.CFGR := (@ with delta
+         MCOSEL => CFGR_MCOSEL_Field (MCO_Source_Type'Pos (Source)),
+         MCOPRE => CFGR_MCOPRE_Field (MCO_Prescaler_Type'Pos (Prescaler)));
+
+   end Configure_MCO;
+
 end LL.RCC;

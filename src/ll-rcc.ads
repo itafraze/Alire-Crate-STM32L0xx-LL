@@ -126,6 +126,32 @@ package LL.RCC is
    --  @enum MSI MSI selection after wake-up from STOP
    --  @enum HSI HSI selection after wake-up from STOP
 
+   type MCO_Source_Type is
+      (NOCLOCK, SYSCLK, HSI, MSI, HSE, PLLCLK, LSI, LSE, HSI48)
+      with Default_Value => NOCLOCK;
+   --  Type of the Microcontroller clock output source
+   --
+   --  @enum NOCLOCK MCO output disabled, no clock on MCO
+   --  @enum SYSCLK SYSCLK selection as MCO source
+   --  @enum HSI HSI selection as MCO source
+   --  @enum MSI MSI selection as MCO source
+   --  @enum HSE HSE selection as MCO source
+   --  @enum PLLCLK PLLCLK selection as MCO source
+   --  @enum LSI LSI selection as MCO source
+   --  @enum LSE LSE selection as MCO source
+   --  @enum HSI48 HSI48 selection as MCO source
+
+   type MCO_Prescaler_Type is
+      (DIV_1, DIV_2, DIV_4, DIV_8, DIV_16)
+      with Default_Value => DIV_1;
+   --  Type of the Microcontroller clock output prescaler
+   --
+   --  @enum DIV_1 MCO Clock divided by 1
+   --  @enum DIV_2 MCO Clock divided by 2
+   --  @enum DIV_4 MCO Clock divided by 4
+   --  @enum DIV_8 MCO Clock divided by 8
+   --  @enum DIV_16 MCO Clock divided by 16
+
    ---------------------------------------------------------------------------
    procedure HSE_Enable_CSS is null
       with Inline;
@@ -495,5 +521,11 @@ package LL.RCC is
       return Clock_After_Wake_Type
       with Inline;
    --  Get clock after wake-up from stop mode
+
+   ---------------------------------------------------------------------------
+   procedure Configure_MCO (Source    : MCO_Source_Type;
+                            Prescaler : MCO_Prescaler_Type)
+      with Inline;
+   --  Configure Microcontroller clock output (MCOx)
 
 end LL.RCC;
