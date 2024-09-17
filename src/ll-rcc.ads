@@ -54,6 +54,23 @@ package LL.RCC is
    --  @enum MEDIUM_HIGH Xtal mode medium high driving capability
    --  @enum HIGH Xtal mode higher driving capability
 
+   type MSI_Range_Type is
+      (RANGE_0, RANGE_1, RANGE_2, RANGE_3, RANGE_4, RANGE_5, RANGE_6)
+      with Default_Value => RANGE_0;
+   --  Type of the MSI clock ranges
+   --
+   --  @enum RANGE_0 MSI = 65.536 KHz
+   --  @enum RANGE_1 MSI = 131.072 KHz
+   --  @enum RANGE_2 MSI = 262.144 KHz
+   --  @enum RANGE_3 MSI = 524.288 KHz
+   --  @enum RANGE_4 MSI = 1.048 MHz
+   --  @enum RANGE_5 MSI = 2.097 MHz
+   --  @enum RANGE_6 MSI = 4.194 MHz
+
+   subtype MSI_Trim_Calibration_Type is
+      CMSIS.Device.RCC.ICSCR_MSITRIM_Field;
+   --  Type of multi-speed internal clock trimming values
+
    ---------------------------------------------------------------------------
    procedure HSE_Enable_CSS is null
       with Inline;
@@ -307,5 +324,61 @@ package LL.RCC is
       return Boolean
       with Inline;
    --  Check if LSI is ready
+
+   ---------------------------------------------------------------------------
+   procedure MSI_Enable
+      with Inline;
+   --  Enable MSI oscillator
+
+   ---------------------------------------------------------------------------
+   procedure MSI_Disable
+      with Inline;
+   --  Disable MSI oscillator
+
+   ---------------------------------------------------------------------------
+   function MSI_Is_Ready
+      return Boolean
+      with Inline;
+   --  Check if MSI is ready
+
+   ---------------------------------------------------------------------------
+   procedure MSI_Set_Range (Value : MSI_Range_Type)
+      with Inline;
+   --  Configure the Internal Multi Speed oscillator (MSI) clock range in run
+   --  mode.
+
+   ---------------------------------------------------------------------------
+   function MSI_Get_Range
+      return MSI_Range_Type
+      with Inline;
+   --  Get the Internal Multi Speed oscillator (MSI) clock range in run mode.
+
+   ---------------------------------------------------------------------------
+   function MSI_Get_Calibration
+      return Natural
+      with Inline;
+   --  Get MSI calibration value
+   --
+   --  Notes:
+   --  - When MSITRIM is written, MSICAL is updated with the sum of MSITRIM and
+   --    the factory trim value
+
+   ---------------------------------------------------------------------------
+   procedure MSI_Set_Calibration_Trimming (Value : MSI_Trim_Calibration_Type)
+      with Inline;
+   --  Set MSI calibration trimming
+   --
+   --  Notes:
+   --  - User-programmable trimming value that is added to the MSICAL
+   --
+   --  TODO:
+   --  - Replace MSI_Trim_Calibration_Type with Natural and add precondition
+   --    on Value allowed range
+
+   ---------------------------------------------------------------------------
+   function MSI_Get_Calibration_Trimming
+      return Natural
+      with Inline;
+   --  Get MSI calibration trimming
 
 end LL.RCC;

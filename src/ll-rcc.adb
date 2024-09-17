@@ -268,4 +268,58 @@ package body LL.RCC is
       return Boolean is
       (Boolean'Val (RCC.CSR.LSIRDY));
 
+   ---------------------------------------------------------------------------
+   procedure MSI_Enable is
+   begin
+
+      RCC.CR.MSION := CR_MSION_Field (2#1#);
+
+   end MSI_Enable;
+
+   ---------------------------------------------------------------------------
+   procedure MSI_Disable is
+   begin
+
+      RCC.CR.MSION := CR_MSION_Field (2#0#);
+
+   end MSI_Disable;
+
+   ---------------------------------------------------------------------------
+   function MSI_Is_Ready
+      return Boolean is
+      (Boolean'Val (RCC.CR.MSIRDY));
+
+   ---------------------------------------------------------------------------
+   procedure MSI_Set_Range (Value : MSI_Range_Type) is
+   begin
+
+      RCC.ICSCR.MSIRANGE := ICSCR_MSIRANGE_Field (
+         MSI_Range_Type'Pos (Value));
+
+   end MSI_Set_Range;
+
+   ---------------------------------------------------------------------------
+   function MSI_Get_Range
+      return MSI_Range_Type is
+      (MSI_Range_Type'Val (RCC.ICSCR.MSIRANGE));
+
+   ---------------------------------------------------------------------------
+   function MSI_Get_Calibration
+      return Natural is
+      (Natural (RCC.ICSCR.MSICAL));
+
+   ---------------------------------------------------------------------------
+   procedure MSI_Set_Calibration_Trimming (
+      Value : MSI_Trim_Calibration_Type) is
+   begin
+
+      RCC.ICSCR.MSITRIM := Value;
+
+   end MSI_Set_Calibration_Trimming;
+
+   ---------------------------------------------------------------------------
+   function MSI_Get_Calibration_Trimming
+      return Natural is
+      (Natural (RCC.ICSCR.MSITRIM));
+
 end LL.RCC;
