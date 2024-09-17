@@ -71,6 +71,61 @@ package LL.RCC is
       CMSIS.Device.RCC.ICSCR_MSITRIM_Field;
    --  Type of multi-speed internal clock trimming values
 
+   type System_Clock_Source_Type is
+      (MSI, HSI, HSE, PLL)
+      with Default_Value => MSI;
+   --  Configure the system clock source
+   --
+   --  @enum MSI MSI selection as system clock
+   --  @enum HSI HSI selection as system clock
+   --  @enum HSE HSE selection as system clock
+   --  @enum PLL PLL selection as system clock
+
+   type AHB_Prescaler_Type is
+      (DIV_1, DIV_2, DIV_4, DIV_8, DIV_16, DIV_64, DIV_128, DIV_256, DIV_512)
+      with Default_Value => DIV_1;
+   --  Type of the AHB prescaler
+   --
+   --  @enum DIV_1 SYSCLK not divided
+   --  @enum DIV_2 SYSCLK divided by 2
+   --  @enum DIV_4 SYSCLK divided by 4
+   --  @enum DIV_8 SYSCLK divided by 8
+   --  @enum DIV_16 SYSCLK divided by 16
+   --  @enum DIV_64 SYSCLK divided by 64
+   --  @enum DIV_128 SYSCLK divided by 128
+   --  @enum DIV_256 SYSCLK divided by 256
+   --  @enum DIV_512 SYSCLK divided by 512
+
+   type APB1_Prescaler_Type is
+      (DIV_1, DIV_2, DIV_4, DIV_8, DIV_16)
+      with Default_Value => DIV_1;
+   --  Type of the APB1 prescaler
+   --
+   --  @enum DIV_1 HCLK not divided
+   --  @enum DIV_2 HCLK divided by 2
+   --  @enum DIV_4 HCLK divided by 4
+   --  @enum DIV_8 HCLK divided by 8
+   --  @enum DIV_16 HCLK divided by 16
+
+   type APB2_Prescaler_Type is
+      (DIV_1, DIV_2, DIV_4, DIV_8, DIV_16)
+      with Default_Value => DIV_1;
+   --  Type of the APB2 prescaler
+   --
+   --  @enum DIV_1 HCLK not divided
+   --  @enum DIV_2 HCLK divided by 2
+   --  @enum DIV_4 HCLK divided by 4
+   --  @enum DIV_8 HCLK divided by 8
+   --  @enum DIV_16 HCLK divided by 16
+
+   type Clock_After_Wake_Type is
+      (MSI, HSI)
+      with Default_Value => MSI;
+   --  Wakeup from Stop and CSS backup clock selection
+   --
+   --  @enum MSI MSI selection after wake-up from STOP
+   --  @enum HSI HSI selection after wake-up from STOP
+
    ---------------------------------------------------------------------------
    procedure HSE_Enable_CSS is null
       with Inline;
@@ -380,5 +435,65 @@ package LL.RCC is
       return Natural
       with Inline;
    --  Get MSI calibration trimming
+
+   ---------------------------------------------------------------------------
+   procedure Set_System_Clock_Source (Source : System_Clock_Source_Type)
+      with Inline;
+   --  Configure the system clock source
+
+   ---------------------------------------------------------------------------
+   function Get_System_Clock_Source
+      return System_Clock_Source_Type
+      with Inline;
+   --  Get the system clock source
+
+   ---------------------------------------------------------------------------
+   procedure Set_AHB_Prescaler (Prescaler : AHB_Prescaler_Type)
+      with Inline;
+   --  Set AHB prescaler
+   --
+   --  Notes:
+   --  - Depending on the device voltage range, the software has to set
+   --    correctly the prescaler to ensure that the system frequency does not
+   --    exceed the maximum allowed frequency
+
+   ---------------------------------------------------------------------------
+   procedure Set_APB1_Prescaler (Prescaler : APB1_Prescaler_Type)
+      with Inline;
+   --  Set APB1 prescaler
+
+   ---------------------------------------------------------------------------
+   procedure Set_APB2_Prescaler (Prescaler : APB2_Prescaler_Type)
+      with Inline;
+   --  Set APB2 prescaler
+
+   ---------------------------------------------------------------------------
+   function Get_AHB_Prescaler
+      return AHB_Prescaler_Type
+      with Inline;
+   --  Get AHB prescaler
+
+   ---------------------------------------------------------------------------
+   function Get_APB1_Prescaler
+      return APB1_Prescaler_Type
+      with Inline;
+   --  Get APB1 prescaler
+
+   ---------------------------------------------------------------------------
+   function Get_APB2_Prescaler
+      return APB2_Prescaler_Type
+      with Inline;
+   --  Get APB2 prescaler
+
+   ---------------------------------------------------------------------------
+   procedure Set_Clock_After_Wake_From_Stop (Clock : Clock_After_Wake_Type)
+      with Inline;
+   --  Set clock after wake-up from stop mode
+
+   ---------------------------------------------------------------------------
+   function Get_Clock_After_Wake_From_Stop
+      return Clock_After_Wake_Type
+      with Inline;
+   --  Get clock after wake-up from stop mode
 
 end LL.RCC;

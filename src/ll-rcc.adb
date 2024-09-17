@@ -322,4 +322,121 @@ package body LL.RCC is
       return Natural is
       (Natural (RCC.ICSCR.MSITRIM));
 
+   ---------------------------------------------------------------------------
+   procedure Set_System_Clock_Source (Source : System_Clock_Source_Type) is
+   begin
+
+      RCC.CFGR.SW := CFGR_SW_Field (System_Clock_Source_Type'Pos (Source));
+
+   end Set_System_Clock_Source;
+
+   ---------------------------------------------------------------------------
+   function Get_System_Clock_Source
+      return System_Clock_Source_Type is
+      (System_Clock_Source_Type'Val (RCC.CFGR.SWS));
+
+   ---------------------------------------------------------------------------
+   procedure Set_AHB_Prescaler (Prescaler : AHB_Prescaler_Type) is
+   begin
+
+      RCC.CFGR.HPRE := CFGR_HPRE_Field (case Prescaler is
+         when DIV_2 .. DIV_512 =>
+            AHB_Prescaler_Type'Pos (Prescaler)
+               + 2#1000# - AHB_Prescaler_Type'Pos (DIV_2),
+         when others => 2#0#);
+
+   end Set_AHB_Prescaler;
+
+   ---------------------------------------------------------------------------
+   procedure Set_APB1_Prescaler (Prescaler : APB1_Prescaler_Type) is
+   begin
+
+      RCC.CFGR.PPRE.Arr (1) := CFGR_PPRE_Element (case Prescaler is
+         when DIV_2 .. DIV_16 =>
+            APB1_Prescaler_Type'Pos (Prescaler)
+               + 2#100# - APB1_Prescaler_Type'Pos (DIV_2),
+         when others => 2#0#);
+
+   end Set_APB1_Prescaler;
+
+   ---------------------------------------------------------------------------
+   procedure Set_APB2_Prescaler (Prescaler : APB2_Prescaler_Type) is
+   begin
+
+      RCC.CFGR.PPRE.Arr (2) := CFGR_PPRE_Element (case Prescaler is
+         when DIV_2 .. DIV_16 =>
+            APB2_Prescaler_Type'Pos (Prescaler)
+               + 2#100# - APB2_Prescaler_Type'Pos (DIV_2),
+         when others => 2#0#);
+
+   end Set_APB2_Prescaler;
+
+   ---------------------------------------------------------------------------
+   function Get_AHB_Prescaler
+      return AHB_Prescaler_Type is
+      --
+      use all type CFGR_HPRE_Field;
+      --
+      Prescaler : AHB_Prescaler_Type;
+   begin
+
+      Prescaler := AHB_Prescaler_Type'Val (case RCC.CFGR.HPRE is
+         when 2#1000# .. 2#1111# =>
+            (RCC.CFGR.HPRE - 2#1000#) + AHB_Prescaler_Type'Pos (DIV_2),
+         when others => 2#0#);
+
+      return Prescaler;
+
+   end Get_AHB_Prescaler;
+
+   ---------------------------------------------------------------------------
+   function Get_APB1_Prescaler
+      return APB1_Prescaler_Type is
+      --
+      use all type CFGR_PPRE_Element;
+      --
+      Prescaler : APB1_Prescaler_Type;
+   begin
+
+      Prescaler := APB1_Prescaler_Type'Val (case RCC.CFGR.PPRE.Arr (1) is
+         when 2#100# .. 2#111# =>
+            (RCC.CFGR.PPRE.Arr (1) - 2#100#) + APB1_Prescaler_Type'Pos (DIV_2),
+         when others => 2#0#);
+
+      return Prescaler;
+
+   end Get_APB1_Prescaler;
+
+   ---------------------------------------------------------------------------
+   function Get_APB2_Prescaler
+      return APB2_Prescaler_Type is
+      --
+      use all type CFGR_PPRE_Element;
+      --
+      Prescaler : APB2_Prescaler_Type;
+   begin
+
+      Prescaler := APB2_Prescaler_Type'Val (case RCC.CFGR.PPRE.Arr (2) is
+         when 2#100# .. 2#111# =>
+            (RCC.CFGR.PPRE.Arr (2) - 2#100#) + APB2_Prescaler_Type'Pos (DIV_2),
+         when others => 2#0#);
+
+      return Prescaler;
+
+   end Get_APB2_Prescaler;
+
+   ---------------------------------------------------------------------------
+   procedure Set_Clock_After_Wake_From_Stop (Clock : Clock_After_Wake_Type) is
+   begin
+
+      RCC.CFGR.STOPWUCK := CFGR_STOPWUCK_Field (
+            Clock_After_Wake_Type'Pos (Clock));
+
+   end Set_Clock_After_Wake_From_Stop;
+
+   ---------------------------------------------------------------------------
+   function Get_Clock_After_Wake_From_Stop
+      return Clock_After_Wake_Type is
+      (Clock_After_Wake_Type'Val (RCC.CFGR.STOPWUCK));
+
 end LL.RCC;
