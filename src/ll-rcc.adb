@@ -247,4 +247,25 @@ package body LL.RCC is
       return Boolean is
       (Boolean'Val (RCC.CSR.CSSLSED));
 
+   ---------------------------------------------------------------------------
+   procedure LSI_Enable is
+   begin
+
+      RCC.CSR.LSION := CSR_LSION_Field (2#1#);
+
+   end LSI_Enable;
+
+   ---------------------------------------------------------------------------
+   procedure LSI_Disable is
+   begin
+
+      RCC.CSR.LSION := CSR_LSION_Field (2#0#);
+
+   end LSI_Disable;
+
+   ---------------------------------------------------------------------------
+   function LSI_Is_Ready
+      return Boolean is
+      (Boolean'Val (RCC.CSR.LSIRDY));
+
 end LL.RCC;

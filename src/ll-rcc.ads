@@ -292,4 +292,20 @@ package LL.RCC is
       with Inline;
    --  Check if CSS on LSE failure detection
 
+   ---------------------------------------------------------------------------
+   procedure LSI_Enable
+      with Inline;
+   --  Enable LSI oscillator
+
+   ---------------------------------------------------------------------------
+   procedure LSI_Disable
+      with Inline;
+   --  Disable LSI oscillator
+
+   ---------------------------------------------------------------------------
+   function LSI_Is_Ready
+      return Boolean
+      with Inline;
+   --  Check if LSI is ready
+
 end LL.RCC;
