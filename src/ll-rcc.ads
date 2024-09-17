@@ -168,7 +168,7 @@ package LL.RCC is
    --    on Value allowed range
 
    ---------------------------------------------------------------------------
-   function HSI_Set_Calibration_Trimming
+   function HSI_Get_Calibration_Trimming
       return Natural
       with Inline;
    --  Get HSI calibration trimming

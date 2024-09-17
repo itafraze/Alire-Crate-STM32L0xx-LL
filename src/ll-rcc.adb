@@ -172,7 +172,7 @@ package body LL.RCC is
    end HSI_Set_Calibration_Trimming;
 
    ---------------------------------------------------------------------------
-   function HSI_Set_Calibration_Trimming
+   function HSI_Get_Calibration_Trimming
       return Natural is
       (Natural (RCC.ICSCR.HSI16TRIM));
 
