@@ -152,6 +152,80 @@ package LL.RCC is
    --  @enum DIV_8 MCO Clock divided by 8
    --  @enum DIV_16 MCO Clock divided by 16
 
+   type USART1_Source_Type is
+      (PCLK2, SYSCLK, HSI, LSE)
+      with Default_Value => PCLK2;
+   --  Type of the USARTx clock source
+   --
+   --  @enum PCLK2 PCLK2 selected as USART1 clock
+   --  @enum SYSCLK SYSCLK selected as USART1 clock
+   --  @enum HSI HSI selected as USART1 clock
+   --  @enum LSE LSE selected as USART1 clock
+
+   type USART2_Source_Type is
+      (PCLK1, SYSCLK, HSI, LSE)
+      with Default_Value => PCLK1;
+   --  Type of the USARTx clock source
+   --
+   --  @enum PCLK1 PCLK1 selected as USART2 clock
+   --  @enum SYSCLK SYSCLK selected as USART2 clock
+   --  @enum HSI HSI selected as USART2 clock
+   --  @enum LSE LSE selected as USART2 clock
+
+   type LPUART1_Source_Type is
+      (PCLK1, SYSCLK, HSI, LSE)
+      with Default_Value => PCLK1;
+   --  Type of the LPUART1 clock source
+   --
+   --  @enum PCLK1 PCLK1 selected as LPUART1 clock
+   --  @enum SYSCLK SYSCLK selected as LPUART1 clock
+   --  @enum HSI HSI selected as LPUART1 clock
+   --  @enum LSE LSE selected as LPUART1 clock
+
+   type I2C1_Source_Type is
+      (PCLK1, SYSCLK, HSI)
+      with Default_Value => PCLK1;
+   --  Type of the I2C1 clock source
+   --
+   --  @enum PCLK1 PCLK1 selected as I2C1 clock
+   --  @enum SYSCLK SYSCLK selected as I2C1 clock
+   --  @enum HSI HSI selected as I2C1 clock
+
+   type I2C3_Source_Type is
+      (PCLK1, SYSCLK, HSI)
+      with Default_Value => PCLK1;
+   --  Type of the I2C3 clock source
+   --
+   --  @enum PCLK1 PCLK1 selected as I2C3 clock
+   --  @enum SYSCLK SYSCLK selected as I2C3 clock
+   --  @enum HSI HSI selected as I2C3 clock
+
+   type LPTIM1_Source_Type is
+      (PCLK1, LSI, HSI, LSE)
+      with Default_Value => PCLK1;
+   --  Type of the LPTIM1 clock source
+   --
+   --  @enum PCLK1 PCLK1 selected as LPTIM1 clock
+   --  @enum LSI LSI selected as LPTIM1 clock
+   --  @enum HSI HSI selected as LPTIM1 clock
+   --  @enum LSE LSE selected as LPTIM1 clock
+
+   type RNG_Source_Type is
+      (PLL, HSI48)
+      with Default_Value => PLL;
+   --  Type of the RNG clock source
+   --
+   --  @enum PLL PLL selected as RNG clock
+   --  @enum HSI48 HSI48 selected as RNG clock
+
+   type USB_Source_Type is
+      (PLL, HSI48)
+      with Default_Value => PLL;
+   --  Type of the USB clock source
+   --
+   --  @enum PLL PLL selected as USB clock
+   --  @enum HSI48 HSI48 selected as USB clock
+
    ---------------------------------------------------------------------------
    procedure HSE_Enable_CSS is null
       with Inline;
@@ -527,5 +601,107 @@ package LL.RCC is
                             Prescaler : MCO_Prescaler_Type)
       with Inline;
    --  Configure Microcontroller clock output (MCOx)
+
+   ---------------------------------------------------------------------------
+   procedure Set_USART1_Clock_Source (Source : USART1_Source_Type)
+      with Inline;
+   --  Configure USART1 clock source
+
+   ---------------------------------------------------------------------------
+   procedure Set_USART2_Clock_Source (Source : USART2_Source_Type)
+      with Inline;
+   --  Configure USART2 clock source
+
+   ---------------------------------------------------------------------------
+   procedure Set_LPUART1_Clock_Source (Source : LPUART1_Source_Type)
+      with Inline;
+   --  Configure LPUART1 clock source
+
+   ---------------------------------------------------------------------------
+   procedure Set_I2C1_Clock_Source (Source : I2C1_Source_Type)
+      with Inline;
+   --  Configure I2C1 clock source
+
+   ---------------------------------------------------------------------------
+   procedure Set_I2C3_Clock_Source (Source : I2C3_Source_Type)
+      with Inline;
+   --  Configure I2C3 clock source
+
+   ---------------------------------------------------------------------------
+   procedure Set_LPTIM1_Clock_Source (Source : LPTIM1_Source_Type)
+      with Inline;
+   --  Configure LPTIM1 clock source
+
+   ---------------------------------------------------------------------------
+   procedure Set_RNG_Clock_Source (Source : RNG_Source_Type) is null
+      with Inline;
+   --  Configure RNG clock source
+   --
+   --  TODO:
+   --  - Implement for supported devices
+
+   ---------------------------------------------------------------------------
+   procedure Set_USB_Clock_Source (Source : USB_Source_Type) is null
+      with Inline;
+   --  Configure USB clock source
+   --
+   --  TODO:
+   --  - Implement for supported devices
+
+   ---------------------------------------------------------------------------
+   function Get_USART1_Clock_Source
+      return USART1_Source_Type
+      with Inline;
+   --  Get USART1 clock source
+
+   ---------------------------------------------------------------------------
+   function Get_USART2_Clock_Source
+      return USART2_Source_Type
+      with Inline;
+   --  Get USART2 clock source
+
+   ---------------------------------------------------------------------------
+   function Get_LPUART1_Clock_Source
+      return LPUART1_Source_Type
+      with Inline;
+   --  Get LPUART1 clock source
+
+   ---------------------------------------------------------------------------
+   function Get_I2C1_Clock_Source
+      return I2C1_Source_Type
+      with Inline;
+   --  Get I2C1 clock source
+
+   ---------------------------------------------------------------------------
+   function Get_I2C3_Clock_Source
+      return I2C3_Source_Type
+      with Inline;
+   --  Get I2C3 clock source
+
+   ---------------------------------------------------------------------------
+   function Get_LPTIM1_Clock_Source
+      return LPTIM1_Source_Type
+      with Inline;
+   --  Get LPTIM1 clock source
+
+   ---------------------------------------------------------------------------
+   function Get_RNG_Clock_Source
+      return RNG_Source_Type
+      is (RNG_Source_Type'First)
+      with Inline;
+   --  Get RNG clock source
+   --
+   --  TODO:
+   --  - Implement for supported devices
+
+   ---------------------------------------------------------------------------
+   function Get_USB_Clock_Source
+      return USB_Source_Type
+      is (USB_Source_Type'First)
+      with Inline;
+   --  Get USB clock source
+   --
+   --  TODO:
+   --  - Implement for supported devices
 
 end LL.RCC;

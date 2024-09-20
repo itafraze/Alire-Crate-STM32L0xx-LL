@@ -450,4 +450,82 @@ package body LL.RCC is
 
    end Configure_MCO;
 
+   ---------------------------------------------------------------------------
+   procedure Set_USART1_Clock_Source (Source : USART1_Source_Type) is
+   begin
+
+      RCC.CCIPR.USART1SEL.Val := USART1_Source_Type'Pos (Source);
+
+   end Set_USART1_Clock_Source;
+
+   ---------------------------------------------------------------------------
+   procedure Set_USART2_Clock_Source (Source : USART2_Source_Type) is
+   begin
+
+      RCC.CCIPR.USART2SEL.Val := USART2_Source_Type'Pos (Source);
+
+   end Set_USART2_Clock_Source;
+
+   ---------------------------------------------------------------------------
+   procedure Set_LPUART1_Clock_Source (Source : LPUART1_Source_Type) is
+   begin
+
+      RCC.CCIPR.LPUART1SEL.Val := LPUART1_Source_Type'Pos (Source);
+
+   end Set_LPUART1_Clock_Source;
+
+   ---------------------------------------------------------------------------
+   procedure Set_I2C1_Clock_Source (Source : I2C1_Source_Type) is
+   begin
+
+      RCC.CCIPR.I2C1SEL.Val := (I2C1_Source_Type'Pos (Source));
+
+   end Set_I2C1_Clock_Source;
+
+   ---------------------------------------------------------------------------
+   procedure Set_I2C3_Clock_Source (Source : I2C3_Source_Type) is
+   begin
+
+      RCC.CCIPR.I2C3SEL.Val := (I2C3_Source_Type'Pos (Source));
+
+   end Set_I2C3_Clock_Source;
+
+   ---------------------------------------------------------------------------
+   procedure Set_LPTIM1_Clock_Source (Source : LPTIM1_Source_Type) is
+   begin
+
+      RCC.CCIPR.LPTIM1SEL.Val := (LPTIM1_Source_Type'Pos (Source));
+
+   end Set_LPTIM1_Clock_Source;
+
+   ---------------------------------------------------------------------------
+   function Get_USART1_Clock_Source
+      return USART1_Source_Type is
+      (USART1_Source_Type'Val (RCC.CCIPR.USART1SEL.Val));
+
+   ---------------------------------------------------------------------------
+   function Get_USART2_Clock_Source
+      return USART2_Source_Type is
+      (USART2_Source_Type'Val (RCC.CCIPR.USART2SEL.Val));
+
+   ---------------------------------------------------------------------------
+   function Get_LPUART1_Clock_Source
+      return LPUART1_Source_Type is
+      (LPUART1_Source_Type'Val (RCC.CCIPR.LPUART1SEL.Val));
+
+   ---------------------------------------------------------------------------
+   function Get_I2C1_Clock_Source
+      return I2C1_Source_Type is
+      (I2C1_Source_Type'Val (RCC.CCIPR.I2C1SEL.Val));
+
+   ---------------------------------------------------------------------------
+   function Get_I2C3_Clock_Source
+      return I2C3_Source_Type is
+      (I2C3_Source_Type'Val (RCC.CCIPR.I2C3SEL.Val));
+
+   ---------------------------------------------------------------------------
+   function Get_LPTIM1_Clock_Source
+      return LPTIM1_Source_Type is
+      (LPTIM1_Source_Type'Val (RCC.CCIPR.LPTIM1SEL.Val));
+
 end LL.RCC;
