@@ -226,6 +226,16 @@ package LL.RCC is
    --  @enum PLL PLL selected as USB clock
    --  @enum HSI48 HSI48 selected as USB clock
 
+   type RTC_Source_Type is
+      (NONE, LSE, LSI, HSE)
+      with Default_Value => NONE;
+   --  Type of the RTC clock source
+   --
+   --  @enum NONE No clock used as RTC clock
+   --  @enum LSE LSE oscillator clock used as RTC clock
+   --  @enum LSI LSI oscillator clock used as RTC clock
+   --  @enum HSE HSE oscillator clock divided by a programmable prescaler
+
    ---------------------------------------------------------------------------
    procedure HSE_Enable_CSS is null
       with Inline;
@@ -703,5 +713,47 @@ package LL.RCC is
    --
    --  TODO:
    --  - Implement for supported devices
+
+   ---------------------------------------------------------------------------
+   procedure Set_RTC_Clock_Source (Source : RTC_Source_Type)
+      with Inline;
+   --  Configure RTC clock source
+   --
+   --  Notes:
+   --  - Once the RTC clock source has been selected, it cannot be changed any
+   --    more unlessthe Backup domain is reset, or unless a failure is detected
+   --    on LSE (LSECSSD is set). The RTCRST bit can be used to reset them.
+
+   ---------------------------------------------------------------------------
+   function Get_RTC_Clock_Source
+      return RTC_Source_Type
+      with Inline;
+   --  Get RTC clock source
+
+   ---------------------------------------------------------------------------
+   procedure Enable_RTC
+      with Inline;
+   --  Enable RTC
+
+   ---------------------------------------------------------------------------
+   procedure Disable_RTC
+      with Inline;
+   --  Disable RTC
+
+   ---------------------------------------------------------------------------
+   function Is_Enabled_RTC
+      return Boolean
+      with Inline;
+   --  Check if RTC has been enabled or not
+
+   ---------------------------------------------------------------------------
+   procedure Force_Backup_Domain_Reset
+      with Inline;
+   --  Force the Backup domain reset
+
+   ---------------------------------------------------------------------------
+   procedure Release_Backup_Domain_Reset
+      with Inline;
+   --  Release the Backup domain reset
 
 end LL.RCC;

@@ -430,7 +430,7 @@ package body LL.RCC is
    begin
 
       RCC.CFGR.STOPWUCK := CFGR_STOPWUCK_Field (
-            Clock_After_Wake_Type'Pos (Clock));
+         Clock_After_Wake_Type'Pos (Clock));
 
    end Set_Clock_After_Wake_From_Stop;
 
@@ -527,5 +527,55 @@ package body LL.RCC is
    function Get_LPTIM1_Clock_Source
       return LPTIM1_Source_Type is
       (LPTIM1_Source_Type'Val (RCC.CCIPR.LPTIM1SEL.Val));
+
+   ---------------------------------------------------------------------------
+   procedure Set_RTC_Clock_Source (Source : RTC_Source_Type) is
+   begin
+
+      RCC.CSR.RTCSEL := CSR_RTCSEL_Field (RTC_Source_Type'Pos (Source));
+
+   end Set_RTC_Clock_Source;
+
+   ---------------------------------------------------------------------------
+   function Get_RTC_Clock_Source
+      return RTC_Source_Type is
+      (RTC_Source_Type'Val (RCC.CSR.RTCSEL));
+
+   ---------------------------------------------------------------------------
+   procedure Enable_RTC is
+   begin
+
+      RCC.CSR.RTCEN := CSR_RTCEN_Field (2#1#);
+
+   end Enable_RTC;
+
+   ---------------------------------------------------------------------------
+   procedure Disable_RTC is
+   begin
+
+      RCC.CSR.RTCEN := CSR_RTCEN_Field (2#0#);
+
+   end Disable_RTC;
+
+   ---------------------------------------------------------------------------
+   function Is_Enabled_RTC
+      return Boolean is
+      (Boolean'Val (RCC.CSR.RTCEN));
+
+   ---------------------------------------------------------------------------
+   procedure Force_Backup_Domain_Reset is
+   begin
+
+      RCC.CSR.RTCRST := CSR_RTCRST_Field (2#1#);
+
+   end Force_Backup_Domain_Reset;
+
+   ---------------------------------------------------------------------------
+   procedure Release_Backup_Domain_Reset is
+   begin
+
+      RCC.CSR.RTCRST := CSR_RTCRST_Field (2#0#);
+
+   end Release_Backup_Domain_Reset;
 
 end LL.RCC;
