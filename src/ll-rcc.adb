@@ -578,4 +578,62 @@ package body LL.RCC is
 
    end Release_Backup_Domain_Reset;
 
+   ---------------------------------------------------------------------------
+   procedure PLL_Enable is
+   begin
+
+      RCC.CR.PLLON := CR_PLLON_Field (2#1#);
+
+   end PLL_Enable;
+
+   ---------------------------------------------------------------------------
+   procedure PLL_Disable is
+   begin
+
+      RCC.CR.PLLON := CR_PLLON_Field (2#0#);
+
+   end PLL_Disable;
+
+   ---------------------------------------------------------------------------
+   function PLL_Is_Ready
+      return Boolean is
+      (Boolean'Val (RCC.CR.PLLRDY));
+
+   ---------------------------------------------------------------------------
+   procedure PLL_Configure_Domain_SYS (Source   : PLL_Source_Type;
+                                       Multiply : PLL_Multiplicator_Type;
+                                       Divide   : PLL_Divider_Type) is
+   begin
+
+      RCC.CFGR := (@ with delta
+         PLLSRC => CFGR_PLLSRC_Field (PLL_Source_Type'Pos (Source)),
+         PLLMUL => CFGR_PLLMUL_Field (PLL_Multiplicator_Type'Pos (Multiply)),
+         PLLDIV => CFGR_PLLDIV_Field (PLL_Divider_Type'Pos (Divide))
+      );
+
+   end PLL_Configure_Domain_SYS;
+
+   ---------------------------------------------------------------------------
+   procedure PLL_Set_Main_Source (Source : PLL_Source_Type) is
+   begin
+
+      RCC.CFGR.PLLSRC := CFGR_PLLSRC_Field (PLL_Source_Type'Pos (Source));
+
+   end PLL_Set_Main_Source;
+
+   ---------------------------------------------------------------------------
+   function PLL_Get_Main_Source
+      return PLL_Source_Type is
+      (PLL_Source_Type'Val (RCC.CFGR.PLLSRC));
+
+   ---------------------------------------------------------------------------
+   function PLL_Get_Multiplicator
+      return PLL_Multiplicator_Type is
+      (PLL_Multiplicator_Type'Val (RCC.CFGR.PLLMUL));
+
+   ---------------------------------------------------------------------------
+   function PLL_Get_Divider
+      return PLL_Divider_Type is
+      (PLL_Divider_Type'Val (RCC.CFGR.PLLDIV));
+
 end LL.RCC;

@@ -236,6 +236,38 @@ package LL.RCC is
    --  @enum LSI LSI oscillator clock used as RTC clock
    --  @enum HSE HSE oscillator clock divided by a programmable prescaler
 
+   type PLL_Source_Type is
+      (HSI, HSE)
+      with Default_Value => HSI;
+   --  Type of the PLL clock source
+   --
+   --  @enum HSI HSI clock selected as PLL entry clock source
+   --  @enum HSE HSE clock selected as PLL entry clock source
+
+   type PLL_Multiplicator_Type is
+      (MUL_3, MUL_4, MUL_6, MUL_8, MUL_12, MUL_16, MUL_24, MUL_32, MUL_48)
+      with Default_Value => MUL_3;
+   --  Type of the PLL multiplication factor
+   --
+   --  @enum MUL_3 PLL input clock * 3
+   --  @enum MUL_4 PLL input clock * 4
+   --  @enum MUL_6 PLL input clock * 6
+   --  @enum MUL_8 PLL input clock * 8
+   --  @enum MUL_12 PLL input clock * 12
+   --  @enum MUL_16 PLL input clock * 16
+   --  @enum MUL_24 PLL input clock * 24
+   --  @enum MUL_32 PLL input clock * 32
+   --  @enum MUL_48 PLL input clock * 48
+
+   type PLL_Divider_Type is
+      (DIV_2, DIV_3, DIV_4)
+      with Default_Value => DIV_2;
+   --  Type of the PLL division factor
+   --
+   --  @enum DIV_2 PLL clock output = PLLVCO / 2
+   --  @enum DIV_3 PLL clock output = PLLVCO / 3
+   --  @enum DIV_4 PLL clock output = PLLVCO / 4
+
    ---------------------------------------------------------------------------
    procedure HSE_Enable_CSS is null
       with Inline;
@@ -755,5 +787,56 @@ package LL.RCC is
    procedure Release_Backup_Domain_Reset
       with Inline;
    --  Release the Backup domain reset
+
+   ---------------------------------------------------------------------------
+   procedure PLL_Enable
+      with Inline;
+   --  Enable PLL
+
+   ---------------------------------------------------------------------------
+   procedure PLL_Disable
+      with Inline;
+   --  Disable PLL
+
+   ---------------------------------------------------------------------------
+   function PLL_Is_Ready
+      return Boolean
+      with Inline;
+   --  Check if PLL ready
+
+   ---------------------------------------------------------------------------
+   procedure PLL_Configure_Domain_SYS (Source   : PLL_Source_Type;
+                                       Multiply : PLL_Multiplicator_Type;
+                                       Divide   : PLL_Divider_Type)
+      with Inline;
+   --  Configure PLL used for SYSCLK domain
+   --
+   --  Notes:
+   --  - The PLL VCO clock frequency must not exceed 96 MHz when the product is
+   --    in Range 1, 48 MHz when the product is in Range 2 and 24 MHz when the
+   --    product is in Range 3.
+
+   ---------------------------------------------------------------------------
+   procedure PLL_Set_Main_Source (Source : PLL_Source_Type)
+      with Inline;
+   --  Configure PLL clock source
+
+   ---------------------------------------------------------------------------
+   function PLL_Get_Main_Source
+      return PLL_Source_Type
+      with Inline;
+   --  Get PLL clock source
+
+   ---------------------------------------------------------------------------
+   function PLL_Get_Multiplicator
+      return PLL_Multiplicator_Type
+      with Inline;
+   --  Get PLL multiplication factor
+
+   ---------------------------------------------------------------------------
+   function PLL_Get_Divider
+      return PLL_Divider_Type
+      with Inline;
+   --  Get PLL division factor
 
 end LL.RCC;
