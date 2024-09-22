@@ -880,12 +880,127 @@ package LL.RCC is
    ---------------------------------------------------------------------------
    procedure Clear_Flag_HSECSS
       with Inline;
-   --  Clear Clock Security System interrupt flag
+   --  Clear HSE Clock Security System interrupt flag
 
    ---------------------------------------------------------------------------
    procedure Clear_Flag_LSECSS
       with Inline;
    --  Clear LSE Clock Security System interrupt flag
 
+   ---------------------------------------------------------------------------
+   function Is_Active_Flag_LSIRDY
+      return Boolean
+      with Inline;
+   --  Check if LSI ready interrupt occurred or not
+
+   ---------------------------------------------------------------------------
+   function Is_Active_Flag_LSERDY
+      return Boolean
+      with Inline;
+   --  Check if LSE ready interrupt occurred or not
+
+   ---------------------------------------------------------------------------
+   function Is_Active_Flag_MSIRDY
+      return Boolean
+      with Inline;
+   --  Check if MSI ready interrupt occurred or not
+
+   ---------------------------------------------------------------------------
+   function Is_Active_Flag_HSIRDY
+      return Boolean
+      with Inline;
+   --  Check if HSI ready interrupt occurred or not
+
+   ---------------------------------------------------------------------------
+   function Is_Active_Flag_HSERDY
+      return Boolean
+      with Inline;
+   --  Check if HSE ready interrupt occurred or not
+
+   ---------------------------------------------------------------------------
+   function Is_Active_Flag_PLLRDY
+      return Boolean
+      with Inline;
+   --  Check if PLL ready interrupt occurred or not
+
+   ---------------------------------------------------------------------------
+   function Is_Active_Flag_HSI48RDY
+      return Boolean is (False)
+      with Inline;
+   --  Check if HSI48 ready interrupt occurred or not
+   --
+   --  TODO:
+   --  - Implement for supported devices
+
+   ---------------------------------------------------------------------------
+   function Is_Active_Flag_HSECSS
+      return Boolean
+      with Inline;
+   --  Check if HSE Clock Security System interrupt occurred or not
+
+   ---------------------------------------------------------------------------
+   function Is_Active_Flag_LSECSS
+      return Boolean
+      with Inline;
+   --  Check if LSE Clock Security System interrupt occurred or not
+
+   ---------------------------------------------------------------------------
+   function Is_Active_Flag_HSIDIV
+      return Boolean
+      with Inline;
+   --  Check if HSI divider is enabled (it divides by 4)
+
+   ---------------------------------------------------------------------------
+   function Is_Active_Flag_FWRST
+      return Boolean
+      with Inline;
+   --  Check if RCC flag Firewall Reset is set or not
+
+   ---------------------------------------------------------------------------
+   function Is_Active_Flag_IWDGRST
+      return Boolean
+      with Inline;
+   --  Check if RCC flag Independent Watchdog Reset is set or not
+
+   ---------------------------------------------------------------------------
+   function Is_Active_Flag_LPWRRST
+      return Boolean
+      with Inline;
+   --  Check if RCC flag Low Power Reset is set or not
+
+   ---------------------------------------------------------------------------
+   function Is_Active_Flag_OBLRST
+      return Boolean
+      with Inline;
+   --  Check if RCC flag Options Bytes Loading Reset is set or not
+
+   ---------------------------------------------------------------------------
+   function Is_Active_Flag_PINRST
+      return Boolean
+      with Inline;
+   --  Check if RCC flag PIN Reset is set or not
+
+   ---------------------------------------------------------------------------
+   function Is_Active_Flag_PORRST
+      return Boolean
+      with Inline;
+   --  Check if RCC flag POR/PDR Reset is set or not
+
+   ---------------------------------------------------------------------------
+   function Is_Active_Flag_SFTRST
+      return Boolean
+      with Inline;
+   --  Check if RCC flag Software Reset is set or not
+
+   ---------------------------------------------------------------------------
+   function Is_Active_Flag_WWDGRST
+      return Boolean
+      with Inline;
+   --  Check if RCC flag Window Watchdog Reset is set or not
+
+   ---------------------------------------------------------------------------
+   procedure Clear_Reset_Flags
+      with Inline;
+   --  Set RMVF bit to clear the reset flags
 
 end LL.RCC;

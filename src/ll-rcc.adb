@@ -700,4 +700,97 @@ package body LL.RCC is
 
    end Clear_Flag_LSECSS;
 
+   ---------------------------------------------------------------------------
+   function Is_Active_Flag_LSIRDY
+      return Boolean is
+      (Boolean'Val (RCC.CIFR.LSIRDYF));
+
+   ---------------------------------------------------------------------------
+   function Is_Active_Flag_LSERDY
+      return Boolean is
+      (Boolean'Val (RCC.CIFR.LSERDYF));
+
+   ---------------------------------------------------------------------------
+   function Is_Active_Flag_MSIRDY
+      return Boolean is
+      (Boolean'Val (RCC.CIFR.MSIRDYF));
+
+   ---------------------------------------------------------------------------
+   function Is_Active_Flag_HSIRDY
+      return Boolean is
+      (Boolean'Val (RCC.CIFR.HSI16RDYF));
+
+   ---------------------------------------------------------------------------
+   function Is_Active_Flag_HSERDY
+      return Boolean is
+      (Boolean'Val (RCC.CIFR.HSERDYF));
+
+   ---------------------------------------------------------------------------
+   function Is_Active_Flag_PLLRDY
+      return Boolean is
+      (Boolean'Val (RCC.CIFR.PLLRDYF));
+
+   ---------------------------------------------------------------------------
+   function Is_Active_Flag_HSECSS
+      return Boolean is
+      (Boolean'Val (RCC.CIFR.CSSHSEF));
+
+   ---------------------------------------------------------------------------
+   function Is_Active_Flag_LSECSS
+      return Boolean is
+      (Boolean'Val (RCC.CIFR.CSSHSEF));
+
+   ---------------------------------------------------------------------------
+   function Is_Active_Flag_HSIDIV
+      return Boolean is
+      (Boolean'Val (RCC.CR.HSI16DIVF));
+
+   ---------------------------------------------------------------------------
+   function Is_Active_Flag_FWRST
+      return Boolean is
+      (Boolean'Val (RCC.CSR.FWRSTF));
+
+   ---------------------------------------------------------------------------
+   function Is_Active_Flag_IWDGRST
+      return Boolean is
+      (Boolean'Val (RCC.CSR.IWDGRSTF));
+
+   ---------------------------------------------------------------------------
+   function Is_Active_Flag_LPWRRST
+      return Boolean is
+      (Boolean'Val (RCC.CSR.LPWRSTF));
+
+   ---------------------------------------------------------------------------
+   function Is_Active_Flag_OBLRST
+      return Boolean is
+      (Boolean'Val (RCC.CSR.OBLRSTF));
+
+   ---------------------------------------------------------------------------
+   function Is_Active_Flag_PINRST
+      return Boolean is
+      (Boolean'Val (RCC.CSR.PINRSTF));
+
+   ---------------------------------------------------------------------------
+   function Is_Active_Flag_PORRST
+      return Boolean is
+      (Boolean'Val (RCC.CSR.PORRSTF));
+
+   ---------------------------------------------------------------------------
+   function Is_Active_Flag_SFTRST
+      return Boolean is
+      (Boolean'Val (RCC.CSR.SFTRSTF));
+
+   ---------------------------------------------------------------------------
+   function Is_Active_Flag_WWDGRST
+      return Boolean is
+      (Boolean'Val (RCC.CSR.WWDGRSTF));
+
+   ---------------------------------------------------------------------------
+   procedure Clear_Reset_Flags is
+   begin
+
+      RCC.CSR.RMVF := CSR_RMVF_Field (2#1#);
+
+   end Clear_Reset_Flags;
+
 end LL.RCC;
