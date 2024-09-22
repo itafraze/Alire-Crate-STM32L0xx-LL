@@ -905,4 +905,39 @@ package body LL.RCC is
 
    end Disable_Interrupt_LSECSS;
 
+   ---------------------------------------------------------------------------
+   function Is_Enabled_Interrupt_LSIRDY
+      return Boolean is
+      (Boolean'Val (RCC.CIER.LSIRDYIE));
+
+   ---------------------------------------------------------------------------
+   function Is_Enabled_Interrupt_LSERDY
+      return Boolean is
+      (Boolean'Val (RCC.CIER.LSERDYIE));
+
+   ---------------------------------------------------------------------------
+   function Is_Enabled_Interrupt_MSIRDY
+      return Boolean is
+      (Boolean'Val (RCC.CIER.MSIRDYIE));
+
+   ---------------------------------------------------------------------------
+   function Is_Enabled_Interrupt_HSIRDY
+      return Boolean is
+      (Boolean'Val (RCC.CIER.HSI16RDYIE));
+
+   ---------------------------------------------------------------------------
+   function Is_Enabled_Interrupt_HSERDY
+      return Boolean is
+      (Boolean'Val (RCC.CIER.HSERDYIE));
+
+   ---------------------------------------------------------------------------
+   function Is_Enabled_Interrupt_PLLRDY
+      return Boolean is
+      (Boolean'Val (RCC.CIER.PLLRDYIE));
+
+   ---------------------------------------------------------------------------
+   function Is_Enabled_Interrupt_LSECSS
+      return Boolean is
+      (Boolean'Val (RCC.CIER.CSSLSE));
+
 end LL.RCC;

@@ -1089,4 +1089,55 @@ package LL.RCC is
       with Inline;
    --  Disable LSE ready interrupt
 
+   ---------------------------------------------------------------------------
+   function Is_Enabled_Interrupt_LSIRDY
+      return Boolean
+      with Inline;
+   --  Checks if LSI ready interrupt source is enabled or disabled
+
+   ---------------------------------------------------------------------------
+   function Is_Enabled_Interrupt_LSERDY
+      return Boolean
+      with Inline;
+   --  Checks if LSE ready interrupt source is enabled or disabled
+
+   ---------------------------------------------------------------------------
+   function Is_Enabled_Interrupt_MSIRDY
+      return Boolean
+      with Inline;
+   --  Checks if MSI ready interrupt source is enabled or disabled
+
+   ---------------------------------------------------------------------------
+   function Is_Enabled_Interrupt_HSIRDY
+      return Boolean
+      with Inline;
+   --  Checks if HSI ready interrupt source is enabled or disabled
+
+   ---------------------------------------------------------------------------
+   function Is_Enabled_Interrupt_HSERDY
+      return Boolean
+      with Inline;
+   --  Checks if HSE ready interrupt source is enabled or disabled
+
+   ---------------------------------------------------------------------------
+   function Is_Enabled_Interrupt_PLLRDY
+      return Boolean
+      with Inline;
+   --  Checks if PLL ready interrupt source is enabled or disabled
+
+   ---------------------------------------------------------------------------
+   function Is_Enabled_Interrupt_HSI48RDY
+      return Boolean is (False)
+      with Inline;
+   --  Checks if HSI48 ready interrupt source is enabled or disabled
+   --
+   --  TODO:
+   --  - Implement for supported devices
+
+   ---------------------------------------------------------------------------
+   function Is_Enabled_Interrupt_LSECSS
+      return Boolean
+      with Inline;
+   --  Checks if LSE ready interrupt source is enabled or disabled
+
 end LL.RCC;
