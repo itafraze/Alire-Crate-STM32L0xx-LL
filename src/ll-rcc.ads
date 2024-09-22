@@ -1003,4 +1003,47 @@ package LL.RCC is
       with Inline;
    --  Set RMVF bit to clear the reset flags
 
+   ---------------------------------------------------------------------------
+   procedure Enable_Interrupt_LSIRDY
+      with Inline;
+   --  Enable LSI ready interrupt
+
+   ---------------------------------------------------------------------------
+   procedure Enable_Interrupt_LSERDY
+      with Inline;
+   --  Enable LSE ready interrupt
+
+   ---------------------------------------------------------------------------
+   procedure Enable_Interrupt_MSIRDY
+      with Inline;
+   --  Enable MSI ready interrupt
+
+   ---------------------------------------------------------------------------
+   procedure Enable_Interrupt_HSIRDY
+      with Inline;
+   --  Enable HSI ready interrupt
+
+   ---------------------------------------------------------------------------
+   procedure Enable_Interrupt_HSERDY
+      with Inline;
+   --  Enable HSE ready interrupt
+
+   ---------------------------------------------------------------------------
+   procedure Enable_Interrupt_PLLRDY
+      with Inline;
+   --  Enable PLL ready interrupt
+
+   ---------------------------------------------------------------------------
+   procedure Enable_Interrupt_HSI48RDY is null
+      with Inline;
+   --  Enable HSI48 ready interrupt
+   --
+   --  TODO:
+   --  - Implement for supported devices
+
+   ---------------------------------------------------------------------------
+   procedure Enable_Interrupt_LSECSS
+      with Inline;
+   --  Enable LSE ready interrupt
+
 end LL.RCC;

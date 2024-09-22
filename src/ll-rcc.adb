@@ -793,4 +793,60 @@ package body LL.RCC is
 
    end Clear_Reset_Flags;
 
+   ---------------------------------------------------------------------------
+   procedure Enable_Interrupt_LSIRDY is
+   begin
+
+      RCC.CIER.LSIRDYIE := CIER_LSIRDYIE_Field (2#1#);
+
+   end Enable_Interrupt_LSIRDY;
+
+   ---------------------------------------------------------------------------
+   procedure Enable_Interrupt_LSERDY is
+   begin
+
+      RCC.CIER.LSERDYIE := CIER_LSERDYIE_Field (2#1#);
+
+   end Enable_Interrupt_LSERDY;
+
+   ---------------------------------------------------------------------------
+   procedure Enable_Interrupt_MSIRDY is
+   begin
+
+      RCC.CIER.MSIRDYIE := CIER_MSIRDYIE_Field (2#1#);
+
+   end Enable_Interrupt_MSIRDY;
+
+   ---------------------------------------------------------------------------
+   procedure Enable_Interrupt_HSIRDY is
+   begin
+
+      RCC.CIER.HSI16RDYIE := CIER_HSI16RDYIE_Field (2#1#);
+
+   end Enable_Interrupt_HSIRDY;
+
+   ---------------------------------------------------------------------------
+   procedure Enable_Interrupt_HSERDY is
+   begin
+
+      RCC.CIER.HSERDYIE := CIER_HSERDYIE_Field (2#1#);
+
+   end Enable_Interrupt_HSERDY;
+
+   ---------------------------------------------------------------------------
+   procedure Enable_Interrupt_PLLRDY is
+   begin
+
+      RCC.CIER.PLLRDYIE := CIER_PLLRDYIE_Field (2#1#);
+
+   end Enable_Interrupt_PLLRDY;
+
+   ---------------------------------------------------------------------------
+   procedure Enable_Interrupt_LSECSS is
+   begin
+
+      RCC.CIER.CSSLSE := CIER_CSSLSE_Field (2#1#);
+
+   end Enable_Interrupt_LSECSS;
+
 end LL.RCC;
