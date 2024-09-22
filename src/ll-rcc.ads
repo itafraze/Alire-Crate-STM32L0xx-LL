@@ -1046,4 +1046,47 @@ package LL.RCC is
       with Inline;
    --  Enable LSE ready interrupt
 
+   ---------------------------------------------------------------------------
+   procedure Disable_Interrupt_LSIRDY
+      with Inline;
+   --  Disable LSI ready interrupt
+
+   ---------------------------------------------------------------------------
+   procedure Disable_Interrupt_LSERDY
+      with Inline;
+   --  Disable LSE ready interrupt
+
+   ---------------------------------------------------------------------------
+   procedure Disable_Interrupt_MSIRDY
+      with Inline;
+   --  Disable MSI ready interrupt
+
+   ---------------------------------------------------------------------------
+   procedure Disable_Interrupt_HSIRDY
+      with Inline;
+   --  Disable HSI ready interrupt
+
+   ---------------------------------------------------------------------------
+   procedure Disable_Interrupt_HSERDY
+      with Inline;
+   --  Disable HSE ready interrupt
+
+   ---------------------------------------------------------------------------
+   procedure Disable_Interrupt_PLLRDY
+      with Inline;
+   --  Disable PLL ready interrupt
+
+   ---------------------------------------------------------------------------
+   procedure Disable_Interrupt_HSI48RDY is null
+      with Inline;
+   --  Disable HSI48 ready interrupt
+   --
+   --  TODO:
+   --  - Implement for supported devices
+
+   ---------------------------------------------------------------------------
+   procedure Disable_Interrupt_LSECSS
+      with Inline;
+   --  Disable LSE ready interrupt
+
 end LL.RCC;
