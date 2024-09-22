@@ -636,4 +636,68 @@ package body LL.RCC is
       return PLL_Divider_Type is
       (PLL_Divider_Type'Val (RCC.CFGR.PLLDIV));
 
+   ---------------------------------------------------------------------------
+   procedure Clear_Flag_LSIRDY is
+   begin
+
+      RCC.CICR.LSIRDYC := CICR_LSIRDYC_Field (2#1#);
+
+   end Clear_Flag_LSIRDY;
+
+   ---------------------------------------------------------------------------
+   procedure Clear_Flag_LSERDY is
+   begin
+
+      RCC.CICR.LSERDYC := CICR_LSERDYC_Field (2#1#);
+
+   end Clear_Flag_LSERDY;
+
+   ---------------------------------------------------------------------------
+   procedure Clear_Flag_MSIRDY is
+   begin
+
+      RCC.CICR.MSIRDYC := CICR_MSIRDYC_Field (2#1#);
+
+   end Clear_Flag_MSIRDY;
+
+   ---------------------------------------------------------------------------
+   procedure Clear_Flag_HSIRDY is
+   begin
+
+      RCC.CICR.HSI16RDYC := CICR_HSI16RDYC_Field (2#1#);
+
+   end Clear_Flag_HSIRDY;
+
+   ---------------------------------------------------------------------------
+   procedure Clear_Flag_HSERDY is
+   begin
+
+      RCC.CICR.HSERDYC := CICR_HSERDYC_Field (2#1#);
+
+   end Clear_Flag_HSERDY;
+
+   ---------------------------------------------------------------------------
+   procedure Clear_Flag_PLLRDY is
+   begin
+
+      RCC.CICR.PLLRDYC := CICR_PLLRDYC_Field (2#1#);
+
+   end Clear_Flag_PLLRDY;
+
+   ---------------------------------------------------------------------------
+   procedure Clear_Flag_HSECSS is
+   begin
+
+      RCC.CICR.CSSHSEC := CICR_CSSHSEC_Field (2#1#);
+
+   end Clear_Flag_HSECSS;
+
+   ---------------------------------------------------------------------------
+   procedure Clear_Flag_LSECSS is
+   begin
+
+      RCC.CICR.CSSLSEC := CICR_CSSLSEC_Field (2#1#);
+
+   end Clear_Flag_LSECSS;
+
 end LL.RCC;

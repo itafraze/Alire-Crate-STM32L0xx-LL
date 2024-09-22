@@ -839,4 +839,53 @@ package LL.RCC is
       with Inline;
    --  Get PLL division factor
 
+   ---------------------------------------------------------------------------
+   procedure Clear_Flag_LSIRDY
+      with Inline;
+   --  Clear LSI ready interrupt flag
+
+   ---------------------------------------------------------------------------
+   procedure Clear_Flag_LSERDY
+      with Inline;
+   --  Clear LSE ready interrupt flag
+
+   ---------------------------------------------------------------------------
+   procedure Clear_Flag_MSIRDY
+      with Inline;
+   --  Clear MSI ready interrupt flag
+
+   ---------------------------------------------------------------------------
+   procedure Clear_Flag_HSIRDY
+      with Inline;
+   --  Clear HSI ready interrupt flag
+
+   ---------------------------------------------------------------------------
+   procedure Clear_Flag_HSERDY
+      with Inline;
+   --  Clear HSE ready interrupt flag
+
+   ---------------------------------------------------------------------------
+   procedure Clear_Flag_PLLRDY
+      with Inline;
+   --  Clear PLL ready interrupt flag
+
+   ---------------------------------------------------------------------------
+   procedure Clear_Flag_HSI48RDY is null
+      with Inline;
+   --  Clear HSI48 ready interrupt flag
+   --
+   --  TODO:
+   --  - Implement for supported devices
+
+   ---------------------------------------------------------------------------
+   procedure Clear_Flag_HSECSS
+      with Inline;
+   --  Clear Clock Security System interrupt flag
+
+   ---------------------------------------------------------------------------
+   procedure Clear_Flag_LSECSS
+      with Inline;
+   --  Clear LSE Clock Security System interrupt flag
+
+
 end LL.RCC;
