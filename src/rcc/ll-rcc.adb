@@ -25,21 +25,16 @@ with CMSIS.Device;
    use CMSIS.Device;
 with CMSIS.Device.RCC;
    use CMSIS.Device.RCC;
-with CMSIS.Device.RCC.Instances;
-   use CMSIS.Device.RCC.Instances;
 
 with Stm32l0xx_Ll_Config;
 
 package body LL.RCC is
-   --  Reset and Clock Control (RCC) low-level driver
+   --  Reset and Clock Control (RCC) low-level driver body
    --
    --  Implementation notes:
    --  - Based on source files:
    --    - stm32l0xx_hal_driver:Inc/stm32l0xx_ll_rcc.h
    --    - stm32l0xx_hal_driver:Src/stm32l0xx_ll_rcc.c
-
-   RCC renames CMSIS.Device.RCC.Instances.RCC;
-   --  Force RCC to represent the instance instead of this child package
 
    HSI_Frequency : constant Natural := 16_000_000;
    --
@@ -461,14 +456,6 @@ package body LL.RCC is
    end Set_I2C3_Clock_Source;
 
    ---------------------------------------------------------------------------
-   procedure Set_LPTIM1_Clock_Source (Source : LPTIM1_Source_Type) is
-   begin
-
-      RCC.CCIPR.LPTIM1SEL.Val := (LPTIM1_Source_Type'Pos (Source));
-
-   end Set_LPTIM1_Clock_Source;
-
-   ---------------------------------------------------------------------------
    function Get_USART1_Clock_Source
       return USART1_Source_Type is
       (USART1_Source_Type'Val (RCC.CCIPR.USART1SEL.Val));
@@ -492,11 +479,6 @@ package body LL.RCC is
    function Get_I2C3_Clock_Source
       return I2C3_Source_Type is
       (I2C3_Source_Type'Val (RCC.CCIPR.I2C3SEL.Val));
-
-   ---------------------------------------------------------------------------
-   function Get_LPTIM1_Clock_Source
-      return LPTIM1_Source_Type is
-      (LPTIM1_Source_Type'Val (RCC.CCIPR.LPTIM1SEL.Val));
 
    ---------------------------------------------------------------------------
    procedure Set_RTC_Clock_Source (Source : RTC_Source_Type) is

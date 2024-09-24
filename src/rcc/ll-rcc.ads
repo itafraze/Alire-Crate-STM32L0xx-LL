@@ -22,6 +22,8 @@
 ------------------------------------------------------------------------------
 
 with CMSIS.Device.RCC;
+with CMSIS.Device.RCC.Instances;
+   use CMSIS.Device.RCC.Instances;
 
 package LL.RCC is
    --  Reset and Clock Control (RCC) low-level driver
@@ -29,6 +31,12 @@ package LL.RCC is
    --  Implementation notes:
    --  - Based on source files:
    --    - stm32l0xx_hal_driver:Inc/stm32l0xx_ll_rcc.h
+   --
+   --  TODO:
+   --  - Implement API Get_USART_Clock_Frequency
+   --  - Implement API Get_I2C_Clock_Frequency
+   --  - Implement API Get_LPUART_Clock_Frequency
+   --  - Implement API Get_USB_Clock_Frequency
 
    type HSE_Prescaler_Type is
       (DIV_2, DIV_4, DIV_8, DIV_16)
@@ -196,16 +204,6 @@ package LL.RCC is
    --  @enum PCLK1 PCLK1 selected as I2C3 clock
    --  @enum SYSCLK SYSCLK selected as I2C3 clock
    --  @enum HSI HSI selected as I2C3 clock
-
-   type LPTIM1_Source_Type is
-      (PCLK1, LSI, HSI, LSE)
-      with Default_Value => PCLK1;
-   --  Type of the LPTIM1 clock source
-   --
-   --  @enum PCLK1 PCLK1 selected as LPTIM1 clock
-   --  @enum LSI LSI selected as LPTIM1 clock
-   --  @enum HSI HSI selected as LPTIM1 clock
-   --  @enum LSE LSE selected as LPTIM1 clock
 
    type RNG_Source_Type is
       (PLL, HSI48)
@@ -675,10 +673,6 @@ package LL.RCC is
       with Inline;
    --  Configure I2C3 clock source
 
-   ---------------------------------------------------------------------------
-   procedure Set_LPTIM1_Clock_Source (Source : LPTIM1_Source_Type)
-      with Inline;
-   --  Configure LPTIM1 clock source
 
    ---------------------------------------------------------------------------
    procedure Set_RNG_Clock_Source (Source : RNG_Source_Type) is null
@@ -726,11 +720,6 @@ package LL.RCC is
       with Inline;
    --  Get I2C3 clock source
 
-   ---------------------------------------------------------------------------
-   function Get_LPTIM1_Clock_Source
-      return LPTIM1_Source_Type
-      with Inline;
-   --  Get LPTIM1 clock source
 
    ---------------------------------------------------------------------------
    function Get_RNG_Clock_Source
@@ -1160,6 +1149,9 @@ package LL.RCC is
    --    frequencies
 
 private
+
+   RCC renames CMSIS.Device.RCC.Instances.RCC;
+   --  Force RCC to represent the instance instead of this child package
 
    for PLL_Divider_Type use (
       DIV_2 => 2#01#,

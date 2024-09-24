@@ -1,0 +1,46 @@
+------------------------------------------------------------------------------
+--  Copyright 2024, Emanuele Zarfati
+--
+--  Licensed under the Apache License, Version 2.0 (the "License");
+--  you may not use this file except in compliance with the License.
+--  You may obtain a copy of the License at
+--
+--      http://www.apache.org/licenses/LICENSE-2.0
+--
+--  Unless required by applicable law or agreed to in writing, software
+--  distributed under the License is distributed on an "AS IS" BASIS,
+--  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+--  See the License for the specific language governing permissions and
+--  limitations under the License.
+--
+------------------------------------------------------------------------------
+--
+--  Revision History:
+--    2024.09 E. Zarfati
+--       - First version
+--
+------------------------------------------------------------------------------
+
+package body LL.RCC.LPTIM is
+   --  Reset and Clock Control (RCC) low-level driver body for the Low-Power
+   --  Timer (LPTIM) peripherals
+   --
+   --  Implementation notes:
+   --  - Based on source files:
+   --    - stm32l0xx_hal_driver:Inc/stm32l0xx_ll_rcc.h
+   --    - stm32l0xx_hal_driver:Src/stm32l0xx_ll_rcc.c
+
+   ---------------------------------------------------------------------------
+   procedure Set_LPTIM1_Clock_Source (Source : LPTIM1_Source_Type) is
+   begin
+
+      RCC.CCIPR.LPTIM1SEL.Val := (LPTIM1_Source_Type'Pos (Source));
+
+   end Set_LPTIM1_Clock_Source;
+
+   ---------------------------------------------------------------------------
+   function Get_LPTIM1_Clock_Source
+      return LPTIM1_Source_Type is
+      (LPTIM1_Source_Type'Val (RCC.CCIPR.LPTIM1SEL.Val));
+
+end LL.RCC.LPTIM;
