@@ -21,10 +21,14 @@
 --
 ------------------------------------------------------------------------------
 
+with CMSIS.Device;
+   use CMSIS.Device;
 with CMSIS.Device.RCC;
    use CMSIS.Device.RCC;
 with CMSIS.Device.RCC.Instances;
    use CMSIS.Device.RCC.Instances;
+
+with Stm32l0xx_Ll_Config;
 
 package body LL.RCC is
    --  Reset and Clock Control (RCC) low-level driver
@@ -36,6 +40,20 @@ package body LL.RCC is
 
    RCC renames CMSIS.Device.RCC.Instances.RCC;
    --  Force RCC to represent the instance instead of this child package
+
+   HSI_Frequency : constant Natural := 16_000_000;
+   --
+
+   PLL_Multiply_Table : constant array (PLL_Multiplicator_Type) of Natural := [
+      MUL_3 => 3,
+      MUL_4 => 4,
+      MUL_6 => 6,
+      MUL_8 => 8,
+      MUL_12 => 12,
+      MUL_16 => 16,
+      MUL_24 => 24,
+      MUL_32 => 32,
+      MUL_48 => 48];
 
    ---------------------------------------------------------------------------
    procedure HSE_Enable_Bypass is
@@ -891,5 +909,124 @@ package body LL.RCC is
    function Is_Enabled_Interrupt_LSECSS
       return Boolean is
       (Boolean'Val (RCC.CIER.CSSLSE));
+
+   ---------------------------------------------------------------------------
+   procedure Get_System_Clocks_Frequency (Clocks : in out Clocks_Type) is
+   begin
+
+      Clocks.SYSCLK_Frequency :=
+         Get_System_Clock_Frequency;
+      Clocks.HCLK_Frequency :=
+         Get_HCLK_Clock_Frequency (Clocks.SYSCLK_Frequency);
+      Clocks.PCLK1_Frequency :=
+         Get_PCLK1_Clock_Frequency (Clocks.HCLK_Frequency);
+      Clocks.PCLK2_Frequency :=
+         Get_PCLK2_Clock_Frequency (Clocks.HCLK_Frequency);
+
+   end Get_System_Clocks_Frequency;
+
+   ---------------------------------------------------------------------------
+   function Get_System_Clock_Frequency
+      return Natural is
+      --
+      Frequency : Natural;
+   begin
+
+      Frequency := Natural (
+         case Get_System_Clock_Source is
+            when MSI => Calculate_MSI_Frequency (MSI_Get_Range),
+            when HSI => Shift_Right (
+               UInt32 (HSI_Frequency),
+               (Boolean'Pos (Is_Active_Flag_HSIDIV) * 2)),
+            when HSE => Stm32l0xx_Ll_Config.HSE_Frequency,
+            when PLL => PLL_Get_Frequency_Domain_SYS);
+
+      return Frequency;
+
+   end Get_System_Clock_Frequency;
+
+   ---------------------------------------------------------------------------
+   function Get_HCLK_Clock_Frequency (System_Clock_Frequency : Natural)
+      return Natural is
+      (Calculate_HCLK_Frequency (System_Clock_Frequency, Get_AHB_Prescaler));
+
+   ---------------------------------------------------------------------------
+   function Get_PCLK1_Clock_Frequency (HCLK_Clock_Frequency : Natural)
+      return Natural is
+      (Calculate_PCLK1_Frequency (HCLK_Clock_Frequency, Get_APB1_Prescaler));
+
+   ---------------------------------------------------------------------------
+   function Get_PCLK2_Clock_Frequency (HCLK_Clock_Frequency : Natural)
+      return Natural is
+      (Calculate_PCLK2_Frequency (HCLK_Clock_Frequency, Get_APB2_Prescaler));
+
+   ---------------------------------------------------------------------------
+   function PLL_Get_Frequency_Domain_SYS
+      return Natural is
+      --
+      Frequency : Natural;
+   begin
+
+      Frequency := Natural (
+         case PLL_Get_Main_Source is
+            when HSI =>
+               Shift_Right (
+                  UInt32 (HSI_Frequency),
+                  Boolean'Pos (Is_Active_Flag_HSIDIV) * 2),
+            when HSE =>
+               Stm32l0xx_Ll_Config.HSE_Frequency);
+
+      Frequency := Calculate_PLLCLK_Frequency (
+         Frequency,
+         PLL_Get_Multiplicator,
+         PLL_Get_Divider);
+
+      return Frequency;
+
+   end PLL_Get_Frequency_Domain_SYS;
+
+   ---------------------------------------------------------------------------
+   function Calculate_MSI_Frequency (Frequency_Range : MSI_Range_Type)
+      return Natural is
+      (Natural (Shift_Left (
+         UInt32 (32_768),
+         MSI_Range_Type'Pos (Frequency_Range) + 1)));
+
+   ---------------------------------------------------------------------------
+   function Calculate_PLLCLK_Frequency (
+      Input_Frequency : Natural;
+      Multiply        : PLL_Multiplicator_Type;
+      Divide          : PLL_Divider_Type)
+      return Natural is
+      ((Input_Frequency * PLL_Multiply_Table (Multiply))
+         / (PLL_Divider_Type'Enum_Rep (Divide) + 1));
+
+   ---------------------------------------------------------------------------
+   function Calculate_HCLK_Frequency (SYSCLK_Frequency : Natural;
+                                      AHB_Prescaler    : AHB_Prescaler_Type)
+      return Natural is
+      (Natural (Shift_Right (
+         UInt32 (SYSCLK_Frequency),
+         (case AHB_Prescaler is
+            when DIV_1 .. DIV_16 =>
+               AHB_Prescaler_Type'Pos (AHB_Prescaler),
+            when DIV_64 .. DIV_512 =>
+               AHB_Prescaler_Type'Pos (AHB_Prescaler) + 1))));
+
+   ---------------------------------------------------------------------------
+   function Calculate_PCLK1_Frequency (HCLK_Frequency : Natural;
+                                       APB1_Prescaler : APB1_Prescaler_Type)
+      return Natural is
+      (Natural (Shift_Right (
+         UInt32 (HCLK_Frequency),
+         APB1_Prescaler_Type'Pos (APB1_Prescaler))));
+
+   ---------------------------------------------------------------------------
+   function Calculate_PCLK2_Frequency (HCLK_Frequency : Natural;
+                                       APB2_Prescaler : APB2_Prescaler_Type)
+      return Natural is
+      (Natural (Shift_Right (
+         UInt32 (HCLK_Frequency),
+         APB2_Prescaler_Type'Pos (APB2_Prescaler))));
 
 end LL.RCC;

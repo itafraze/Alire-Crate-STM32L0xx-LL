@@ -265,6 +265,15 @@ package LL.RCC is
    --  @enum DIV_3 PLL clock output = PLLVCO / 3
    --  @enum DIV_4 PLL clock output = PLLVCO / 4
 
+   type Clocks_Type is
+      record
+         SYSCLK_Frequency : Natural := 0;
+         HCLK_Frequency : Natural := 0;
+         PCLK1_Frequency : Natural := 0;
+         PCLK2_Frequency : Natural := 0;
+      end record;
+   --  RCC Clocks Frequency Structure
+
    ---------------------------------------------------------------------------
    procedure HSE_Enable_CSS is null
       with Inline;
@@ -1137,6 +1146,19 @@ package LL.RCC is
       with Inline;
    --  Checks if LSE ready interrupt source is enabled or disabled
 
+   ---------------------------------------------------------------------------
+   procedure Get_System_Clocks_Frequency (Clocks : in out Clocks_Type);
+   --  Return the frequencies of different on chip clocks;  System, AHB, APB1
+   --  and APB2 buses clocks
+   --
+   --  Notes:
+   --  - Each time SYSCLK, HCLK, PCLK1 and/or PCLK2 clock changes, this
+   --    function must be called to update structure fields. Otherwise, any
+   --    configuration based on this function will be incorrect.
+   --
+   --  @param Clocks Reference to the structure which will hold the clocks
+   --    frequencies
+
 private
 
    for PLL_Divider_Type use (
@@ -1164,5 +1186,67 @@ private
       DIV_8  => 2#110#,
       DIV_16 => 2#111#);
    --
+
+   ---------------------------------------------------------------------------
+   function Get_System_Clock_Frequency
+      return Natural;
+   --  Return SYSTEM clock frequency
+
+   ---------------------------------------------------------------------------
+   function Get_HCLK_Clock_Frequency (System_Clock_Frequency : Natural)
+      return Natural;
+   --  Return HCLK clock frequency
+   --
+   --  @param System_Clock_Frequency SYSCLK clock frequency
+
+   ---------------------------------------------------------------------------
+   function Get_PCLK1_Clock_Frequency (HCLK_Clock_Frequency : Natural)
+      return Natural;
+   --  Return PCLK1 clock frequency
+   --
+   --  @param HCLK_Clock_Frequency HCLK clock frequency
+
+   ---------------------------------------------------------------------------
+   function Get_PCLK2_Clock_Frequency (HCLK_Clock_Frequency : Natural)
+      return Natural;
+   --  Return PCLK2 clock frequency
+   --
+   --  @param HCLK_Clock_Frequency HCLK clock frequency
+
+   ---------------------------------------------------------------------------
+   function PLL_Get_Frequency_Domain_SYS
+      return Natural;
+   --  Return PLL clock frequency used for system domain
+
+   ---------------------------------------------------------------------------
+   function Calculate_MSI_Frequency (Frequency_Range : MSI_Range_Type)
+      return Natural;
+   --  Helper function to calculate the MSI frequency (in Hz)
+
+   ---------------------------------------------------------------------------
+   function Calculate_PLLCLK_Frequency (
+      Input_Frequency : Natural;
+      Multiply        : PLL_Multiplicator_Type;
+      Divide          : PLL_Divider_Type)
+      return Natural;
+   --  Helper function to calculate the PLLCLK frequency
+
+   ---------------------------------------------------------------------------
+   function Calculate_HCLK_Frequency (SYSCLK_Frequency : Natural;
+                                      AHB_Prescaler    : AHB_Prescaler_Type)
+      return Natural;
+   --  Helper function to calculate the HCLK frequency
+
+   ---------------------------------------------------------------------------
+   function Calculate_PCLK1_Frequency (HCLK_Frequency : Natural;
+                                       APB1_Prescaler : APB1_Prescaler_Type)
+      return Natural;
+   --  Helper function to calculate the PCLK1 frequency (ABP1)
+
+   ---------------------------------------------------------------------------
+   function Calculate_PCLK2_Frequency (HCLK_Frequency : Natural;
+                                       APB2_Prescaler : APB2_Prescaler_Type)
+      return Natural;
+   --  Helper function to calculate the PCLK2 frequency (ABP2)
 
 end LL.RCC;
