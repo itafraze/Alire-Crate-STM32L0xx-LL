@@ -21,6 +21,9 @@
 --
 ------------------------------------------------------------------------------
 
+with CMSIS.Device;
+   use CMSIS.Device;
+
 package body LL.RCC.LPTIM is
    --  Reset and Clock Control (RCC) low-level driver body for the Low-Power
    --  Timer (LPTIM) peripherals
@@ -31,16 +34,32 @@ package body LL.RCC.LPTIM is
    --    - stm32l0xx_hal_driver:Src/stm32l0xx_ll_rcc.c
 
    ---------------------------------------------------------------------------
-   procedure Set_LPTIM1_Clock_Source (Source : LPTIM1_Source_Type) is
+   procedure Set_Clock_Source (Source : LPTIMx_Source_Type) is
    begin
 
-      RCC.CCIPR.LPTIM1SEL.Val := (LPTIM1_Source_Type'Pos (Source));
+      case Source is
+         when LPTIM1_Source_Type'Range =>
+            RCC.CCIPR.LPTIM1SEL.Val :=
+               LPTIMx_Source_Type'Pos (Source)
+               - LPTIMx_Source_Type'Pos (LPTIM1_Source_Type'First);
+      end case;
 
-   end Set_LPTIM1_Clock_Source;
+   end Set_Clock_Source;
 
    ---------------------------------------------------------------------------
-   function Get_LPTIM1_Clock_Source
-      return LPTIM1_Source_Type is
-      (LPTIM1_Source_Type'Val (RCC.CCIPR.LPTIM1SEL.Val));
+   function Get_Clock_Source (Instance : LPTIM_Instance_Type)
+      return LPTIMx_Source_Type is
+      --
+      Source : LPTIMx_Source_Type;
+   begin
+
+      Source := LPTIMx_Source_Type'Val (case Instance is
+         when LPTIM1 =>
+            RCC.CCIPR.LPTIM1SEL.Val
+            + LPTIM1_Source_Type'Pos (LPTIM1_Source_Type'First));
+
+      return Source;
+
+   end Get_Clock_Source;
 
 end LL.RCC.LPTIM;
