@@ -96,10 +96,10 @@ package LL.RCC is
    --  @enum DIV_256 SYSCLK divided by 256
    --  @enum DIV_512 SYSCLK divided by 512
 
-   type APB1_Prescaler_Type is
+   type APBx_Prescaler_Type is
       (DIV_1, DIV_2, DIV_4, DIV_8, DIV_16)
       with Default_Value => DIV_1;
-   --  Type of the APB1 prescaler
+   --  Type of the APBx prescaler
    --
    --  @enum DIV_1 HCLK not divided
    --  @enum DIV_2 HCLK divided by 2
@@ -107,16 +107,13 @@ package LL.RCC is
    --  @enum DIV_8 HCLK divided by 8
    --  @enum DIV_16 HCLK divided by 16
 
-   type APB2_Prescaler_Type is
-      (DIV_1, DIV_2, DIV_4, DIV_8, DIV_16)
-      with Default_Value => DIV_1;
+   subtype APB1_Prescaler_Type is
+      APBx_Prescaler_Type;
+   --  Type of the APB1 prescaler
+
+   subtype APB2_Prescaler_Type is
+      APBx_Prescaler_Type;
    --  Type of the APB2 prescaler
-   --
-   --  @enum DIV_1 HCLK not divided
-   --  @enum DIV_2 HCLK divided by 2
-   --  @enum DIV_4 HCLK divided by 4
-   --  @enum DIV_8 HCLK divided by 8
-   --  @enum DIV_16 HCLK divided by 16
 
    type Clock_After_Wake_Type is
       (MSI, HSI)
@@ -1139,5 +1136,33 @@ package LL.RCC is
       return Boolean
       with Inline;
    --  Checks if LSE ready interrupt source is enabled or disabled
+
+private
+
+   for PLL_Divider_Type use (
+      DIV_2 => 2#01#,
+      DIV_3 => 2#10#,
+      DIV_4 => 2#11#);
+   --
+
+   for AHB_Prescaler_Type use (
+      DIV_1   => 2#0000#,
+      DIV_2   => 2#1000#,
+      DIV_4   => 2#1001#,
+      DIV_8   => 2#1010#,
+      DIV_16  => 2#1011#,
+      DIV_64  => 2#1100#,
+      DIV_128 => 2#1101#,
+      DIV_256 => 2#1110#,
+      DIV_512 => 2#1111#);
+   --
+
+   for APBx_Prescaler_Type use (
+      DIV_1  => 2#000#,
+      DIV_2  => 2#100#,
+      DIV_4  => 2#101#,
+      DIV_8  => 2#110#,
+      DIV_16 => 2#111#);
+   --
 
 end LL.RCC;

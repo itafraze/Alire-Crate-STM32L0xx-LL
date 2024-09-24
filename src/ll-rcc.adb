@@ -339,11 +339,8 @@ package body LL.RCC is
    procedure Set_AHB_Prescaler (Prescaler : AHB_Prescaler_Type) is
    begin
 
-      RCC.CFGR.HPRE := CFGR_HPRE_Field (case Prescaler is
-         when DIV_2 .. DIV_512 =>
-            AHB_Prescaler_Type'Pos (Prescaler)
-               + 2#1000# - AHB_Prescaler_Type'Pos (DIV_2),
-         when others => 2#0#);
+      RCC.CFGR.HPRE := CFGR_HPRE_Field (
+         AHB_Prescaler_Type'Enum_Rep (Prescaler));
 
    end Set_AHB_Prescaler;
 
@@ -351,11 +348,8 @@ package body LL.RCC is
    procedure Set_APB1_Prescaler (Prescaler : APB1_Prescaler_Type) is
    begin
 
-      RCC.CFGR.PPRE.Arr (1) := CFGR_PPRE_Element (case Prescaler is
-         when DIV_2 .. DIV_16 =>
-            APB1_Prescaler_Type'Pos (Prescaler)
-               + 2#100# - APB1_Prescaler_Type'Pos (DIV_2),
-         when others => 2#0#);
+      RCC.CFGR.PPRE.Arr (1) := CFGR_PPRE_Element (
+         APB1_Prescaler_Type'Enum_Rep (Prescaler));
 
    end Set_APB1_Prescaler;
 
@@ -363,67 +357,25 @@ package body LL.RCC is
    procedure Set_APB2_Prescaler (Prescaler : APB2_Prescaler_Type) is
    begin
 
-      RCC.CFGR.PPRE.Arr (2) := CFGR_PPRE_Element (case Prescaler is
-         when DIV_2 .. DIV_16 =>
-            APB2_Prescaler_Type'Pos (Prescaler)
-               + 2#100# - APB2_Prescaler_Type'Pos (DIV_2),
-         when others => 2#0#);
+      RCC.CFGR.PPRE.Arr (2) := CFGR_PPRE_Element (
+         APB2_Prescaler_Type'Enum_Rep (Prescaler));
 
    end Set_APB2_Prescaler;
 
    ---------------------------------------------------------------------------
    function Get_AHB_Prescaler
       return AHB_Prescaler_Type is
-      --
-      use all type CFGR_HPRE_Field;
-      --
-      Prescaler : AHB_Prescaler_Type;
-   begin
-
-      Prescaler := AHB_Prescaler_Type'Val (case RCC.CFGR.HPRE is
-         when 2#1000# .. 2#1111# =>
-            (RCC.CFGR.HPRE - 2#1000#) + AHB_Prescaler_Type'Pos (DIV_2),
-         when others => 2#0#);
-
-      return Prescaler;
-
-   end Get_AHB_Prescaler;
+      (AHB_Prescaler_Type'Enum_Val (RCC.CFGR.HPRE));
 
    ---------------------------------------------------------------------------
    function Get_APB1_Prescaler
       return APB1_Prescaler_Type is
-      --
-      use all type CFGR_PPRE_Element;
-      --
-      Prescaler : APB1_Prescaler_Type;
-   begin
-
-      Prescaler := APB1_Prescaler_Type'Val (case RCC.CFGR.PPRE.Arr (1) is
-         when 2#100# .. 2#111# =>
-            (RCC.CFGR.PPRE.Arr (1) - 2#100#) + APB1_Prescaler_Type'Pos (DIV_2),
-         when others => 2#0#);
-
-      return Prescaler;
-
-   end Get_APB1_Prescaler;
+      (APB1_Prescaler_Type'Enum_Val (RCC.CFGR.PPRE.Arr (1)));
 
    ---------------------------------------------------------------------------
    function Get_APB2_Prescaler
       return APB2_Prescaler_Type is
-      --
-      use all type CFGR_PPRE_Element;
-      --
-      Prescaler : APB2_Prescaler_Type;
-   begin
-
-      Prescaler := APB2_Prescaler_Type'Val (case RCC.CFGR.PPRE.Arr (2) is
-         when 2#100# .. 2#111# =>
-            (RCC.CFGR.PPRE.Arr (2) - 2#100#) + APB2_Prescaler_Type'Pos (DIV_2),
-         when others => 2#0#);
-
-      return Prescaler;
-
-   end Get_APB2_Prescaler;
+      (APB2_Prescaler_Type'Enum_Val (RCC.CFGR.PPRE.Arr (2)));
 
    ---------------------------------------------------------------------------
    procedure Set_Clock_After_Wake_From_Stop (Clock : Clock_After_Wake_Type) is
@@ -608,7 +560,7 @@ package body LL.RCC is
       RCC.CFGR := (@ with delta
          PLLSRC => CFGR_PLLSRC_Field (PLL_Source_Type'Pos (Source)),
          PLLMUL => CFGR_PLLMUL_Field (PLL_Multiplicator_Type'Pos (Multiply)),
-         PLLDIV => CFGR_PLLDIV_Field (PLL_Divider_Type'Pos (Divide))
+         PLLDIV => CFGR_PLLDIV_Field (PLL_Divider_Type'Enum_Rep (Divide))
       );
 
    end PLL_Configure_Domain_SYS;
@@ -634,7 +586,7 @@ package body LL.RCC is
    ---------------------------------------------------------------------------
    function PLL_Get_Divider
       return PLL_Divider_Type is
-      (PLL_Divider_Type'Val (RCC.CFGR.PLLDIV));
+      (PLL_Divider_Type'Enum_Val (RCC.CFGR.PLLDIV));
 
    ---------------------------------------------------------------------------
    procedure Clear_Flag_LSIRDY is
