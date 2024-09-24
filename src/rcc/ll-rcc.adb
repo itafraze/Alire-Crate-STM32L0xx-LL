@@ -36,9 +36,6 @@ package body LL.RCC is
    --    - stm32l0xx_hal_driver:Inc/stm32l0xx_ll_rcc.h
    --    - stm32l0xx_hal_driver:Src/stm32l0xx_ll_rcc.c
 
-   HSI_Frequency : constant Natural := 16_000_000;
-   --
-
    PLL_Multiply_Table : constant array (PLL_Multiplicator_Type) of Natural := [
       MUL_3 => 3,
       MUL_4 => 4,

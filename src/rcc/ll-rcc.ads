@@ -1179,6 +1179,12 @@ private
       DIV_16 => 2#111#);
    --
 
+   LSI_Frequency : constant Natural := 37_000;
+   --
+
+   HSI_Frequency : constant Natural := 16_000_000;
+   --
+
    ---------------------------------------------------------------------------
    function Get_System_Clock_Frequency
       return Natural;

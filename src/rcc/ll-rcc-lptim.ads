@@ -64,4 +64,9 @@ package LL.RCC.LPTIM is
       with Inline;
    --  Get LPTIMx clock source
 
+   ---------------------------------------------------------------------------
+   function Get_Clock_Frequency (Instance : LPTIM_Instance_Type)
+      return Natural;
+   --  Return LPTIMx clock frequency
+
 end LL.RCC.LPTIM;

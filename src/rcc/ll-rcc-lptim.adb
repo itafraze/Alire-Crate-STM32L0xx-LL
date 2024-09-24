@@ -24,6 +24,8 @@
 with CMSIS.Device;
    use CMSIS.Device;
 
+with Stm32l0xx_Ll_Config;
+
 package body LL.RCC.LPTIM is
    --  Reset and Clock Control (RCC) low-level driver body for the Low-Power
    --  Timer (LPTIM) peripherals
@@ -61,5 +63,45 @@ package body LL.RCC.LPTIM is
       return Source;
 
    end Get_Clock_Source;
+
+   ---------------------------------------------------------------------------
+   function Get_Clock_Frequency (Instance : LPTIM_Instance_Type)
+      return Natural is
+      --
+      Frequency : Natural := 0;
+   begin
+
+      case Get_Clock_Source (Instance) is
+         when LPTIM1_PCLK1 => null;
+            Frequency :=
+               Get_PCLK1_Clock_Frequency (
+                  Get_HCLK_Clock_Frequency (
+                     Get_System_Clock_Frequency));
+
+         when LPTIM1_LSI =>
+            if LSI_Is_Ready
+            then
+               Frequency := LSI_Frequency;
+            end if;
+
+         when LPTIM1_HSI =>
+            if HSI_Is_Ready
+            then
+               Frequency := Natural (
+                  Shift_Right (
+                     UInt32 (HSI_Frequency),
+                     (Boolean'Pos (Is_Active_Flag_HSIDIV) * 2)));
+            end if;
+
+         when LPTIM1_LSE =>
+            if LSE_Is_Ready
+            then
+               Frequency := Stm32l0xx_Ll_Config.LSE_Frequency;
+            end if;
+      end case;
+
+      return Frequency;
+
+   end Get_Clock_Frequency;
 
 end LL.RCC.LPTIM;
