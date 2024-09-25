@@ -93,9 +93,8 @@ run_cmd() {
    move_to_tests_directory
 
    # Emulation testing
-
    run_cmd \
-      "alr config --set alias.emu \
+      "alr settings --set alias.emu \
          \"exec -P1 arm-eabi-gnatemu --\
          -XEMU_MODE=run ./bin/tests.elf\""
 
