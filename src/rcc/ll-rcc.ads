@@ -352,7 +352,7 @@ package LL.RCC is
    --  Disable HSI divider (it divides by 4)
 
    ---------------------------------------------------------------------------
-   procedure HSI_Enable_Output
+   procedure HSI_Enable_Output is null
       with Inline;
    --  Enable HSI output
 

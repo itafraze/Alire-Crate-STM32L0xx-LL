@@ -152,14 +152,6 @@ package body LL.RCC is
    end HSI_Disable_Divider;
 
    ---------------------------------------------------------------------------
-   procedure HSI_Enable_Output is
-   begin
-
-      RCC.CR.HSI16OUTEN := CR_HSI16OUTEN_Field (2#1#);
-
-   end HSI_Enable_Output;
-
-   ---------------------------------------------------------------------------
    procedure HSI_Disable_Output is
    begin
 

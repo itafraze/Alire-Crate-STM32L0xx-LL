@@ -64,7 +64,8 @@ lack of testing.
 | LPTIM | ∂ | No get functions, no encoder mode
 | LPUART | |
 | PWR | ∂ |
-| RCC | ∂ | No HSE CSS, no HSI48
+| RCC | ∂ | No: HSE CSS, HSI Output, HSI48, USB, full driver (USART, I2C,
+LPUART, USB)
 | RNG | |
 | RTC | |
 | SPI | |
