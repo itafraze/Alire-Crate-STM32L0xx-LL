@@ -16,29 +16,25 @@
 ------------------------------------------------------------------------------
 --
 --  Revision History:
---    2024.04 E. Zarfati
+--    2024.09 E. Zarfati
 --       - First version
 --
 ------------------------------------------------------------------------------
 
-with LL.TIM.Test;
-with LL.RCC.Test;
+with AUnit.Test_Fixtures;
+with AUnit.Test_Suites;
 
-package body Suite is
+package LL.RCC.Test is
 
-   Result : aliased AUnit.Test_Suites.Test_Suite;
-   --  Statically allocated test suite
+   type Zero_Fixture is
+      new AUnit.Test_Fixtures.Test_Fixture with null record;
+   --  All RCC peripherals registers set to zero
 
+   ---------------------------------------------------------------------------
+   overriding procedure Set_Up (T : in out Zero_Fixture);
+
+   ---------------------------------------------------------------------------
    function Suite
-      return AUnit.Test_Suites.Access_Test_Suite
-   is
-   begin
+      return AUnit.Test_Suites.Access_Test_Suite;
 
-      Result.Add_Test (LL.TIM.Test.Suite);
-      Result.Add_Test (LL.RCC.Test.Suite);
-
-      return Result'Access;
-
-   end Suite;
-
-end Suite;
+end LL.RCC.Test;
