@@ -29,9 +29,9 @@ package body Suite is
    Result : aliased AUnit.Test_Suites.Test_Suite;
    --  Statically allocated test suite
 
+   ---------------------------------------------------------------------------
    function Suite
-      return AUnit.Test_Suites.Access_Test_Suite
-   is
+      return AUnit.Test_Suites.Access_Test_Suite is
    begin
 
       Result.Add_Test (LL.TIM.Test.Suite);

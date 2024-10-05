@@ -77,11 +77,9 @@ package body LL.TIM.Test is
       Suite_Prefix_Zero : constant String := "LL.TIM::Zero_Fixture::";
    begin
 
-      Result.Add_Test (
-        Caller_Zero.Create (
-            Suite_Prefix_Zero
-               & "Init_Success_With_Defaults",
-            Enable_Counter_Sets_CEN'Access));
+      Result.Add_Test (Caller_Zero.Create (
+         Suite_Prefix_Zero & "Enable_Counter_Sets_CEN",
+         Enable_Counter_Sets_CEN'Access));
 
       return Result'Access;
 
