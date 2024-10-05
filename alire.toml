@@ -48,3 +48,5 @@ style_checks    = "no"         #
 
 [configuration.variables]
 Disable_Restrictions = {type = "Boolean", default = false}
+LSE_Frequency = {type = "Integer", default = 32_768}
+HSE_Frequency = {type = "Integer", default = 8_000_000}
