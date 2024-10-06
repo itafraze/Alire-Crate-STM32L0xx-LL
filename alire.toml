@@ -1,6 +1,6 @@
 name = "stm32l0xx_ll"
 description = "Low-level drivers for STMicroelectronics' STM32L0 MCU series"
-version = "0.7.0-dev"
+version = "0.7.1-dev"
 
 authors = ["Emanuele Zarfati"]
 maintainers = ["Emanuele Zarfati <zarfati.tecno@gmail.com>"]
@@ -48,5 +48,8 @@ style_checks    = "no"         #
 
 [configuration.variables]
 Disable_Restrictions = {type = "Boolean", default = false}
+LSI_Frequency = {type = "Integer", default = 37_000}
+HSI_Frequency = {type = "Integer", default = 16_000_000}
+HSI48_Frequency = {type = "Integer", default = 48_000_000}
 LSE_Frequency = {type = "Integer", default = 32_768}
 HSE_Frequency = {type = "Integer", default = 8_000_000}

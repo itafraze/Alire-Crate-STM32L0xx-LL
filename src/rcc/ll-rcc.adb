@@ -26,8 +26,6 @@ with CMSIS.Device;
 with CMSIS.Device.RCC;
    use CMSIS.Device.RCC;
 
-with Stm32l0xx_Ll_Config;
-
 package body LL.RCC is
    --  Reset and Clock Control (RCC) low-level driver body
    --
@@ -909,7 +907,7 @@ package body LL.RCC is
             when HSI => Shift_Right (
                UInt32 (HSI_Frequency),
                (Boolean'Pos (Is_Active_Flag_HSIDIV) * 2)),
-            when HSE => Stm32l0xx_Ll_Config.HSE_Frequency,
+            when HSE => HSE_Frequency,
             when PLL => PLL_Get_Frequency_Domain_SYS);
 
       return Frequency;
@@ -944,8 +942,7 @@ package body LL.RCC is
                Shift_Right (
                   UInt32 (HSI_Frequency),
                   Boolean'Pos (Is_Active_Flag_HSIDIV) * 2),
-            when HSE =>
-               Stm32l0xx_Ll_Config.HSE_Frequency);
+            when HSE => HSE_Frequency);
 
       Frequency := Calculate_PLLCLK_Frequency (
          Frequency,

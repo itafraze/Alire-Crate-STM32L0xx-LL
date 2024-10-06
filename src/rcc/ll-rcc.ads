@@ -21,6 +21,8 @@
 --
 ------------------------------------------------------------------------------
 
+with Stm32l0xx_Ll_Config;
+
 with CMSIS.Device.RCC;
 with CMSIS.Device.RCC.Instances;
    use CMSIS.Device.RCC.Instances;
@@ -271,6 +273,27 @@ package LL.RCC is
          PCLK2_Frequency : Natural := 0;
       end record;
    --  RCC Clocks Frequency Structure
+
+   MSI_Frequency : Natural := 2_097_152;
+   --  MSI (multispeed internal) oscillator clock frequency
+   --
+   --  Notes:
+   --  - 2.1MHz is used as system clock source after startup from power reset
+   --    (see RCC.ICSCR.MSIRANGE)
+
+   LSI_Frequency : constant Natural := Stm32l0xx_Ll_Config.LSI_Frequency;
+   --  Low-speed internal RC (LSI RC) frequency
+
+   HSI_Frequency : constant Natural := Stm32l0xx_Ll_Config.HSI_Frequency;
+   --  High-speed internal (HSI16) oscillator clock frequency
+
+   HSI48_Frequency : constant Natural := Stm32l0xx_Ll_Config.HSI48_Frequency;
+
+   LSE_Frequency : constant Natural := Stm32l0xx_Ll_Config.LSE_Frequency;
+   --  Low-speed external crystal (LSE crystal) frequency
+
+   HSE_Frequency : constant Natural := Stm32l0xx_Ll_Config.HSE_Frequency;
+   --  High-speed external (HSE) oscillator clock frequency
 
    ---------------------------------------------------------------------------
    procedure HSE_Enable_CSS is null
@@ -1177,12 +1200,6 @@ private
       DIV_4  => 2#101#,
       DIV_8  => 2#110#,
       DIV_16 => 2#111#);
-   --
-
-   LSI_Frequency : constant Natural := 37_000;
-   --
-
-   HSI_Frequency : constant Natural := 16_000_000;
    --
 
    ---------------------------------------------------------------------------
