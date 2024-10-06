@@ -18,6 +18,8 @@
 --  Revision History:
 --    2024.03 E. Zarfati
 --       - First version
+--    2024.10 E. Zarfati
+--       - Fix IOP_GRP1_Enable_Clock name
 --
 ------------------------------------------------------------------------------
 
@@ -76,7 +78,7 @@ package LL.BUS is
    --  @param Peripherals
 
    ---------------------------------------------------------------------------
-   procedure IOP_GRP1_EnableClock (
+   procedure IOP_GRP1_Enable_Clock (
       Peripherals : IOP_GRP1_Peripheral_Select_Type);
    --  Enable IOP peripherals clock
    --

@@ -18,6 +18,8 @@
 --  Revision History:
 --    2024.03 E. Zarfati
 --       - First version
+--    2024.10 E. Zarfati
+--       - Fix IOP_GRP1_Enable_Clock name
 --
 ------------------------------------------------------------------------------
 
@@ -151,7 +153,7 @@ package body LL.BUS is
    end APB2_GRP1_Enable_Clock;
 
    ---------------------------------------------------------------------------
-   procedure IOP_GRP1_EnableClock (
+   procedure IOP_GRP1_Enable_Clock (
       Peripherals : IOP_GRP1_Peripheral_Select_Type) is
    --
       UNUSED_Bit : CMSIS.Device.Bit
@@ -184,6 +186,6 @@ package body LL.BUS is
             end case;
          end if;
       end loop;
-   end IOP_GRP1_EnableClock;
+   end IOP_GRP1_Enable_Clock;
 
 end LL.BUS;
