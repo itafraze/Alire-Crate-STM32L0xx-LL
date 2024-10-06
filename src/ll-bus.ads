@@ -84,6 +84,4 @@ package LL.BUS is
    --
    --  @param Peripherals
 
-
-
 end LL.BUS;

@@ -20,12 +20,15 @@
 --       - First version
 --    2024.10 E. Zarfati
 --       - Fix IOP_GRP1_Enable_Clock name
+--       - Use RCC instance in place of RCC_Periph
 --
 ------------------------------------------------------------------------------
 
 with CMSIS.Device;
 with CMSIS.Device.RCC;
    use CMSIS.Device.RCC;
+with CMSIS.Device.RCC.Instances;
+   use CMSIS.Device.RCC.Instances;
 
 package body LL.BUS is
    --  BUS low-layer driver body
@@ -51,60 +54,59 @@ package body LL.BUS is
          then
             case Ph is
                when TIM2 =>
-                  RCC_Periph.APB1ENR.TIM2EN := 2#1#;
-                  UNUSED_Bit := RCC_Periph.APB1ENR.TIM2EN;
+                  RCC.APB1ENR.TIM2EN := 2#1#;
+                  UNUSED_Bit := RCC.APB1ENR.TIM2EN;
                when TIM3 =>
-                  RCC_Periph.APB1ENR.TIM3EN := 2#1#;
-                  UNUSED_Bit := RCC_Periph.APB1ENR.TIM3EN;
+                  RCC.APB1ENR.TIM3EN := 2#1#;
+                  UNUSED_Bit := RCC.APB1ENR.TIM3EN;
                when TIM6 =>
-                  RCC_Periph.APB1ENR.TIM6EN := 2#1#;
-                  UNUSED_Bit := RCC_Periph.APB1ENR.TIM6EN;
+                  RCC.APB1ENR.TIM6EN := 2#1#;
+                  UNUSED_Bit := RCC.APB1ENR.TIM6EN;
                when TIM7 =>
-                  RCC_Periph.APB1ENR.TIM7EN := 2#1#;
-                  UNUSED_Bit := RCC_Periph.APB1ENR.TIM7EN;
+                  RCC.APB1ENR.TIM7EN := 2#1#;
+                  UNUSED_Bit := RCC.APB1ENR.TIM7EN;
                when LCD => null;
                when WWDG =>
-                  RCC_Periph.APB1ENR.WWDGEN := 2#1#;
-                  UNUSED_Bit := RCC_Periph.APB1ENR.WWDGEN;
+                  RCC.APB1ENR.WWDGEN := 2#1#;
+                  UNUSED_Bit := RCC.APB1ENR.WWDGEN;
                when SPI2 =>
-                  RCC_Periph.APB1ENR.SPI2EN := 2#1#;
-                  UNUSED_Bit := RCC_Periph.APB1ENR.SPI2EN;
+                  RCC.APB1ENR.SPI2EN := 2#1#;
+                  UNUSED_Bit := RCC.APB1ENR.SPI2EN;
                when USART2 =>
-                  RCC_Periph.APB1ENR.USART2EN := 2#1#;
-                  UNUSED_Bit := RCC_Periph.APB1ENR.USART2EN;
+                  RCC.APB1ENR.USART2EN := 2#1#;
+                  UNUSED_Bit := RCC.APB1ENR.USART2EN;
                when LPUART1 =>
-                  RCC_Periph.APB1ENR.LPUART1EN := 2#1#;
-                  UNUSED_Bit := RCC_Periph.APB1ENR.LPUART1EN;
+                  RCC.APB1ENR.LPUART1EN := 2#1#;
+                  UNUSED_Bit := RCC.APB1ENR.LPUART1EN;
                when USART4 =>
-                  RCC_Periph.APB1ENR.USART4EN := 2#1#;
-                  UNUSED_Bit := RCC_Periph.APB1ENR.USART4EN;
+                  RCC.APB1ENR.USART4EN := 2#1#;
+                  UNUSED_Bit := RCC.APB1ENR.USART4EN;
                when USART5 =>
-                  RCC_Periph.APB1ENR.USART5EN := 2#1#;
-                  UNUSED_Bit := RCC_Periph.APB1ENR.USART5EN;
+                  RCC.APB1ENR.USART5EN := 2#1#;
+                  UNUSED_Bit := RCC.APB1ENR.USART5EN;
                when I2C1 =>
-                  RCC_Periph.APB1ENR.I2C1EN := 2#1#;
-                  UNUSED_Bit := RCC_Periph.APB1ENR.I2C1EN;
+                  RCC.APB1ENR.I2C1EN := 2#1#;
+                  UNUSED_Bit := RCC.APB1ENR.I2C1EN;
                when I2C2 =>
-                  RCC_Periph.APB1ENR.I2C2EN := 2#1#;
-                  UNUSED_Bit := RCC_Periph.APB1ENR.I2C2EN;
+                  RCC.APB1ENR.I2C2EN := 2#1#;
+                  UNUSED_Bit := RCC.APB1ENR.I2C2EN;
                when USB => null;
                when CRS => null;
                when PWR =>
-                  RCC_Periph.APB1ENR.PWREN := 2#1#;
-                  UNUSED_Bit := RCC_Periph.APB1ENR.PWREN;
+                  RCC.APB1ENR.PWREN := 2#1#;
+                  UNUSED_Bit := RCC.APB1ENR.PWREN;
                when DAC1 => null;
                when I2C3 =>
-                  RCC_Periph.APB1ENR.I2C3EN := 2#1#;
-                  UNUSED_Bit := RCC_Periph.APB1ENR.I2C3EN;
+                  RCC.APB1ENR.I2C3EN := 2#1#;
+                  UNUSED_Bit := RCC.APB1ENR.I2C3EN;
                when LPTIM1 =>
-                  RCC_Periph.APB1ENR.LPTIM1EN := 2#1#;
-                  UNUSED_Bit := RCC_Periph.APB1ENR.LPTIM1EN;
+                  RCC.APB1ENR.LPTIM1EN := 2#1#;
+                  UNUSED_Bit := RCC.APB1ENR.LPTIM1EN;
             end case;
          end if;
       end loop;
 
    end APB1_GRP1_Enable_Clock;
-
 
    ---------------------------------------------------------------------------
    procedure APB2_GRP1_Enable_Clock (
@@ -123,29 +125,29 @@ package body LL.BUS is
          then
             case Ph is
                when SYSCFG =>
-                  RCC_Periph.APB2ENR.SYSCFGEN := 2#1#;
-                  UNUSED_Bit := RCC_Periph.APB2ENR.SYSCFGEN;
+                  RCC.APB2ENR.SYSCFGEN := 2#1#;
+                  UNUSED_Bit := RCC.APB2ENR.SYSCFGEN;
                when TIM21 =>
-                  RCC_Periph.APB2ENR.TIM21EN := 2#1#;
-                  UNUSED_Bit := RCC_Periph.APB2ENR.TIM21EN;
+                  RCC.APB2ENR.TIM21EN := 2#1#;
+                  UNUSED_Bit := RCC.APB2ENR.TIM21EN;
                when TIM22 =>
-                  RCC_Periph.APB2ENR.TIM22EN := 2#1#;
-                  UNUSED_Bit := RCC_Periph.APB2ENR.TIM22EN;
+                  RCC.APB2ENR.TIM22EN := 2#1#;
+                  UNUSED_Bit := RCC.APB2ENR.TIM22EN;
                when FW =>
-                  RCC_Periph.APB2ENR.FWEN := 2#1#;
-                  UNUSED_Bit := RCC_Periph.APB2ENR.FWEN;
+                  RCC.APB2ENR.FWEN := 2#1#;
+                  UNUSED_Bit := RCC.APB2ENR.FWEN;
                when ADC1 =>
-                  RCC_Periph.APB2ENR.ADCEN := 2#1#;
-                  UNUSED_Bit := RCC_Periph.APB2ENR.ADCEN;
+                  RCC.APB2ENR.ADCEN := 2#1#;
+                  UNUSED_Bit := RCC.APB2ENR.ADCEN;
                when SPI1 =>
-                  RCC_Periph.APB2ENR.SPI1EN := 2#1#;
-                  UNUSED_Bit := RCC_Periph.APB2ENR.SPI1EN;
+                  RCC.APB2ENR.SPI1EN := 2#1#;
+                  UNUSED_Bit := RCC.APB2ENR.SPI1EN;
                when USART1 =>
-                  RCC_Periph.APB2ENR.USART1EN := 2#1#;
-                  UNUSED_Bit := RCC_Periph.APB2ENR.USART1EN;
+                  RCC.APB2ENR.USART1EN := 2#1#;
+                  UNUSED_Bit := RCC.APB2ENR.USART1EN;
                when DBGMCU =>
-                  RCC_Periph.APB2ENR.DBGEN := 2#1#;
-                  UNUSED_Bit := RCC_Periph.APB2ENR.DBGEN;
+                  RCC.APB2ENR.DBGEN := 2#1#;
+                  UNUSED_Bit := RCC.APB2ENR.DBGEN;
             end case;
          end if;
       end loop;
@@ -166,23 +168,23 @@ package body LL.BUS is
          then
             case Ph is
                when GPIOA =>
-                  RCC_Periph.IOPENR.IOPAEN := 2#1#;
-                  UNUSED_Bit := RCC_Periph.IOPENR.IOPAEN;
+                  RCC.IOPENR.IOPAEN := 2#1#;
+                  UNUSED_Bit := RCC.IOPENR.IOPAEN;
                when GPIOB =>
-                  RCC_Periph.IOPENR.IOPBEN := 2#1#;
-                  UNUSED_Bit := RCC_Periph.IOPENR.IOPBEN;
+                  RCC.IOPENR.IOPBEN := 2#1#;
+                  UNUSED_Bit := RCC.IOPENR.IOPBEN;
                when GPIOC =>
-                  RCC_Periph.IOPENR.IOPCEN := 2#1#;
-                  UNUSED_Bit := RCC_Periph.IOPENR.IOPCEN;
+                  RCC.IOPENR.IOPCEN := 2#1#;
+                  UNUSED_Bit := RCC.IOPENR.IOPCEN;
                when GPIOD =>
-                  RCC_Periph.IOPENR.IOPDEN := 2#1#;
-                  UNUSED_Bit := RCC_Periph.IOPENR.IOPDEN;
+                  RCC.IOPENR.IOPDEN := 2#1#;
+                  UNUSED_Bit := RCC.IOPENR.IOPDEN;
                when GPIOE =>
-                  RCC_Periph.IOPENR.IOPEEN := 2#1#;
-                  UNUSED_Bit := RCC_Periph.IOPENR.IOPEEN;
+                  RCC.IOPENR.IOPEEN := 2#1#;
+                  UNUSED_Bit := RCC.IOPENR.IOPEEN;
                when GPIOH =>
-                  RCC_Periph.IOPENR.IOPHEN := 2#1#;
-                  UNUSED_Bit := RCC_Periph.IOPENR.IOPHEN;
+                  RCC.IOPENR.IOPHEN := 2#1#;
+                  UNUSED_Bit := RCC.IOPENR.IOPHEN;
             end case;
          end if;
       end loop;
