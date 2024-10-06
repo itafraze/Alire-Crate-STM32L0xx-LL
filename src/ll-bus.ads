@@ -20,6 +20,7 @@
 --       - First version
 --    2024.10 E. Zarfati
 --       - Fix IOP_GRP1_Enable_Clock name
+--       - Implement AHB1_GRP1_Enable_Clock
 --
 ------------------------------------------------------------------------------
 
@@ -31,6 +32,16 @@ package LL.BUS is
    --  Implementation notes:
    --  - Based on source files:
    --    - stm32l0xx_hal_driver:Inc/stm32l0xx_ll_bus.h
+
+   type AHB1_GRP1_Peripheral_Type is
+      (DMA1, MIF, CRC, TSC, RNG, CRYP);
+   --
+
+   type AHB1_GRP1_Peripheral_Select_Type is
+      array (AHB1_GRP1_Peripheral_Type)
+      of Boolean
+      with Default_Component_Value => False;
+   --
 
    type APB1_GRP1_Peripheral_Type is
       (TIM2, TIM3, TIM6, TIM7, LCD, WWDG, SPI2, USART2, LPUART1, USART4,
@@ -63,6 +74,13 @@ package LL.BUS is
       of Boolean
       with Default_Component_Value => False;
    --
+
+   ---------------------------------------------------------------------------
+   procedure AHB1_GRP1_Enable_Clock (
+      Peripherals : AHB1_GRP1_Peripheral_Select_Type);
+   --  Enable AHB1 peripherals clock
+   --
+   --  @param Peripherals
 
    ---------------------------------------------------------------------------
    procedure APB1_GRP1_Enable_Clock (

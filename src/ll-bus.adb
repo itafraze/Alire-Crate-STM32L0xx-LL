@@ -21,6 +21,7 @@
 --    2024.10 E. Zarfati
 --       - Fix IOP_GRP1_Enable_Clock name
 --       - Use RCC instance in place of RCC_Periph
+--       - Implement AHB1_GRP1_Enable_Clock
 --
 ------------------------------------------------------------------------------
 
@@ -36,6 +37,32 @@ package body LL.BUS is
    --  Implementation notes:
    --  - Based on source files:
    --    - stm32l0xx_hal_driver:Inc/stm32l0xx_ll_bus.h
+
+   ---------------------------------------------------------------------------
+   procedure AHB1_GRP1_Enable_Clock (
+      Peripherals : AHB1_GRP1_Peripheral_Select_Type) is
+   --
+   --  TODO:
+   --  - Device-category-dependent implementation to handle missing
+   --    peripherals
+   begin
+
+      for Ph in AHB1_GRP1_Peripheral_Select_Type'Range
+      loop
+         if Peripherals (Ph) = True
+         then
+            case Ph is
+               when DMA1 => RCC.AHBENR.DMAEN := AHBENR_DMAEN_Field (2#1#);
+               when MIF => RCC.AHBENR.MIFEN := AHBENR_MIFEN_Field (2#1#);
+               when CRC => RCC.AHBENR.CRCEN := AHBENR_CRCEN_Field (2#1#);
+               when TSC => null;
+               when RNG => null;
+               when CRYP => RCC.AHBENR.CRYPEN := AHBENR_CRYPEN_Field (2#1#);
+            end case;
+         end if;
+      end loop;
+
+   end AHB1_GRP1_Enable_Clock;
 
    ---------------------------------------------------------------------------
    procedure APB1_GRP1_Enable_Clock (
