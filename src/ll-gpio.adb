@@ -39,6 +39,32 @@ package body LL.GPIO is
    --    - stm32l0xx_hal_driver:Src/stm32l0xx_ll_gpio.c
 
    ---------------------------------------------------------------------------
+   function Init (Instance : Instance_Type;
+                  Init     : Init_Type)
+      return Status_Type is
+   begin
+
+      if Init.Mode = OUTPUT
+         or else Init.Mode = ALTERNATE
+      then
+         Set_Pin_Speed (Instance, Init.Pin, Init.Speed);
+         Set_Pin_Output_Type (Instance, Init.Pin, Init.Output);
+      end if;
+
+      Set_Pin_Pull (Instance, Init.Pin, Init.Pull);
+
+      if Init.Mode = ALTERNATE
+      then
+         Set_Alternate_Function (Instance, Init.Pin, Init.Alternate);
+      end if;
+
+      Set_Pin_Mode (Instance, Init.Pin, Init.Mode);
+
+      return SUCCESS;
+
+   end Init;
+
+   ---------------------------------------------------------------------------
    procedure Set_Pin_Mode (Instance : Instance_Type;
                            Pin      : Pin_Type;
                            Mode     : Mode_Type) is

@@ -93,6 +93,36 @@ package LL.GPIO is
       Natural;
    --
 
+   type Init_Type is
+      record
+         Pin : Pin_Type;
+         Mode : Mode_Type;
+         Speed : Speed_Type;
+         Output : Output_Type;
+         Pull : Pull_Type;
+         Alternate : Alternate_Type;
+      end record;
+   --  Init parameters
+   --
+   --  @field Pin Specifies the GPIO pins to be configured
+   --  @field Mode Specifies the operating mode for the selected pins
+   --  @field Speed Specifies the speed for the selected pins
+   --  @field Output Specifies the operating output type for the selected pins
+   --  @field Pull Specifies the operating Pull-up/Pull down for the selected
+   --    pins
+   --  @field Alternate Specifies the Peripheral to be connected to the
+   --    selected pins
+
+   ---------------------------------------------------------------------------
+   function Init (Instance : Instance_Type;
+                  Init     : Init_Type)
+      return Status_Type;
+   --  Initialize GPIO registers according to the specified parameters
+   --
+   --  @param Instance GPIO Port
+   --  @param Init
+   --  @return An error status
+
    ---------------------------------------------------------------------------
    procedure Set_Pin_Mode (Instance : Instance_Type;
                            Pin      : Pin_Type;
