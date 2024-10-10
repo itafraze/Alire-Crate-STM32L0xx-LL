@@ -56,12 +56,12 @@ lack of testing.
 | CRC | |
 | CRS | |
 | DAC | |
-| DMA | |
+| DMA | ✓ | No full driver deinit
 | EXTI | |
 | GPIO | ∂ |
 | I2C | |
 | IWDG | |
-| LPTIM | ∂ | No get functions, no encoder mode
+| LPTIM | ∂ | No: get functions, encoder mode
 | LPUART | |
 | PWR | ∂ |
 | RCC | ∂ | No: HSE CSS, HSI Output, HSI48, USB, full driver (USART, I2C,
