@@ -24,7 +24,7 @@ project Stm32l0xx_Ll is
    --  Source directories
    for Source_Dirs use ();
    for Source_Dirs use Project'Source_Dirs & ("src/", "config/",
-      "src/rcc/");
+      "src/rcc/", "src/dma/");
 
    --  Other project directories
    for Create_Missing_Dirs use "True";
