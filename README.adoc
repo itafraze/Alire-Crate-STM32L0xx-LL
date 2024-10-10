@@ -58,7 +58,7 @@ lack of testing.
 | DAC | |
 | DMA | ✓ | No full driver deinit
 | EXTI | |
-| GPIO | ∂ |
+| GPIO | ✓ | No full driver deinit
 | I2C | |
 | IWDG | |
 | LPTIM | ∂ | No: get functions, encoder mode
