@@ -41,6 +41,41 @@ package body LL.DMA is
    --    - stm32l0xx_hal_driver:Src/stm32l0xx_ll_dma.c
 
    ---------------------------------------------------------------------------
+   function Init (Instance : Instance_Type;
+                  Channel  : Channel_Type;
+                  Init     : Init_Type)
+      return Status_Type is
+   begin
+
+      --  Channel configuration
+      Configure_Transfer (Instance, Channel, (
+         Direction => Init.Direction,
+         Mode => Init.Mode,
+         Priority => Init.Priority,
+         Peripheral_Increment =>
+            Init.Periph_Or_Mem_To_Mem_Source_Increment_Mode,
+         Memory_Increment =>
+            Init.Mem_Or_Mem_To_Mem_Destination_Increment_Mode,
+         Peripheral_Data_Alignment =>
+            Init.Periph_Or_Mem_To_Mem_Source_Data_Size,
+         Memory_Data_Alignment =>
+            Init.Mem_Or_Mem_To_Mem_Destination_Data_Size));
+
+      --  Addresses configuration
+      Set_Memory_Address (Instance, Channel,
+         Init.Mem_Or_Mem_To_Mem_Destination_Address);
+      Set_Peripheral_Address (Instance, Channel,
+         Init.Periph_Or_Mem_To_Mem_Source_Address);
+
+      --  Data configuration
+      Set_Data_Length (Instance, Channel, Init.Number_Of_Data);
+      Set_Peripheral_Request (Instance, Channel, Init.Periph_Request);
+
+      return SUCCESS;
+
+   end Init;
+
+   ---------------------------------------------------------------------------
    procedure Enable_Channel (Instance : Instance_Type;
                              Channel  : Channel_Type) is
    --
@@ -737,27 +772,26 @@ package body LL.DMA is
 
 
    ---------------------------------------------------------------------------
-   procedure Set_Memory_To_Memory_Source_Address (Instance : Instance_Type;
-                                                  Channel  : Channel_Type;
-                                                  Memory   : Address_Type)
+   procedure Set_Mem_To_Mem_Source_Address (Instance : Instance_Type;
+                                            Channel  : Channel_Type;
+                                            Memory   : Address_Type)
       renames Set_Peripheral_Address;
 
    ---------------------------------------------------------------------------
-   procedure Set_Memory_To_Memory_Destination_Address (
-      Instance : Instance_Type;
-      Channel  : Channel_Type;
-      Memory   : Address_Type)
+   procedure Set_Mem_To_Mem_Destination_Address (Instance : Instance_Type;
+                                                 Channel  : Channel_Type;
+                                                 Memory   : Address_Type)
       renames Set_Memory_Address;
 
    ---------------------------------------------------------------------------
-   function Get_Memory_To_Memory_Source_Address (Instance : Instance_Type;
-                                                 Channel  : Channel_Type)
+   function Get_Mem_To_Mem_Source_Address (Instance : Instance_Type;
+                                           Channel  : Channel_Type)
       return Address_Type
       renames Get_Peripheral_Address;
 
    ---------------------------------------------------------------------------
-   function Get_Memory_To_Memory_Destination_Address (Instance : Instance_Type;
-                                                      Channel  : Channel_Type)
+   function Get_Mem_To_Mem_Destination_Address (Instance : Instance_Type;
+                                                Channel  : Channel_Type)
       return Address_Type
       renames Get_Memory_Address;
 

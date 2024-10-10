@@ -33,6 +33,9 @@ package LL.DMA is
    --  Implementation notes:
    --  - Based on source files:
    --    - stm32l0xx_hal_driver:Inc/stm32l0xx_ll_dma.h
+   --
+   --  TODO:
+   --  - Implement Deinit
 
    subtype Instance_Type is
       CMSIS.Device.DMA.Instances.Instance_Type;
@@ -135,6 +138,62 @@ package LL.DMA is
    --  @enum REQUEST_13 DMA peripheral request 13
    --  @enum REQUEST_14 DMA peripheral request 14
    --  @enum REQUEST_15 DMA peripheral request 15
+
+   type Init_Type is
+      record
+         Periph_Or_Mem_To_Mem_Source_Address : Address_Type;
+         Mem_Or_Mem_To_Mem_Destination_Address : Address_Type;
+         Direction : Direction_Type;
+         Mode : Mode_Type;
+         Periph_Or_Mem_To_Mem_Source_Increment_Mode : Increment_Type;
+         Mem_Or_Mem_To_Mem_Destination_Increment_Mode : Increment_Type;
+         Periph_Or_Mem_To_Mem_Source_Data_Size : Data_Alignment_Type;
+         Mem_Or_Mem_To_Mem_Destination_Data_Size : Data_Alignment_Type;
+         Number_Of_Data : Transfer_Length_Type;
+         Periph_Request : Request_Type;
+         Priority : Priority_Type;
+      end record;
+   --  Initialisation parameters
+   --
+   --  @field Periph_Or_Mem_To_Mem_Source_Address Specifies the
+   --    peripheral base address for DMA transfer or as Source base address in
+   --    case of memory to memory transfer direction.
+   --  @field Mem_Or_Mem_To_Mem_Destination_Address Specifies the
+   --    memory base address for DMA transfer or as Destination base address in
+   --    case of memory to memory transfer direction.
+   --  @field Direction Specifies if the data will be transferred from memory
+   --       to peripheral, from memory to memory or from peripheral to memory.
+   --  @field Mode Specifies the normal or circular operation mode.
+   --  @field Periph_Or_Mem_To_Mem_Source_Increment_Mode Specifies
+   --    whether the Peripheral address or Source address in case of memory to
+   --    memory transfer direction is incremented or not.
+   --  @field Mem_Or_Mem_To_Mem_Destination_Increment_Mode Specifies
+   --    whether the Memory address or Destination address in case of memory to
+   --    memory transfer direction is incremented or not.
+   --  @field Periph_Or_Mem_To_Mem_Source_Data_Size Specifies the
+   --    Peripheral data size alignment or Source data size alignment (byte,
+   --    half word, word) in case of memory to memory transfer direction.
+   --  @field Mem_Or_Mem_To_Mem_Destination_Data_Size Specifies the
+   --    Memory data size alignment or Destination data size alignment (byte,
+   --    half word, word) in case of memory to memory transfer direction.
+   --  @field Number_Of_Data Specifies the number of data to transfer, in
+   --    data unit. The data unit is equal to the source buffer configuration
+   --    set in PeripheralSize or MemorySize parameters depending in the
+   --    transfer direction.
+   --  @field Periph_Request Specifies the peripheral request.
+   --  @field Priority Specifies the channel priority level.
+
+   ---------------------------------------------------------------------------
+   function Init (Instance : Instance_Type;
+                  Channel  : Channel_Type;
+                  Init     : Init_Type)
+      return Status_Type;
+   --  Initialize the DMA registers according to the specified parameters
+   --
+   --  @param Instance
+   --  @param Channel
+   --  @param Init
+   --  @return An error status
 
    ---------------------------------------------------------------------------
    procedure Enable_Channel (Instance : Instance_Type;
@@ -410,9 +469,9 @@ package LL.DMA is
    --  @return Peripheral address
 
    ---------------------------------------------------------------------------
-   procedure Set_Memory_To_Memory_Source_Address (Instance : Instance_Type;
-                                                  Channel  : Channel_Type;
-                                                  Memory   : Address_Type);
+   procedure Set_Mem_To_Mem_Source_Address (Instance : Instance_Type;
+                                            Channel  : Channel_Type;
+                                            Memory   : Address_Type);
    --  Set the Memory to Memory Source address
    --
    --  Notes:
@@ -424,10 +483,9 @@ package LL.DMA is
    --  @param Memory address
 
    ---------------------------------------------------------------------------
-   procedure Set_Memory_To_Memory_Destination_Address (
-      Instance : Instance_Type;
-      Channel  : Channel_Type;
-      Memory   : Address_Type);
+   procedure Set_Mem_To_Mem_Destination_Address (Instance : Instance_Type;
+                                                 Channel  : Channel_Type;
+                                                 Memory   : Address_Type);
    --  Set the Memory to Memory Destination address
    --
    --  Notes:
@@ -439,8 +497,8 @@ package LL.DMA is
    --  @param Memory address
 
    ---------------------------------------------------------------------------
-   function Get_Memory_To_Memory_Source_Address (Instance : Instance_Type;
-                                                 Channel  : Channel_Type)
+   function Get_Mem_To_Mem_Source_Address (Instance : Instance_Type;
+                                           Channel  : Channel_Type)
       return Address_Type;
    --  Get the Memory to Memory Source address
    --
@@ -452,8 +510,8 @@ package LL.DMA is
    --  @return Memory address
 
    ---------------------------------------------------------------------------
-   function Get_Memory_To_Memory_Destination_Address (Instance : Instance_Type;
-                                                      Channel  : Channel_Type)
+   function Get_Mem_To_Mem_Destination_Address (Instance : Instance_Type;
+                                                Channel  : Channel_Type)
       return Address_Type;
    --  Get the Memory to Memory Destination address
    --
