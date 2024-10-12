@@ -136,6 +136,114 @@ package body LL.BUS is
    end APB1_GRP1_Enable_Clock;
 
    ---------------------------------------------------------------------------
+   procedure APB1_GRP1_Force_Reset (
+      Peripherals : APB1_GRP1_Peripheral_Select_Type) is
+   --
+   --  TODO:
+   --  - Device-category-dependent implementation to handle missing
+   --    peripherals
+   begin
+
+      for Ph in APB1_GRP1_Peripheral_Select_Type'Range
+      loop
+         if Peripherals (Ph) = True
+         then
+            case Ph is
+               when TIM2 =>
+                  RCC.APB1RSTR.TIM2RST := APB1RSTR_TIM2RST_Field (2#1#);
+               when TIM3 =>
+                  RCC.APB1RSTR.TIM3RST := APB1RSTR_TIM3RST_Field (2#1#);
+               when TIM6 =>
+                  RCC.APB1RSTR.TIM6RST := APB1RSTR_TIM6RST_Field (2#1#);
+               when TIM7 =>
+                  RCC.APB1RSTR.TIM7RST := APB1RSTR_TIM7RST_Field (2#1#);
+               when LCD => null;
+               when WWDG =>
+                  RCC.APB1RSTR.WWDGRST := APB1RSTR_WWDGRST_Field (2#1#);
+               when SPI2 =>
+                  RCC.APB1RSTR.SPI2RST := APB1RSTR_SPI2RST_Field (2#1#);
+               when USART2 =>
+                  RCC.APB1RSTR.USART2RST := APB1RSTR_USART2RST_Field (2#1#);
+               when LPUART1 =>
+                  RCC.APB1RSTR.LPUART1RST := APB1RSTR_LPUART1RST_Field (2#1#);
+               when USART4 =>
+                  RCC.APB1RSTR.USART4RST := APB1RSTR_USART4RST_Field (2#1#);
+               when USART5 =>
+                  RCC.APB1RSTR.USART5RST := APB1RSTR_USART5RST_Field (2#1#);
+               when I2C1 =>
+                  RCC.APB1RSTR.I2C1RST := APB1RSTR_I2C1RST_Field (2#1#);
+               when I2C2 =>
+                  RCC.APB1RSTR.I2C2RST := APB1RSTR_I2C2RST_Field (2#1#);
+               when USB => null;
+               when CRS => null;
+               when PWR =>
+                  RCC.APB1RSTR.PWRRST := APB1RSTR_PWRRST_Field (2#1#);
+               when DAC1 => null;
+               when I2C3 =>
+                  RCC.APB1RSTR.I2C3 := APB1RSTR_I2C3_Field (2#1#);
+               when LPTIM1 =>
+                  RCC.APB1RSTR.LPTIM1RST := APB1RSTR_LPTIM1RST_Field (2#1#);
+            end case;
+         end if;
+      end loop;
+
+   end APB1_GRP1_Force_Reset;
+
+   ---------------------------------------------------------------------------
+   procedure APB1_GRP1_Release_Reset (
+      Peripherals : APB1_GRP1_Peripheral_Select_Type) is
+   --
+   --  TODO:
+   --  - Device-category-dependent implementation to handle missing
+   --    peripherals
+   begin
+
+      for Ph in APB1_GRP1_Peripheral_Select_Type'Range
+      loop
+         if Peripherals (Ph) = True
+         then
+            case Ph is
+               when TIM2 =>
+                  RCC.APB1RSTR.TIM2RST := APB1RSTR_TIM2RST_Field (2#0#);
+               when TIM3 =>
+                  RCC.APB1RSTR.TIM3RST := APB1RSTR_TIM3RST_Field (2#0#);
+               when TIM6 =>
+                  RCC.APB1RSTR.TIM6RST := APB1RSTR_TIM6RST_Field (2#0#);
+               when TIM7 =>
+                  RCC.APB1RSTR.TIM7RST := APB1RSTR_TIM7RST_Field (2#0#);
+               when LCD => null;
+               when WWDG =>
+                  RCC.APB1RSTR.WWDGRST := APB1RSTR_WWDGRST_Field (2#0#);
+               when SPI2 =>
+                  RCC.APB1RSTR.SPI2RST := APB1RSTR_SPI2RST_Field (2#0#);
+               when USART2 =>
+                  RCC.APB1RSTR.USART2RST := APB1RSTR_USART2RST_Field (2#0#);
+               when LPUART1 =>
+                  RCC.APB1RSTR.LPUART1RST := APB1RSTR_LPUART1RST_Field (2#0#);
+               when USART4 =>
+                  RCC.APB1RSTR.USART4RST := APB1RSTR_USART4RST_Field (2#0#);
+               when USART5 =>
+                  RCC.APB1RSTR.USART5RST := APB1RSTR_USART5RST_Field (2#0#);
+               when I2C1 =>
+                  RCC.APB1RSTR.I2C1RST := APB1RSTR_I2C1RST_Field (2#0#);
+               when I2C2 =>
+                  RCC.APB1RSTR.I2C2RST := APB1RSTR_I2C2RST_Field (2#0#);
+               when USB => null;
+               when CRS => null;
+               when PWR =>
+                  RCC.APB1RSTR.PWRRST := APB1RSTR_PWRRST_Field (2#0#);
+               when DAC1 => null;
+               when I2C3 =>
+                  RCC.APB1RSTR.I2C3 := APB1RSTR_I2C3_Field (2#0#);
+               when LPTIM1 =>
+                  RCC.APB1RSTR.LPTIM1RST := APB1RSTR_LPTIM1RST_Field (2#0#);
+            end case;
+         end if;
+      end loop;
+
+   end APB1_GRP1_Release_Reset;
+
+   ---------------------------------------------------------------------------
    procedure APB2_GRP1_Enable_Clock (
       Peripherals : APB2_GRP1_Peripheral_Select_Type) is
    --

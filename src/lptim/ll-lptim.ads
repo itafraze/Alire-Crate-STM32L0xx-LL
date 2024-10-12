@@ -194,7 +194,16 @@ package LL.LPTIM is
       return Status_Type;
    --  Configure the LPTIMx peripheral according to the specified parameters.
    --
+   --  @param Instance Low-Power Timer instance
    --  @param Init
+   --  @return An error status
+
+   ---------------------------------------------------------------------------
+   function Deinit (Instance : Instance_Type)
+      return Status_Type;
+   --  Set LPTIMx registers to their reset values
+   --
+   --  @param Instance Low-Power Timer instance
    --  @return An error status
 
    ---------------------------------------------------------------------------

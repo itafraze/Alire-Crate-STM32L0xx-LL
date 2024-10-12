@@ -26,6 +26,8 @@ with CMSIS.Device.LPTIM;
 with CMSIS.Device.LPTIM.Instances;
    use CMSIS.Device.LPTIM.Instances;
 
+with LL.BUS;
+
 package body LL.LPTIM is
    --  Low-Power Timer (LPTIM) low-layer driver
    --
@@ -57,6 +59,25 @@ package body LL.LPTIM is
       return SUCCESS;
 
    end Init;
+
+   ---------------------------------------------------------------------------
+   function Deinit (Instance : Instance_Type)
+      return Status_Type is
+   --
+      use all type LL.BUS.APB1_GRP1_Peripheral_Type;
+      --
+      Select_LPTIM1 : constant LL.BUS.APB1_GRP1_Peripheral_Select_Type := [
+         LPTIM1 => True,
+         others => False];
+   begin
+      return ERROR when not Instance'Valid;
+
+      LL.BUS.APB1_GRP1_Force_Reset (Select_LPTIM1);
+      LL.BUS.APB1_GRP1_Release_Reset (Select_LPTIM1);
+
+      return SUCCESS;
+
+   end Deinit;
 
    ---------------------------------------------------------------------------
    procedure Enable (Instance : Instance_Type) is

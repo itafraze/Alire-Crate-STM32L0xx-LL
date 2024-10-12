@@ -89,6 +89,21 @@ package LL.BUS is
    --
    --  @param Peripherals
 
+   ---------------------------------------------------------------------------
+   procedure APB1_GRP1_Force_Reset (
+      Peripherals : APB1_GRP1_Peripheral_Select_Type);
+   --  Force APB1 peripherals reset
+   --
+   --  @param Peripherals
+
+   ---------------------------------------------------------------------------
+   procedure APB1_GRP1_Release_Reset (
+      Peripherals : APB1_GRP1_Peripheral_Select_Type);
+   --  Release APB1 peripherals reset
+   --
+   --  @param Peripherals
+
+   ---------------------------------------------------------------------------
    procedure APB2_GRP1_Enable_Clock (
       Peripherals : APB2_GRP1_Peripheral_Select_Type);
    --  Enable APB2 peripherals clock
