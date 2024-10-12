@@ -46,6 +46,19 @@ package body LL.LPTIM is
    end Enable;
 
    ---------------------------------------------------------------------------
+   function Is_Enabled (Instance : Instance_Type)
+      return Boolean is
+   --
+      LPTIM renames
+         LPTIMx (All_Instance_Type (Instance));
+      --
+   begin
+
+      return Boolean'Val (LPTIM.CR.ENABLE);
+
+   end Is_Enabled;
+
+   ---------------------------------------------------------------------------
    procedure Start_Counter (Instance       : Instance_Type;
                             Operating_Mode : Operating_Mode_Type) is
    --
@@ -77,6 +90,19 @@ package body LL.LPTIM is
    end Set_Update_Mode;
 
    ---------------------------------------------------------------------------
+   function Get_Update_Mode (Instance : Instance_Type)
+      return Update_Mode_Type is
+   --
+      LPTIM renames
+         LPTIMx (All_Instance_Type (Instance));
+      --
+   begin
+
+      return Update_Mode_Type'Val (LPTIM.CFGR.PRELOAD);
+
+   end Get_Update_Mode;
+
+   ---------------------------------------------------------------------------
    procedure Set_Auto_Reload (Instance          : Instance_Type;
                               Auto_Reload_Value : Auto_Reload_Value_Type) is
    --
@@ -88,6 +114,19 @@ package body LL.LPTIM is
       LPTIM.ARR.ARR := ARR_ARR_Field (Auto_Reload_Value);
 
    end Set_Auto_Reload;
+
+   ---------------------------------------------------------------------------
+   function Get_Auto_Reload (Instance : Instance_Type)
+      return Auto_Reload_Value_Type is
+   --
+      LPTIM renames
+         LPTIMx (All_Instance_Type (Instance));
+      --
+   begin
+
+      return Auto_Reload_Value_Type (LPTIM.ARR.ARR);
+
+   end Get_Auto_Reload;
 
    ---------------------------------------------------------------------------
    procedure Set_Compare (Instance      : Instance_Type;
@@ -103,6 +142,32 @@ package body LL.LPTIM is
    end Set_Compare;
 
    ---------------------------------------------------------------------------
+   function Get_Compare (Instance : Instance_Type)
+      return Compare_Value_Type is
+   --
+      LPTIM renames
+         LPTIMx (All_Instance_Type (Instance));
+      --
+   begin
+
+      return Compare_Value_Type (LPTIM.CMP.CMP);
+
+   end Get_Compare;
+
+   ---------------------------------------------------------------------------
+   function Get_Counter (Instance : Instance_Type)
+      return Natural is
+   --
+      LPTIM renames
+         LPTIMx (All_Instance_Type (Instance));
+      --
+   begin
+
+      return Natural (LPTIM.CNT.CNT);
+
+   end Get_Counter;
+
+   ---------------------------------------------------------------------------
    procedure Set_Counter_Mode (Instance     : Instance_Type;
                                Counter_Mode : Counter_Mode_Type) is
    --
@@ -115,6 +180,19 @@ package body LL.LPTIM is
          Counter_Mode_Type'Pos (Counter_Mode));
 
    end Set_Counter_Mode;
+
+   ---------------------------------------------------------------------------
+   function Get_Counter_Mode (Instance : Instance_Type)
+      return Counter_Mode_Type is
+   --
+      LPTIM renames
+         LPTIMx (All_Instance_Type (Instance));
+      --
+   begin
+
+      return Counter_Mode_Type'Val (LPTIM.CFGR.COUNTMODE);
+
+   end Get_Counter_Mode;
 
    ---------------------------------------------------------------------------
    procedure Configure_Output (Instance : Instance_Type;
@@ -146,6 +224,19 @@ package body LL.LPTIM is
    end Set_Waveform;
 
    ---------------------------------------------------------------------------
+   function Get_Waveform (Instance : Instance_Type)
+      return Waveform_Type is
+   --
+      LPTIM renames
+         LPTIMx (All_Instance_Type (Instance));
+      --
+   begin
+
+      return Waveform_Type'Val (LPTIM.CFGR.WAVE);
+
+   end Get_Waveform;
+
+   ---------------------------------------------------------------------------
    procedure Set_Polarity (Instance : Instance_Type;
                            Polarity : Output_Polarity_Type) is
    --
@@ -160,6 +251,19 @@ package body LL.LPTIM is
    end Set_Polarity;
 
    ---------------------------------------------------------------------------
+   function Get_Polarity (Instance : Instance_Type)
+      return Output_Polarity_Type is
+   --
+      LPTIM renames
+         LPTIMx (All_Instance_Type (Instance));
+      --
+   begin
+
+      return Output_Polarity_Type'Val (LPTIM.CFGR.WAVPOL);
+
+   end Get_Polarity;
+
+   ---------------------------------------------------------------------------
    procedure Set_Prescaler (Instance  : Instance_Type;
                             Prescaler : Prescaler_Type) is
    --
@@ -171,6 +275,19 @@ package body LL.LPTIM is
       LPTIM.CFGR.PRESC := CFGR_PRESC_Field (Prescaler_Type'Pos (Prescaler));
 
    end Set_Prescaler;
+
+   ---------------------------------------------------------------------------
+   function Get_Prescaler (Instance : Instance_Type)
+      return Prescaler_Type is
+   --
+      LPTIM renames
+         LPTIMx (All_Instance_Type (Instance));
+      --
+   begin
+
+      return Prescaler_Type'Val (LPTIM.CFGR.PRESC);
+
+   end Get_Prescaler;
 
    ---------------------------------------------------------------------------
    procedure Enable_Timeout (Instance : Instance_Type) is
@@ -195,6 +312,19 @@ package body LL.LPTIM is
       LPTIM.CFGR.TIMOUT := CFGR_TIMOUT_Field (2#0#);
 
    end Disable_Timeout;
+
+   ---------------------------------------------------------------------------
+   function Is_Enabled_Timeout (Instance : Instance_Type)
+      return Boolean is
+   --
+      LPTIM renames
+         LPTIMx (All_Instance_Type (Instance));
+      --
+   begin
+
+      return Boolean'Val (LPTIM.CFGR.TIMOUT);
+
+   end Is_Enabled_Timeout;
 
    ---------------------------------------------------------------------------
    procedure Software_Trigger (Instance : Instance_Type) is
@@ -228,6 +358,45 @@ package body LL.LPTIM is
    end Configure_Trigger;
 
    ---------------------------------------------------------------------------
+   function Get_Trigger_Source (Instance : Instance_Type)
+      return Source_Type is
+   --
+      LPTIM renames
+         LPTIMx (All_Instance_Type (Instance));
+      --
+   begin
+
+      return Source_Type'Val (LPTIM.CFGR.TRIGSEL);
+
+   end Get_Trigger_Source;
+
+   ---------------------------------------------------------------------------
+   function Get_Trigger_Filter (Instance : Instance_Type)
+      return Filter_Type is
+   --
+      LPTIM renames
+         LPTIMx (All_Instance_Type (Instance));
+      --
+   begin
+
+      return Filter_Type'Val (LPTIM.CFGR.TRGFLT);
+
+   end Get_Trigger_Filter;
+
+   ---------------------------------------------------------------------------
+   function Get_Trigger_Polarity (Instance : Instance_Type)
+      return Trigger_Polarity_Type is
+   --
+      LPTIM renames
+         LPTIMx (All_Instance_Type (Instance));
+      --
+   begin
+
+      return Trigger_Polarity_Type'Val (LPTIM.CFGR.TRIGEN);
+
+   end Get_Trigger_Polarity;
+
+   ---------------------------------------------------------------------------
    procedure Set_Clock_Source (Instance     : Instance_Type;
                                Clock_Source : Clock_Source_Type) is
    --
@@ -240,6 +409,19 @@ package body LL.LPTIM is
          Clock_Source_Type'Pos (Clock_Source));
 
    end Set_Clock_Source;
+
+   ---------------------------------------------------------------------------
+   function Get_Clock_Source (Instance : Instance_Type)
+      return Clock_Source_Type is
+   --
+      LPTIM renames
+         LPTIMx (All_Instance_Type (Instance));
+      --
+   begin
+
+      return Clock_Source_Type'Val (LPTIM.CFGR.CKSEL);
+
+   end Get_Clock_Source;
 
    ---------------------------------------------------------------------------
    procedure Configure_Clock (Instance : Instance_Type;
@@ -256,6 +438,95 @@ package body LL.LPTIM is
          CKPOL => CFGR_CKPOL_Field (Clock_Polarity_Type'Pos (Polarity)));
 
    end Configure_Clock;
+
+   ---------------------------------------------------------------------------
+   function Get_Clock_Polarity (Instance : Instance_Type)
+      return Clock_Polarity_Type is
+   --
+      LPTIM renames
+         LPTIMx (All_Instance_Type (Instance));
+      --
+   begin
+
+      return Clock_Polarity_Type'Val (LPTIM.CFGR.CKPOL);
+
+   end Get_Clock_Polarity;
+
+   ---------------------------------------------------------------------------
+   function Get_Clock_Filter (Instance : Instance_Type)
+      return Clock_Filter_Type is
+   --
+      LPTIM renames
+         LPTIMx (All_Instance_Type (Instance));
+      --
+   begin
+
+      return Clock_Filter_Type'Val (LPTIM.CFGR.CKFLT);
+
+   end Get_Clock_Filter;
+
+   ---------------------------------------------------------------------------
+   procedure Set_Encoder_Mode (Instance : Instance_Type;
+                               Encoder  : Encoder_Mode) is
+   --
+      LPTIM renames
+         LPTIMx (All_Instance_Type (Instance));
+      --
+   begin
+
+      LPTIM.CFGR.CKPOL := CFGR_CKPOL_Field (Encoder_Mode'Pos (Encoder));
+
+   end Set_Encoder_Mode;
+
+   ---------------------------------------------------------------------------
+   function Get_Encoder_Mode (Instance : Instance_Type)
+      return Encoder_Mode is
+   --
+      LPTIM renames
+         LPTIMx (All_Instance_Type (Instance));
+      --
+   begin
+
+      return Encoder_Mode'Val (LPTIM.CFGR.CKPOL);
+
+   end Get_Encoder_Mode;
+
+   ---------------------------------------------------------------------------
+   procedure Enable_Encoder_Mode (Instance : Instance_Type) is
+   --
+      LPTIM renames
+         LPTIMx (All_Instance_Type (Instance));
+      --
+   begin
+
+      LPTIM.CFGR.ENC := CFGR_ENC_Field (2#1#);
+
+   end Enable_Encoder_Mode;
+
+   ---------------------------------------------------------------------------
+   procedure Disable_Encoder_Mode (Instance : Instance_Type) is
+   --
+      LPTIM renames
+         LPTIMx (All_Instance_Type (Instance));
+      --
+   begin
+
+      LPTIM.CFGR.ENC := CFGR_ENC_Field (2#0#);
+
+   end Disable_Encoder_Mode;
+
+   ---------------------------------------------------------------------------
+   function Is_Enabled_Encoder_Mode (Instance : Instance_Type)
+      return Boolean is
+   --
+      LPTIM renames
+         LPTIMx (All_Instance_Type (Instance));
+      --
+   begin
+
+      return Boolean'Val (LPTIM.CFGR.ENC);
+
+   end Is_Enabled_Encoder_Mode;
 
    ---------------------------------------------------------------------------
    procedure Clear_Flag_CMPM (Instance : Instance_Type) is
@@ -457,6 +728,19 @@ package body LL.LPTIM is
    end Disable_Interrupt_CMPM;
 
    ---------------------------------------------------------------------------
+   function Is_Enabled_Interrupt_CMPM (Instance : Instance_Type)
+      return Boolean is
+   --
+      LPTIM renames
+         LPTIMx (All_Instance_Type (Instance));
+      --
+   begin
+
+      return Boolean'Val (LPTIM.IER.CMPMIE);
+
+   end Is_Enabled_Interrupt_CMPM;
+
+   ---------------------------------------------------------------------------
    procedure Enable_Interrupt_ARRM (Instance : Instance_Type) is
    --
       LPTIM renames
@@ -479,6 +763,19 @@ package body LL.LPTIM is
       LPTIM.IER.ARRMIE := IER_ARRMIE_Field (2#0#);
 
    end Disable_Interrupt_ARRM;
+
+   ---------------------------------------------------------------------------
+   function Is_Enabled_Interrupt_ARRM (Instance : Instance_Type)
+      return Boolean is
+   --
+      LPTIM renames
+         LPTIMx (All_Instance_Type (Instance));
+      --
+   begin
+
+      return Boolean'Val (LPTIM.IER.ARRMIE);
+
+   end Is_Enabled_Interrupt_ARRM;
 
    ---------------------------------------------------------------------------
    procedure Enable_Interrupt_EXTTRIG (Instance : Instance_Type) is
@@ -505,6 +802,19 @@ package body LL.LPTIM is
    end Disable_Interrupt_EXTTRIG;
 
    ---------------------------------------------------------------------------
+   function Is_Enabled_Interrupt_EXTTRIG (Instance : Instance_Type)
+      return Boolean is
+   --
+      LPTIM renames
+         LPTIMx (All_Instance_Type (Instance));
+      --
+   begin
+
+      return Boolean'Val (LPTIM.IER.EXTTRIGIE);
+
+   end Is_Enabled_Interrupt_EXTTRIG;
+
+   ---------------------------------------------------------------------------
    procedure Enable_Interrupt_CMPOK (Instance : Instance_Type) is
    --
       LPTIM renames
@@ -512,7 +822,7 @@ package body LL.LPTIM is
       --
    begin
 
-      LPTIM.IER.EXTTRIGIE := IER_CMPOKIE_Field (2#1#);
+      LPTIM.IER.CMPOKIE := IER_CMPOKIE_Field (2#1#);
 
    end Enable_Interrupt_CMPOK;
 
@@ -524,9 +834,22 @@ package body LL.LPTIM is
       --
    begin
 
-      LPTIM.IER.EXTTRIGIE := IER_CMPOKIE_Field (2#0#);
+      LPTIM.IER.CMPOKIE := IER_CMPOKIE_Field (2#0#);
 
    end Disable_Interrupt_CMPOK;
+
+   ---------------------------------------------------------------------------
+   function Is_Enabled_Interrupt_CMPOK (Instance : Instance_Type)
+      return Boolean is
+   --
+      LPTIM renames
+         LPTIMx (All_Instance_Type (Instance));
+      --
+   begin
+
+      return Boolean'Val (LPTIM.IER.CMPOKIE);
+
+   end Is_Enabled_Interrupt_CMPOK;
 
    ---------------------------------------------------------------------------
    procedure Enable_Interrupt_ARROK (Instance : Instance_Type) is
@@ -553,6 +876,19 @@ package body LL.LPTIM is
    end Disable_Interrupt_ARROK;
 
    ---------------------------------------------------------------------------
+   function Is_Enabled_Interrupt_ARROK (Instance : Instance_Type)
+      return Boolean is
+   --
+      LPTIM renames
+         LPTIMx (All_Instance_Type (Instance));
+      --
+   begin
+
+      return Boolean'Val (LPTIM.IER.ARROKIE);
+
+   end Is_Enabled_Interrupt_ARROK;
+
+   ---------------------------------------------------------------------------
    procedure Enable_Interrupt_UP (Instance : Instance_Type) is
    --
       LPTIM renames
@@ -577,6 +913,19 @@ package body LL.LPTIM is
    end Disable_Interrupt_UP;
 
    ---------------------------------------------------------------------------
+   function Is_Enabled_Interrupt_UP (Instance : Instance_Type)
+      return Boolean is
+   --
+      LPTIM renames
+         LPTIMx (All_Instance_Type (Instance));
+      --
+   begin
+
+      return Boolean'Val (LPTIM.IER.UPIE);
+
+   end Is_Enabled_Interrupt_UP;
+
+   ---------------------------------------------------------------------------
    procedure Enable_Interrupt_DOWN (Instance : Instance_Type) is
    --
       LPTIM renames
@@ -599,5 +948,18 @@ package body LL.LPTIM is
       LPTIM.IER.DOWNIE := IER_DOWNIE_Field (2#0#);
 
    end Disable_Interrupt_DOWN;
+
+   ---------------------------------------------------------------------------
+   function Is_Enabled_Interrupt_DOWN (Instance : Instance_Type)
+      return Boolean is
+   --
+      LPTIM renames
+         LPTIMx (All_Instance_Type (Instance));
+      --
+   begin
+
+      return Boolean'Val (LPTIM.IER.DOWNIE);
+
+   end Is_Enabled_Interrupt_DOWN;
 
 end LL.LPTIM;
