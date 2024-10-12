@@ -31,7 +31,6 @@ package LL.LPTIM is
    --  - Based on source files:
    --    - stm32l0xx_hal_driver:Inc/stm32l0xx_ll_lptim.h
 
-
    subtype Instance_Type is
       CMSIS.Device.LPTIM.Instances.Instance_Type;
    --
@@ -40,7 +39,7 @@ package LL.LPTIM is
       (CONTINUOUS, ONESHOT)
       with Default_Value => CONTINUOUS;
    --
-   --  @enum CONTINUOUS starts in continuous mode
+   --  @enum CONTINUOUS Timer starts in continuous mode
    --  @enum ONESHOT Timer starts in single mode
 
    type Update_Mode_Type is
