@@ -34,6 +34,31 @@ package body LL.LPTIM is
    --    - stm32l0xx_hal_driver:Src/stm32l0xx_ll_lptim.c
 
    ---------------------------------------------------------------------------
+   function Init (Instance : Instance_Type;
+                  Init     : Init_Type)
+      return Status_Type is
+   --
+      LPTIM renames
+         LPTIMx (All_Instance_Type (Instance));
+      --
+   begin
+      return ERROR when Is_Enabled (Instance);
+
+      LPTIM.CFGR := (@ with delta
+         CKSEL => CFGR_CKSEL_Field (
+            Clock_Source_Type'Pos (Init.Clock_Source)),
+         PRESC => CFGR_PRESC_Field (
+            Prescaler_Type'Pos (Init.Prescaler)),
+         WAVE => CFGR_WAVE_Field (
+            Waveform_Type'Pos (Init.Waveform)),
+         WAVPOL => CFGR_WAVPOL_Field (
+            Output_Polarity_Type'Pos (Init.Polarity)));
+
+      return SUCCESS;
+
+   end Init;
+
+   ---------------------------------------------------------------------------
    procedure Enable (Instance : Instance_Type) is
    --
       LPTIM renames

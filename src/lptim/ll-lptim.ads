@@ -173,6 +173,30 @@ package LL.LPTIM is
    --  @enum FALLING
    --  @enum RISING_FALLING
 
+   type Init_Type is
+      record
+         Clock_Source : Clock_Source_Type;
+         Prescaler : Prescaler_Type;
+         Waveform : Waveform_Type;
+         Polarity : Output_Polarity_Type;
+      end record;
+   --  Init parameters
+   --
+   --  @field Clock_Source Specifies the source of the clock used by the LPTIM
+   --    instance.
+   --  @field Prescaler Specifies the prescaler division ratio.
+   --  @field Waveform Specifies the waveform shape.
+   --  @field Polarity Specifies waveform polarity.
+
+   ---------------------------------------------------------------------------
+   function Init (Instance : Instance_Type;
+                  Init     : Init_Type)
+      return Status_Type;
+   --  Configure the LPTIMx peripheral according to the specified parameters.
+   --
+   --  @param Init
+   --  @return An error status
+
    ---------------------------------------------------------------------------
    procedure Enable (Instance : Instance_Type);
    --  Enable the LPTIM instance
