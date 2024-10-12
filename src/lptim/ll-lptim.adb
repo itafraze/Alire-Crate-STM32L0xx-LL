@@ -21,12 +21,17 @@
 --
 ------------------------------------------------------------------------------
 
+--  with System.BB.Armv6m_Atomic;
+
+with CMSIS.Device;
+   use CMSIS.Device;
 with CMSIS.Device.LPTIM;
    use CMSIS.Device.LPTIM;
 with CMSIS.Device.LPTIM.Instances;
    use CMSIS.Device.LPTIM.Instances;
 
 with LL.BUS;
+with LL.RCC.LPTIM;
 
 package body LL.LPTIM is
    --  Low-Power Timer (LPTIM) low-layer driver
@@ -90,6 +95,81 @@ package body LL.LPTIM is
       LPTIM.CR.ENABLE := CR_ENABLE_Field (2#1#);
 
    end Enable;
+
+   ---------------------------------------------------------------------------
+   procedure Disable (Instance : Instance_Type) is
+   --  The following sequence is required to solve LPTIM disable HW limitation.
+   --  Please check Errata Sheet ES0335 for more details under "MCU may
+   --  remain stuck in LPTIM interrupt when entering Stop mode" section.
+      use all type LL.RCC.LPTIM.LPTIMx_Source_Type;
+      --
+      LPTIM renames
+         LPTIMx (All_Instance_Type (Instance));
+      --
+      --  Were_Interrupt_Enabled : constant Boolean := not Interrupt_Disabled;
+      --
+      LPTIM_Source : LL.RCC.LPTIM.LPTIMx_Source_Type;
+      --
+      IER : IER_Register;
+      --
+      CFGR : CFGR_Register;
+      --
+      CMP : CMP_Register;
+      --
+      ARR : ARR_Register;
+      --
+      UNUSED : Status_Type;
+      --
+   begin
+
+      --  Enter critical section
+      --  Disable_Interrupts;
+
+      --  Save LPTIM configuration
+      LPTIM_Source := LL.RCC.LPTIM.Get_Clock_Source (Instance);
+      IER := LPTIM.IER;
+      CFGR := LPTIM.CFGR;
+      CMP := LPTIM.CMP;
+      ARR := LPTIM.ARR;
+
+      --  Reset LPTIM
+      UNUSED := Deinit (Instance);
+
+      if CMP.CMP /= 0
+         or else  ARR.ARR /= 0
+      then
+         --  Restore LPTIM Config
+         LL.RCC.LPTIM.Set_Clock_Source (LPTIM1_PCLK1);
+
+         if CMP.CMP /= 0
+         then
+            Enable (Instance);
+            LPTIM.CMP := CMP;
+            Clear_Flag_CMPOK (Instance);
+         end if;
+
+         if ARR.ARR /= 0
+         then
+            Enable (Instance);
+            LPTIM.ARR := ARR;
+            Clear_Flag_ARROK (Instance);
+         end if;
+
+         LL.RCC.LPTIM.Set_Clock_Source (LPTIM_Source);
+      end if;
+
+      --  Restore configuration registers (LPTIM should be disabled first)
+      LPTIM.CR.ENABLE := CR_ENABLE_Field (2#0#);
+      LPTIM.IER := IER;
+      LPTIM.CFGR := CFGR;
+
+      --  Exit critical section
+      --  if Were_Interrupt_Enabled
+      --  then
+      --     Enable_Interrupts;
+      --  end if;
+
+   end Disable;
 
    ---------------------------------------------------------------------------
    function Is_Enabled (Instance : Instance_Type)

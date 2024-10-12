@@ -213,6 +213,12 @@ package LL.LPTIM is
    --  @param Instance Low-Power Timer instance
 
    ---------------------------------------------------------------------------
+   procedure Disable (Instance : Instance_Type);
+   --  Disable the LPTIM instance
+   --
+   --  @param Instance Low-Power Timer instance
+
+   ---------------------------------------------------------------------------
    function Is_Enabled (Instance : Instance_Type)
       return Boolean;
    --  Indicates whether the LPTIM instance is enabled
