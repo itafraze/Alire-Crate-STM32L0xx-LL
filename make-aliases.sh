@@ -90,6 +90,12 @@ run_cmd() {
 {
    move_to_script_directory
 
+   # Project
+
+   run_cmd \
+      "alr settings --set alias.doc \
+         \"exec -P1 -- gnatdoc --backend html --generate=body --warnings\""
+
    move_to_tests_directory
 
    # Emulation testing

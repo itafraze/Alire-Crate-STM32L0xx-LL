@@ -108,6 +108,18 @@ non-GNATPro users may still find available ARM ELF GNAT Community Edition,
 which ships also the `arm-eabi-gnatemu` binary, at AdaCore's
 link:https://www.adacore.com/download[Download page].
 
+=== Documentation
+
+The `gnatdoc` utility can be used to generate the project software
+documentation. Retrieve this tool through alire with `alr get --build gnatdoc`
+in the desired folder and add the corresponding binary to `PATH`.
+
+.Build the HTML documentation
+[source,console]
+----
+$ alr doc
+----
+
 === Tests on emulated target
 
 The target platform can be emulated using GNATemu. Sub-crate project

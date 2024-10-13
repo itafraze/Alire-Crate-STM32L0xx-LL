@@ -60,4 +60,9 @@ project Stm32l0xx_Ll is
       for Switches ("Ada") use ("-Es"); --  Symbolic traceback
    end Binder;
 
+   package Documentation is
+      for Output_Dir ("html") use "docs/html";
+      for Excluded_Project_Files use ("stm32l0xx_cmsis.gpr");
+   end Documentation;
+
 end Stm32l0xx_Ll;
