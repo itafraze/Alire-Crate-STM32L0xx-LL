@@ -696,7 +696,6 @@ package LL.RCC is
       with Inline;
    --  Configure I2C3 clock source
 
-
    ---------------------------------------------------------------------------
    procedure Set_RNG_Clock_Source (Source : RNG_Source_Type) is null
       with Inline;
@@ -742,7 +741,6 @@ package LL.RCC is
       return I2C3_Source_Type
       with Inline;
    --  Get I2C3 clock source
-
 
    ---------------------------------------------------------------------------
    function Get_RNG_Clock_Source

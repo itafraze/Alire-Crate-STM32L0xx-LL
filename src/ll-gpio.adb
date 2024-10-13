@@ -211,7 +211,6 @@ package body LL.GPIO is
 
    end Get_Alternate_Function;
 
-
    ---------------------------------------------------------------------------
    procedure Lock_Pin (Instance : Instance_Type;
                        Pin      : Pin_Type) is

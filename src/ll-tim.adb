@@ -465,9 +465,7 @@ package body LL.TIM is
          renames TIMx (All_Instance_Type (Instance));
    begin
 
-
       TIM_Instance.CR1.UDIS := CR1_UDIS_Field (2#1#);
-
 
    end Disable_Update_Event;
 

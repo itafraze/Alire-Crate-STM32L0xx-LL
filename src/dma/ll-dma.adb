@@ -571,7 +571,6 @@ package body LL.DMA is
 
    end Set_Data_Length;
 
-
    ---------------------------------------------------------------------------
    function Get_Data_Length (Instance       : Instance_Type;
                              Channel        : Channel_Type)
@@ -646,7 +645,6 @@ package body LL.DMA is
             when others               => Source));
 
    end Config_Addresses;
-
 
    ---------------------------------------------------------------------------
    procedure Set_Memory_Address (Instance : Instance_Type;
@@ -769,7 +767,6 @@ package body LL.DMA is
       return CPARx.all;
 
    end Get_Peripheral_Address;
-
 
    ---------------------------------------------------------------------------
    procedure Set_Mem_To_Mem_Source_Address (Instance : Instance_Type;
@@ -1858,7 +1855,6 @@ package body LL.DMA is
       CCRx.TEIE := CCR_TEIE_Field (2#0#);
 
    end Disable_Interrupt_TE;
-
 
    ---------------------------------------------------------------------------
    function Is_Enabled_Interrupt_TC (Instance : Instance_Type;

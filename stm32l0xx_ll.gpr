@@ -45,12 +45,12 @@ project Stm32l0xx_Ll is
          when "development" =>
             Switches := Switches &
                ("-gnatw_a", "-gnatwc", "-gnatVd", "-gnatVa", "-gnatr",
-               "-gnatyy", "-fgnat-encodings=gdb");
+               "-fgnat-encodings=gdb");
          when "validation" =>
             Switches := Switches &
-               ("-gnatw_a", "-gnatwc", "-gnatVd", "-gnatyy");
+               ("-gnatw_a", "-gnatwc", "-gnatVd");
          when "release" =>
-            Switches := Switches & ("-gnatyy");
+            Switches := Switches;
       end case;
 
       for Default_Switches ("Ada") use Switches;
