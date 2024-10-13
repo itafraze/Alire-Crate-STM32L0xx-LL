@@ -18,6 +18,9 @@
 --  Revision History:
 --    2024.04 E. Zarfati
 --       - First version
+--    2024.10 E. Zarfati
+--       - Complete the LPTIM driver
+--       - Make APIs Inline
 --
 ------------------------------------------------------------------------------
 
@@ -31,7 +34,6 @@ package LL.LPTIM is
    --  - Based on source files:
    --    - stm32l0xx_hal_driver:Inc/stm32l0xx_ll_lptim.h
 
-
    subtype Instance_Type is
       CMSIS.Device.LPTIM.Instances.Instance_Type;
    --
@@ -40,7 +42,7 @@ package LL.LPTIM is
       (CONTINUOUS, ONESHOT)
       with Default_Value => CONTINUOUS;
    --
-   --  @enum CONTINUOUS starts in continuous mode
+   --  @enum CONTINUOUS Timer starts in continuous mode
    --  @enum ONESHOT Timer starts in single mode
 
    type Update_Mode_Type is
@@ -166,15 +168,73 @@ package LL.LPTIM is
       with Default_Value => 0;
    --
 
+   type Encoder_Mode is
+      (RISING, FALLING, RISING_FALLING);
+   --  Encoder Mode
+   --
+   --  @enum RISING
+   --  @enum FALLING
+   --  @enum RISING_FALLING
+
+   type Init_Type is
+      record
+         Clock_Source : Clock_Source_Type;
+         Prescaler : Prescaler_Type;
+         Waveform : Waveform_Type;
+         Polarity : Output_Polarity_Type;
+      end record;
+   --  Init parameters
+   --
+   --  @field Clock_Source Specifies the source of the clock used by the LPTIM
+   --    instance.
+   --  @field Prescaler Specifies the prescaler division ratio.
+   --  @field Waveform Specifies the waveform shape.
+   --  @field Polarity Specifies waveform polarity.
+
    ---------------------------------------------------------------------------
-   procedure Enable (Instance : Instance_Type);
+   function Init (Instance : Instance_Type;
+                  Init     : Init_Type)
+      return Status_Type;
+   --  Configure the LPTIMx peripheral according to the specified parameters.
+   --
+   --  @param Instance Low-Power Timer instance
+   --  @param Init
+   --  @return An error status
+
+   ---------------------------------------------------------------------------
+   function Deinit (Instance : Instance_Type)
+      return Status_Type;
+   --  Set LPTIMx registers to their reset values
+   --
+   --  @param Instance Low-Power Timer instance
+   --  @return An error status
+
+   ---------------------------------------------------------------------------
+   procedure Enable (Instance : Instance_Type)
+      with Inline;
    --  Enable the LPTIM instance
    --
    --  @param Instance Low-Power Timer instance
 
    ---------------------------------------------------------------------------
+   procedure Disable (Instance : Instance_Type);
+   --  Disable the LPTIM instance
+   --
+   --  @param Instance Low-Power Timer instance
+
+   ---------------------------------------------------------------------------
+   function Is_Enabled (Instance : Instance_Type)
+      return Boolean
+      with Inline;
+   --  Indicates whether the LPTIM instance is enabled
+   --
+   --  @param Instance Low-Power Timer instance
+   --  @return Enabled/disabled state of Low-Power Timer instance
+
+   ---------------------------------------------------------------------------
    procedure Start_Counter (Instance       : Instance_Type;
-                            Operating_Mode : Operating_Mode_Type);
+                            Operating_Mode : Operating_Mode_Type)
+      with Inline;
    --  Starts the LPTIM counter in the desired mode.
    --
    --  TODO:
@@ -185,7 +245,8 @@ package LL.LPTIM is
 
    ---------------------------------------------------------------------------
    procedure Set_Update_Mode (Instance    : Instance_Type;
-                              Update_Mode : Update_Mode_Type);
+                              Update_Mode : Update_Mode_Type)
+      with Inline;
    --  Set the LPTIM registers update mode (enable/disable register preload)
    --
    --  TODO:
@@ -195,8 +256,18 @@ package LL.LPTIM is
    --  @param Update_Mode
 
    ---------------------------------------------------------------------------
+   function Get_Update_Mode (Instance : Instance_Type)
+      return Update_Mode_Type
+      with Inline;
+   --  Get the LPTIM registers update mode
+   --
+   --  @param Instance Low-Power Timer instance
+   --  @return Update mode
+
+   ---------------------------------------------------------------------------
    procedure Set_Auto_Reload (Instance          : Instance_Type;
-                              Auto_Reload_Value : Auto_Reload_Value_Type);
+                              Auto_Reload_Value : Auto_Reload_Value_Type)
+      with Inline;
    --  Set the auto reload value
    --
    --  TODO:
@@ -211,8 +282,18 @@ package LL.LPTIM is
    --  @param Auto_Reload_Value
 
    ---------------------------------------------------------------------------
+   function Get_Auto_Reload (Instance : Instance_Type)
+      return Auto_Reload_Value_Type
+      with Inline;
+   --  Get the auto reload value
+   --
+   --  @param Instance Low-Power Timer instance
+   --  @return Auto reload value
+
+   ---------------------------------------------------------------------------
    procedure Set_Compare (Instance      : Instance_Type;
-                          Compare_Value : Compare_Value_Type);
+                          Compare_Value : Compare_Value_Type)
+      with Inline;
    --  Set the compare value
    --
    --  TODO:
@@ -226,8 +307,33 @@ package LL.LPTIM is
    --  @param Compare_Value
 
    ---------------------------------------------------------------------------
+   function Get_Compare (Instance : Instance_Type)
+      return Compare_Value_Type
+      with Inline;
+   --  Get the compare value
+   --
+   --  @param Instance Low-Power Timer instance
+   --  @return Compare value
+
+   ---------------------------------------------------------------------------
+   function Get_Counter (Instance : Instance_Type)
+      return Natural
+      with Inline;
+   --  Get the compare value
+   --
+   --  Notes:
+   --  - When the LPTIM instance is running with an asynchronous clock, reading
+   --    the LPTIMx_CNT register may return unreliable values. So in this case
+   --    it is necessary to perform two consecutive read accesses and verify
+   --    that the two returned values are identical.
+   --
+   --  @param Instance Low-Power Timer instance
+   --  @return Compare value
+
+   ---------------------------------------------------------------------------
    procedure Set_Counter_Mode (Instance     : Instance_Type;
-                               Counter_Mode : Counter_Mode_Type);
+                               Counter_Mode : Counter_Mode_Type)
+      with Inline;
    --  Set the counter mode (selection of the LPTIM counter clock source).
    --
    --  TODO:
@@ -237,9 +343,19 @@ package LL.LPTIM is
    --  @param Counter_Mode
 
    ---------------------------------------------------------------------------
+   function Get_Counter_Mode (Instance : Instance_Type)
+      return Counter_Mode_Type
+      with Inline;
+   --  Get the counter mode
+   --
+   --  @param Instance Low-Power Timer instance
+   --  @return Counter mode
+
+   ---------------------------------------------------------------------------
    procedure Configure_Output (Instance : Instance_Type;
                                Waveform : Waveform_Type;
-                               Polarity : Output_Polarity_Type);
+                               Polarity : Output_Polarity_Type)
+      with Inline;
    --  Configure the LPTIM instance output (LPTIMx_OUT)
    --
    --  TODO:
@@ -255,7 +371,8 @@ package LL.LPTIM is
 
    ---------------------------------------------------------------------------
    procedure Set_Waveform (Instance : Instance_Type;
-                           Waveform : Waveform_Type);
+                           Waveform : Waveform_Type)
+      with Inline;
    --  Set waveform shape
    --
    --  TODO:
@@ -265,8 +382,18 @@ package LL.LPTIM is
    --  @param Waveform
 
    ---------------------------------------------------------------------------
+   function Get_Waveform (Instance : Instance_Type)
+      return Waveform_Type
+      with Inline;
+   --  Get actual waveform shape
+   --
+   --  @param Instance Low-Power Timer instance
+   --  @return Waveform
+
+   ---------------------------------------------------------------------------
    procedure Set_Polarity (Instance : Instance_Type;
-                           Polarity : Output_Polarity_Type);
+                           Polarity : Output_Polarity_Type)
+      with Inline;
    --  Set output polarity
    --
    --  TODO:
@@ -280,8 +407,18 @@ package LL.LPTIM is
    --  @param Polarity
 
    ---------------------------------------------------------------------------
+   function Get_Polarity (Instance : Instance_Type)
+      return Output_Polarity_Type
+      with Inline;
+   --  Get actual output polarity
+   --
+   --  @param Instance Low-Power Timer instance
+   --  @return Polarity
+
+   ---------------------------------------------------------------------------
    procedure Set_Prescaler (Instance  : Instance_Type;
-                            Prescaler : Prescaler_Type);
+                            Prescaler : Prescaler_Type)
+      with Inline;
    --  Set actual prescaler division ratio.
    --
    --  TODO:
@@ -295,7 +432,17 @@ package LL.LPTIM is
    --  @param Prescaler
 
    ---------------------------------------------------------------------------
-   procedure Enable_Timeout (Instance : Instance_Type);
+   function Get_Prescaler (Instance : Instance_Type)
+      return Prescaler_Type
+      with Inline;
+   --  Get actual prescaler division ratio.
+   --
+   --  @param Instance Low-Power Timer instance
+   --  @return Prescaler
+
+   ---------------------------------------------------------------------------
+   procedure Enable_Timeout (Instance : Instance_Type)
+      with Inline;
    --  Enable the timeout function. A trigger event arriving when the timer is
    --  already started will reset and restart the counter
    --
@@ -305,7 +452,8 @@ package LL.LPTIM is
    --  @param Instance Low-Power Timer instance
 
    ---------------------------------------------------------------------------
-   procedure Disable_Timeout (Instance : Instance_Type);
+   procedure Disable_Timeout (Instance : Instance_Type)
+      with Inline;
    --  Disable the timeout function. A trigger event arriving when the timer
    --  is already started will be ignored
    --
@@ -315,7 +463,17 @@ package LL.LPTIM is
    --  @param Instance Low-Power Timer instance
 
    ---------------------------------------------------------------------------
-   procedure Software_Trigger (Instance : Instance_Type);
+   function Is_Enabled_Timeout (Instance : Instance_Type)
+      return Boolean
+      with Inline;
+   --  Indicate whether the timeout function is enabled.
+   --
+   --  @param Instance Low-Power Timer instance
+   --  @return Enabled/disabled state of the Low-Power Timer instance
+
+   ---------------------------------------------------------------------------
+   procedure Software_Trigger (Instance : Instance_Type)
+      with Inline;
    --  Start the LPTIM counter
    --
    --  TODO:
@@ -327,7 +485,8 @@ package LL.LPTIM is
    procedure Configure_Trigger (Instance : Instance_Type;
                                 Source   : Source_Type;
                                 Filter   : Filter_Type;
-                                Polarity : Trigger_Polarity_Type);
+                                Polarity : Trigger_Polarity_Type)
+      with Inline;
    --  Configure the external trigger used as a trigger event for the LPTIM.
    --
    --  TODO:
@@ -339,8 +498,36 @@ package LL.LPTIM is
    --  @param Polarity
 
    ---------------------------------------------------------------------------
+   function Get_Trigger_Source (Instance : Instance_Type)
+      return Source_Type
+      with Inline;
+   --  Get actual external trigger source.
+   --
+   --  @param Instance Low-Power Timer instance
+   --  @return Source
+
+   ---------------------------------------------------------------------------
+   function Get_Trigger_Filter (Instance : Instance_Type)
+      return Filter_Type
+      with Inline;
+   --  Get actual external trigger filter
+   --
+   --  @param Instance Low-Power Timer instance
+   --  @return Filter
+
+   ---------------------------------------------------------------------------
+   function Get_Trigger_Polarity (Instance : Instance_Type)
+      return Trigger_Polarity_Type
+      with Inline;
+   --  Get actual external trigger polarity
+   --
+   --  @param Instance Low-Power Timer instance
+   --  @return Polarity
+
+   ---------------------------------------------------------------------------
    procedure Set_Clock_Source (Instance     : Instance_Type;
-                               Clock_Source : Clock_Source_Type);
+                               Clock_Source : Clock_Source_Type)
+      with Inline;
    --  Set the source of the clock used by the LPTIM instance.
    --
    --  TODO:
@@ -350,9 +537,19 @@ package LL.LPTIM is
    --  @param Clock_Source
 
    ---------------------------------------------------------------------------
+   function Get_Clock_Source (Instance : Instance_Type)
+      return Clock_Source_Type
+      with Inline;
+   --  Get actual LPTIM instance clock source
+   --
+   --  @param Instance Low-Power Timer instance
+   --  @return Clock source
+
+   ---------------------------------------------------------------------------
    procedure Configure_Clock (Instance : Instance_Type;
                               Filter   : Clock_Filter_Type;
-                              Polarity : Clock_Polarity_Type);
+                              Polarity : Clock_Polarity_Type)
+      with Inline;
    --  Configure the active edge or edges used by the counter when the LPTIM
    --  is clocked by an external clock source.
    --
@@ -371,42 +568,117 @@ package LL.LPTIM is
    --  @param Polarity
 
    ---------------------------------------------------------------------------
-   procedure Clear_Flag_CMPM (Instance : Instance_Type);
+   function Get_Clock_Polarity (Instance : Instance_Type)
+      return Clock_Polarity_Type
+      with Inline;
+   --  Get actual clock polarity
+   --
+   --  @param Instance Low-Power Timer instance
+   --  @return Polarity
+
+   ---------------------------------------------------------------------------
+   function Get_Clock_Filter (Instance : Instance_Type)
+      return Clock_Filter_Type
+      with Inline;
+   --  Get actual clock digital filter
+   --
+   --  @param Instance Low-Power Timer instance
+   --  @return Filter
+
+   ---------------------------------------------------------------------------
+   procedure Set_Encoder_Mode (Instance : Instance_Type;
+                               Encoder  : Encoder_Mode)
+      with Inline;
+   --  Configure the encoder mode
+   --
+   --  @param Instance Low-Power Timer instance
+   --  @param Encoder
+
+   ---------------------------------------------------------------------------
+   function Get_Encoder_Mode (Instance : Instance_Type)
+      return Encoder_Mode
+      with Inline;
+   --  Get actual encoder mode
+   --
+   --  @param Instance Low-Power Timer instance
+   --  @return Encoder mode
+
+   ---------------------------------------------------------------------------
+   procedure Enable_Encoder_Mode (Instance : Instance_Type)
+      with Inline;
+   --  Enable the encoder mode
+   --
+   --  Notes:
+   --  - This function must be called when the LPTIM instance is disabled.
+   --  - In this mode the LPTIM instance must be clocked by an internal clock
+   --    source. Also, the prescaler division ratio must be equal to 1.
+   --  - LPTIM instance must be configured in continuous mode prior enabling
+   --    the encoder mode.
+   --
+   --  TODO:
+   --  - Add contract precondition to ensure LPTIM instance is disabled
+   --
+   --  @param Instance Low-Power Timer instance
+
+   ---------------------------------------------------------------------------
+   procedure Disable_Encoder_Mode (Instance : Instance_Type)
+      with Inline;
+   --  Disable the encoder mode
+   --
+   --  @param Instance Low-Power Timer instance
+
+   ---------------------------------------------------------------------------
+   function Is_Enabled_Encoder_Mode (Instance : Instance_Type)
+      return Boolean
+      with Inline;
+   --  Indicates whether the LPTIM operates in encoder mode
+   --
+   --  @param Instance Low-Power Timer instance
+   --  @return Enabled/Disabled state of the encoder mode
+
+   ---------------------------------------------------------------------------
+   procedure Clear_Flag_CMPM (Instance : Instance_Type)
+      with Inline;
    --  Clear the compare match flag (CMPMCF)
    --
    --  @param Instance Low-Power Timer instance
 
    ---------------------------------------------------------------------------
    function Is_Active_Flag_CMPM (Instance : Instance_Type)
-      return Boolean;
+      return Boolean
+      with Inline;
    --  Inform whether a compare match interrupt has occurred
    --
    --  @param Instance Low-Power Timer instance
    --  @return Flag active status
 
    ---------------------------------------------------------------------------
-   procedure Clear_Flag_ARRM (Instance : Instance_Type);
+   procedure Clear_Flag_ARRM (Instance : Instance_Type)
+      with Inline;
    --  Clear the autoreload match flag (ARRMCF)
    --
    --  @param Instance Low-Power Timer instance
 
    ---------------------------------------------------------------------------
    function Is_Active_Flag_ARRM (Instance : Instance_Type)
-      return Boolean;
+      return Boolean
+      with Inline;
    --  Inform whether a autoreload match interrupt has occurred
    --
    --  @param Instance Low-Power Timer instance
    --  @return Flag active status
 
    ---------------------------------------------------------------------------
-   procedure Clear_Flag_EXTTRIG (Instance : Instance_Type);
+   procedure Clear_Flag_EXTTRIG (Instance : Instance_Type)
+      with Inline;
    --  Clear the external trigger valid edge flag(EXTTRIGCF).
    --
    --  @param Instance Low-Power Timer instance
 
    ---------------------------------------------------------------------------
    function Is_Active_Flag_EXTTRIG (Instance : Instance_Type)
-      return Boolean;
+      return Boolean
+      with Inline;
    --  Inform whether a valid edge on the selected external trigger input has
    --  occurred
    --
@@ -414,14 +686,16 @@ package LL.LPTIM is
    --  @return Flag active status
 
    ---------------------------------------------------------------------------
-   procedure Clear_Flag_CMPOK (Instance : Instance_Type);
+   procedure Clear_Flag_CMPOK (Instance : Instance_Type)
+      with Inline;
    --  Clear the compare register update interrupt flag (CMPOKCF).
    --
    --  @param Instance Low-Power Timer instance
 
    ---------------------------------------------------------------------------
    function Is_Active_Flag_CMPOK (Instance : Instance_Type)
-      return Boolean;
+      return Boolean
+      with Inline;
    --  Informs whether the APB bus write operation to the LPTIMx_CMP register
    --  has been successfully completed. If so, a new one can be initiated.
    --
@@ -429,14 +703,16 @@ package LL.LPTIM is
    --  @return Flag active status
 
    ---------------------------------------------------------------------------
-   procedure Clear_Flag_ARROK (Instance : Instance_Type);
+   procedure Clear_Flag_ARROK (Instance : Instance_Type)
+      with Inline;
    --  Clear the autoreload register update interrupt flag (ARROKCF).
    --
    --  @param Instance Low-Power Timer instance
 
    ---------------------------------------------------------------------------
    function Is_Active_Flag_ARROK (Instance : Instance_Type)
-      return Boolean;
+      return Boolean
+      with Inline;
    --  Informs whether the APB bus write operation to the LPTIMx_ARR register
    --  has been successfully completed. If so, a new one can be initiated.
    --
@@ -444,14 +720,16 @@ package LL.LPTIM is
    --  @return Flag active status
 
    ---------------------------------------------------------------------------
-   procedure Clear_Flag_UP (Instance : Instance_Type);
+   procedure Clear_Flag_UP (Instance : Instance_Type)
+      with Inline;
    --  Clear the counter direction change to up interrupt flag (UPCF).
    --
    --  @param Instance Low-Power Timer instance
 
    ---------------------------------------------------------------------------
    function Is_Active_Flag_UP (Instance : Instance_Type)
-      return Boolean;
+      return Boolean
+      with Inline;
    --  Informs whether the counter direction has changed from down to up (when
    --  the LPTIM instance operates in encoder mode).
    --
@@ -459,14 +737,16 @@ package LL.LPTIM is
    --  @return Flag active status
 
    ---------------------------------------------------------------------------
-   procedure Clear_Flag_DOWN (Instance : Instance_Type);
+   procedure Clear_Flag_DOWN (Instance : Instance_Type)
+      with Inline;
    --  Clear the counter direction change to down interrupt flag (DOWNCF).
    --
    --  @param Instance Low-Power Timer instance
 
    ---------------------------------------------------------------------------
    function Is_Active_Flag_DOWN (Instance : Instance_Type)
-      return Boolean;
+      return Boolean
+      with Inline;
    --  Informs whether the counter direction has changed from up to down (when
    --  the LPTIM instance operates in encoder mode).
    --
@@ -474,87 +754,168 @@ package LL.LPTIM is
    --  @return Flag active status
 
    ---------------------------------------------------------------------------
-   procedure Enable_Interrupt_CMPM (Instance : Instance_Type);
+   procedure Enable_Interrupt_CMPM (Instance : Instance_Type)
+      with Inline;
    --  Enable compare match interrupt (CMPMIE).
    --
    --  @param Instance Low-Power Timer instance
 
    ---------------------------------------------------------------------------
-   procedure Disable_Interrupt_CMPM (Instance : Instance_Type);
+   procedure Disable_Interrupt_CMPM (Instance : Instance_Type)
+      with Inline;
    --  Disable compare match interrupt (CMPMIE).
    --
    --  @param Instance Low-Power Timer instance
 
    ---------------------------------------------------------------------------
-   procedure Enable_Interrupt_ARRM (Instance : Instance_Type);
+   function Is_Enabled_Interrupt_CMPM (Instance : Instance_Type)
+      return Boolean
+      with Inline;
+   --  Indicates whether the compare match interrupt (CMPMIE) is enabled
+   --
+   --  @param Instance Low-Power Timer instance
+   --  @return Enabled/disabled state of CMPM interrupt
+
+   ---------------------------------------------------------------------------
+   procedure Enable_Interrupt_ARRM (Instance : Instance_Type)
+      with Inline;
    --  Enable autoreload match interrupt (ARRMIE).
    --
    --  @param Instance Low-Power Timer instance
 
    ---------------------------------------------------------------------------
-   procedure Disable_Interrupt_ARRM (Instance : Instance_Type);
+   procedure Disable_Interrupt_ARRM (Instance : Instance_Type)
+      with Inline;
    --  Disable autoreload match interrupt (ARRMIE).
    --
    --  @param Instance Low-Power Timer instance
 
    ---------------------------------------------------------------------------
-   procedure Enable_Interrupt_EXTTRIG (Instance : Instance_Type);
+   function Is_Enabled_Interrupt_ARRM (Instance : Instance_Type)
+      return Boolean
+      with Inline;
+   --  Indicates whether the autoreload match interrupt (ARRMIE) is enabled
+   --
+   --  @param Instance Low-Power Timer instance
+   --  @return Enabled/disabled state of ARRM interrupt
+
+   ---------------------------------------------------------------------------
+   procedure Enable_Interrupt_EXTTRIG (Instance : Instance_Type)
+      with Inline;
    --  Enable external trigger valid edge interrupt (EXTTRIGIE).
    --
    --  @param Instance Low-Power Timer instance
 
    ---------------------------------------------------------------------------
-   procedure Disable_Interrupt_EXTTRIG (Instance : Instance_Type);
+   procedure Disable_Interrupt_EXTTRIG (Instance : Instance_Type)
+      with Inline;
    --  Disable external trigger valid edge interrupt (EXTTRIGIE).
    --
    --  @param Instance Low-Power Timer instance
 
    ---------------------------------------------------------------------------
-   procedure Enable_Interrupt_CMPOK (Instance : Instance_Type);
+   function Is_Enabled_Interrupt_EXTTRIG (Instance : Instance_Type)
+      return Boolean
+      with Inline;
+   --  Indicates external trigger valid edge interrupt (EXTTRIGIE) is enabled
+   --
+   --  @param Instance Low-Power Timer instance
+   --  @return Enabled/disabled state of EXTTRIG interrupt
+
+   ---------------------------------------------------------------------------
+   procedure Enable_Interrupt_CMPOK (Instance : Instance_Type)
+      with Inline;
    --  Enable compare register write completed interrupt (CMPOKIE).
    --
    --  @param Instance Low-Power Timer instance
 
    ---------------------------------------------------------------------------
-   procedure Disable_Interrupt_CMPOK (Instance : Instance_Type);
+   procedure Disable_Interrupt_CMPOK (Instance : Instance_Type)
+      with Inline;
    --  Disable compare register write completed interrupt (CMPOKIE).
    --
    --  @param Instance Low-Power Timer instance
 
    ---------------------------------------------------------------------------
-   procedure Enable_Interrupt_ARROK (Instance : Instance_Type);
+   function Is_Enabled_Interrupt_CMPOK (Instance : Instance_Type)
+      return Boolean
+      with Inline;
+   --  Indicates whether the compare register write completed interrupt
+   --  (CMPOKIE) is enabled.
+   --
+   --  @param Instance Low-Power Timer instance
+   --  @return Enabled/disabled state of CMPOK interrupt
+
+   ---------------------------------------------------------------------------
+   procedure Enable_Interrupt_ARROK (Instance : Instance_Type)
+      with Inline;
    --  Enable autoreload register write completed interrupt (ARROKIE).
    --
    --  @param Instance Low-Power Timer instance
 
    ---------------------------------------------------------------------------
-   procedure Disable_Interrupt_ARROK (Instance : Instance_Type);
+   procedure Disable_Interrupt_ARROK (Instance : Instance_Type)
+      with Inline;
    --  Disable autoreload register write completed interrupt (ARROKIE).
    --
    --  @param Instance Low-Power Timer instance
 
    ---------------------------------------------------------------------------
-   procedure Enable_Interrupt_UP (Instance : Instance_Type);
+   function Is_Enabled_Interrupt_ARROK (Instance : Instance_Type)
+      return Boolean
+      with Inline;
+   --  Indicates whether the autoreload register write completed interrupt
+   --  (ARROKIE) is enabled
+   --
+   --  @param Instance Low-Power Timer instance
+   --  @return Enabled/disabled state of ARROK interrupt
+
+   ---------------------------------------------------------------------------
+   procedure Enable_Interrupt_UP (Instance : Instance_Type)
+      with Inline;
    --  Enable direction change to up interrupt (UPIE).
    --
    --  @param Instance Low-Power Timer instance
 
    ---------------------------------------------------------------------------
-   procedure Disable_Interrupt_UP (Instance : Instance_Type);
+   procedure Disable_Interrupt_UP (Instance : Instance_Type)
+      with Inline;
    --  Disable direction change to up interrupt (UPIE).
    --
    --  @param Instance Low-Power Timer instance
 
    ---------------------------------------------------------------------------
-   procedure Enable_Interrupt_DOWN (Instance : Instance_Type);
+   function Is_Enabled_Interrupt_UP (Instance : Instance_Type)
+      return Boolean
+      with Inline;
+   --  Indicates whether the direction change to up interrupt (UPIE) is
+   --  enabled
+   --
+   --  @param Instance Low-Power Timer instance
+   --  @return Enabled/disabled state of UP interrupt
+
+   ---------------------------------------------------------------------------
+   procedure Enable_Interrupt_DOWN (Instance : Instance_Type)
+      with Inline;
    --  Enable direction change to down interrupt (DOWNIE).
    --
    --  @param Instance Low-Power Timer instance
 
    ---------------------------------------------------------------------------
-   procedure Disable_Interrupt_DOWN (Instance : Instance_Type);
+   procedure Disable_Interrupt_DOWN (Instance : Instance_Type)
+      with Inline;
    --  Disable direction change to down interrupt (DOWNIE).
    --
    --  @param Instance Low-Power Timer instance
+
+   ---------------------------------------------------------------------------
+   function Is_Enabled_Interrupt_DOWN (Instance : Instance_Type)
+      return Boolean
+      with Inline;
+   --  Indicates whether the direction change to down interrupt (DOWNIE) is
+   --  enabled
+   --
+   --  @param Instance Low-Power Timer instance
+   --  @return Enabled/disabled state of DOWN interrupt
 
 end LL.LPTIM;
