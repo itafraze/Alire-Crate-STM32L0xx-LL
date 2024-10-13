@@ -18,11 +18,12 @@
 --  Revision History:
 --    2024.04 E. Zarfati
 --       - First version
+--    2024.10 E. Zarfati
+--       - Complete the LPTIM driver
 --
 ------------------------------------------------------------------------------
 
---  with System.BB.Armv6m_Atomic;
-
+with CMSIS.Core;
 with CMSIS.Device;
    use CMSIS.Device;
 with CMSIS.Device.LPTIM;
@@ -101,12 +102,14 @@ package body LL.LPTIM is
    --  The following sequence is required to solve LPTIM disable HW limitation.
    --  Please check Errata Sheet ES0335 for more details under "MCU may
    --  remain stuck in LPTIM interrupt when entering Stop mode" section.
+      use CMSIS.Core;
+      --
       use all type LL.RCC.LPTIM.LPTIMx_Source_Type;
       --
       LPTIM renames
          LPTIMx (All_Instance_Type (Instance));
       --
-      --  Were_Interrupt_Enabled : constant Boolean := not Interrupt_Disabled;
+      Were_Interrupt_Enabled : constant Boolean := (Get_PRIMASK and 1) = 0;
       --
       LPTIM_Source : LL.RCC.LPTIM.LPTIMx_Source_Type;
       --
@@ -123,7 +126,7 @@ package body LL.LPTIM is
    begin
 
       --  Enter critical section
-      --  Disable_Interrupts;
+      Disable_Interrupts;
 
       --  Save LPTIM configuration
       LPTIM_Source := LL.RCC.LPTIM.Get_Clock_Source (Instance);
@@ -164,10 +167,10 @@ package body LL.LPTIM is
       LPTIM.CFGR := CFGR;
 
       --  Exit critical section
-      --  if Were_Interrupt_Enabled
-      --  then
-      --     Enable_Interrupts;
-      --  end if;
+      if Were_Interrupt_Enabled
+      then
+         Enable_Interrupts;
+      end if;
 
    end Disable;
 

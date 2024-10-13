@@ -18,6 +18,9 @@
 --  Revision History:
 --    2024.04 E. Zarfati
 --       - First version
+--    2024.10 E. Zarfati
+--       - Complete the LPTIM driver
+--       - Make APIs Inline
 --
 ------------------------------------------------------------------------------
 
